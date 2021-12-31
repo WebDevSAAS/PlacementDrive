@@ -42,10 +42,42 @@ app.get('/',(req,res)=>{
 
 // post route for login ( expects json data)
 app.post('/login', (req, res) => {
+    
     //stuff
 })
 
-
+// post route for register (expects json data)
+app.post('/register', (req, res) => {
+  let k = req.body
+  if (k.usn && k.first_name && k.last_name && k.branch && k.gender && k.dob && k.email && k.phone && k.password ) { 
+    db.query('SELECT first_name FROM student where usn = ?;', [req.body.usn], (error, results, fields) => {
+      // ok
+      if (results.length != 0) {
+        res.json({
+          status: "error",
+          message: "User already exists !",
+        })
+      }
+      else {
+        db.query("INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ;", [k.usn, k.first_name, k.last_name, k.branch, k.gender, k.dob, k.email, k.phone, k.password], (error, resukts, fields) => {
+          if(error) {
+            throw error
+            res.json({ status: "error", message: error })
+          }
+          else {
+            
+            res.json({
+              status: "success",
+              message: "Account created !",
+              
+              profile: k,
+            })
+          }
+        })
+      }
+    })
+  }
+})
 
 // server listening
 app.listen(port,()=>{
