@@ -133,7 +133,7 @@ app.post('/register', (req, res) => {
       }
       // usn doesn't exists, create one
       else {
-        db.query("INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ;", [k.usn, k.first_name, k.last_name, k.branch, k.gender, k.dob, k.email, k.phone, k.password], (error, resukts, fields) => {
+        db.query("INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ;", [k.usn, k.first_name, k.last_name, k.branch, k.gender, k.dob, k.email, k.phone, k.password], (error, results, fields) => {
           if (error) {
             throw error
             res.json({ 
