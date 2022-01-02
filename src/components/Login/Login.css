@@ -1,6 +1,20 @@
 /*--------------------------------------------------------------
 #   Login
 --------------------------------------------------------------*/
+
+h3 {
+  line-height: 1.5;
+}
+
+body {
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.8), transparent),
+    url("./images/bg_image4.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
 :root {
   --input-padding-x: 1.5rem;
   --input-padding-y: 0.75rem;
@@ -67,14 +81,27 @@
   color: #777;
 }
 
-a {
-  color: #777;
+a, Link {
+  color: white;
   text-decoration: none;
 }
-
-a:hover {
-  color: #28292b;
+a:hover, Link:hover {
+  color: white;
 }
+
+#signin-btn:hover {
+  color: #28292b;
+  font-weight: bold;
+  background-color: white;
+}
+.form-submit:hover{
+  color: #212529;
+}
+
+/* a:hover {
+  color: #28292b;
+  font-weight: bold;
+} */
 
 .login-form {
   position: absolute;
@@ -83,4 +110,8 @@ a:hover {
   -moz-transform: translateX(-50%) translateY(-50%);
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
+
+  background-color: #212529ad;
+  border-radius: 1.5rem;
+
 }
