@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form p-4">
+    <div className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form text-center p-4">
       <form className="form-signin">
-        <h3 className="mb-5 pt-1 fs-2 ">
+        <h3 className="mb-5 pt-1 fs-2">
           Placement Management
-          <br /> System.
+          <br /> Login
         </h3>
         <div className="form-label-group px-3">
           <input
