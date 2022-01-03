@@ -1,16 +1,17 @@
 import React from "react";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Register = () => {
   return (
-    <div className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form p-4" id="registration_container">
+    <div
+      className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form p-4"
+      id="registration_container"
+    >
       <form className="form-signin">
-        <h3 className="mb-2 fs-3">
-          Create New Account
-        </h3>
+        <h3 className="mb-2 fs-3 text-center">Create New Account</h3>
 
-        <div className="form-label-group px-3">
+        <div className="form-label-group">
           <input
             type="text"
             id="usn"
@@ -21,7 +22,7 @@ const Register = () => {
           />
           <label htmlFor="usn">University Serial Number (USN)</label>
         </div>
-        <div className="form-label-group px-3">
+        <div className="form-label-group">
           <input
             type="text"
             id="first_name"
@@ -31,7 +32,7 @@ const Register = () => {
           />
           <label htmlFor="first_name">First Name</label>
         </div>
-        <div className="form-label-group px-3">
+        <div className="form-label-group">
           <input
             type="text"
             id="last_name"
@@ -41,7 +42,7 @@ const Register = () => {
           <label htmlFor="last_name">Last Name</label>
         </div>
 
-        <select class="form-select-lg mb-3 fs-6 mx-3" id="branch" required>
+        <select class="form-select mb-3 fs-6 selectStyle" id="branch" required>
           <option selected disabled>
             Select Your Branch
           </option>
@@ -62,21 +63,16 @@ const Register = () => {
             AI&ML - Artificial intelligence & Machine Learning{" "}
           </option>
         </select>
-              
-        
-        <select class="form-select-sm py-2 mb-3 fs-6 mx-3" id="gender" required>
+
+        <select class="form-select mb-3 fs-6 selectStyle" id="gender" required>
           <option selected disabled>
             Gender
           </option>
-          <option value="male">
-          Male
-          </option>
-          <option value="Female">
-          Female
-          </option>
+          <option value="male">Male</option>
+          <option value="Female">Female</option>
         </select>
-        
-        <div className="form-label-group px-3">
+
+        <div className="form-label-group">
           <input
             type="date"
             id="dob"
@@ -86,8 +82,8 @@ const Register = () => {
           />
           <label htmlFor="dob">Date of Birth</label>
         </div>
-        
-        <div className="form-label-group px-3">
+
+        <div className="form-label-group">
           <input
             type="tel"
             id="phone"
@@ -99,22 +95,18 @@ const Register = () => {
           <label htmlFor="phone">Phone No.</label>
         </div>
 
-
-        <div className="form-label-group px-3">
+        <div className="form-label-group">
           <input
             type="email"
             id="email"
             className="form-control"
             placeholder="Email ID"
             required
-            
           />
           <label htmlFor="email">Email ID</label>
         </div>
 
-
-
-        <div className="form-label-group px-3">
+        <div className="form-label-group">
           <input
             type="password"
             id="password"
@@ -129,9 +121,9 @@ const Register = () => {
           className="form-group btn btn-outline-secondary sign-btn m-2"
           id="signin-btn"
         >
-          <Link to="/registration_details" className="form-submit fs-4 px-5">
-            Submit
-          </Link>
+          <NavLink to="/registration_details" className="form-submit fs-4 px-5">
+            Register
+          </NavLink>
         </div>
       </form>
     </div>

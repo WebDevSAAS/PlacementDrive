@@ -1,4 +1,11 @@
-#registration_container{
-    margin-top: 10vh; 
-    height: 700px;
+#registration_container {
+  margin-top: 13.5vh;
+  min-height: 700px;
+}
+
+.selectStyle {
+  border-radius: 25px;
+  height: 48px;
+  padding-left: 10px;
+  text-indent: 12px;
 }
