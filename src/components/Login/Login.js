@@ -1,43 +1,56 @@
 import React from "react";
 import "./Login.css";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div class="container-fluid col-md-6 col-lg-4 login-form">
-      <form class="form-signin">
-        <h3 class="mb-2">Login</h3>
-        <div class="form-label-group">
+    <div className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form p-4">
+      <form className="form-signin">
+        <h3 className="mb-5 pt-1 fs-2 ">
+          Placement Management
+          <br /> System.
+        </h3>
+        <div className="form-label-group px-3">
           <input
             type="email"
             id="inputEmail"
-            class="form-control"
+            className="form-control"
             placeholder="Email address"
             required
-            autofocus
+            autoFocus
           />
-          <label for="inputEmail">Email address</label>
+          <label htmlFor="inputEmail">Email ID</label>
         </div>
-
-        <div class="form-label-group">
+        <div className="form-label-group px-3">
           <input
             type="password"
             id="inputPassword"
-            class="form-control"
+            className="form-control"
             placeholder="Password"
             required
           />
-          <label for="inputPassword">Password</label>
+          <label htmlFor="inputPassword">Password</label>
         </div>
-
-        <div class="text-center">
-          <a class="small" href="#">
+        <div className="text-center mb-3">
+          <Link className="small" to="/forgot_password">
             Forgot password?
-          </a>
+          </Link>
         </div>
-        <div class="form-group btn btn-outline-secondary sign-btn">
-          <a href="#" class="form-submit">
+        <div
+          className="form-group btn btn-outline-secondary sign-btn m-2"
+          id="signin-btn"
+        >
+          <Link to="/sign_in" className="form-submit fs-4 px-5">
             Sign In
-          </a>
+          </Link>
+        </div>
+        <div
+          className="form-group btn btn-outline-secondary sign-btn m-2"
+          id="signin-btn"
+        >
+          <Link to="/register" className="form-submit fs-4 px-5">
+            Register
+          </Link>
         </div>
       </form>
     </div>
