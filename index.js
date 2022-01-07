@@ -36,14 +36,24 @@ db.query('SELECT * FROM student;', (error, results, fields) => {
 // dummy route
 // root-route for server
 app.get('/',(req,res)=>{
-    if (req.session.userid) {
-        console.log(req.session)
-        res.send("Welcome User <a href=\'/logout'>click to logout</a>")
-    } else {
-        req.session.userid = new Date()
-        res.send('who are you man ?');
+    try {
+        db.query('SELECT * FROM student;', (error, results, fields) => {
+            if (error) throw error
+            console.log(fields, results);
+            res.send(results)
+        })
+    } catch (error) {
+        console.log(error);
+        res.send(error);
     }
-    console.log(req.session)
+    // if (req.session.userid) {
+    //     console.log(req.session)
+    //     // res.send("Welcome User <a href=\'/logout'>click to logout</a>")
+    // } else {
+    //     req.session.userid = new Date()
+    //     res.send('server this side');
+    // }
+    // console.log(req.session)
 });
 
 // post route for login ( expects json data)
@@ -82,7 +92,7 @@ app.post('/login', (req, res) => {
                     status: "success",
                     message: "Log in success !",
                     isLogged: true,
-                    keys: fields,
+                    // keys: fields,
                     profile: results[0],
                 })
             }
@@ -133,7 +143,7 @@ app.post('/register', (req, res) => {
       }
       // usn doesn't exists, create one
       else {
-        db.query("INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ;", [k.usn, k.first_name, k.last_name, k.branch, k.gender, k.dob, k.email, k.phone, k.password], (error, results, fields) => {
+        db.query("INSERT INTO student VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ;", [k.usn, k.first_name, k.last_name, k.branch, k.gender, k.dob, k.email, k.phone, k.password], (error, results, fields) => {
           if (error) {
             throw error
             res.json({ 
