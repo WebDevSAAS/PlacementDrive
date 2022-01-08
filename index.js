@@ -1,6 +1,7 @@
 const express =require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser")
+var cors = require('cors')
 const sessions = require('express-session')
 const db = require('./src/config/database.config.js')
 // creating of express app
@@ -15,6 +16,11 @@ app.use(sessions({
     saveUninitialized:true,
     cookie: { maxAge: oneDay },
     resave: false
+}));
+
+// enabling CROS
+app.use(cors({
+  credentials: true,
 }));
 
 // use body parser to decode query params and json body.
