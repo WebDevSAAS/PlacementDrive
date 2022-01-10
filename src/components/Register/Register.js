@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import "./Register.css";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import DataService from "../../Services/service";
 
-var responseData;
+// var responseData;
 
 function hash(message) {
   var forge = require("node-forge");
@@ -43,34 +43,6 @@ async function login(userid, password) {
   });
 }
 
-// funct to register, returns profile and status flags if success else error flags according to spec
-async function signup(
-  usn,
-  fn,
-  ln,
-  branch,
-  gender,
-  dob,
-  email,
-  phone,
-  password
-) {
-  password = hash(password); // get hash
-  postData("http://localhost:8000/register", {
-    usn,
-    first_name: fn,
-    last_name: ln,
-    branch,
-    gender,
-    dob,
-    email,
-    phone,
-    password,
-  }).then((data) => {
-    return data;
-  });
-}
-
 // funct to check logged in state, returns profile data if logged in else not logged according to soec
 async function status() {
   const status = await fetch("http://localhost:8000/status");
@@ -83,169 +55,262 @@ async function logout() {
   return status.json();
 }
 
-const storeData = (usn, fn, ln, branch, gender, dob, mail, pno, pswd) => {
-  responseData = signup(usn, fn, ln, branch, gender, dob, mail, pno, pswd);
-};
+// const storeData = (usn, fn, ln, branch, gender, dob, mail, pno, pswd) => {
+//   responseData = signup(usn, fn, ln, branch, gender, dob, mail, pno, pswd);
+// };
 
-const Register = () => {
-  const [usn, setUsn] = useState("");
-  const [fn, setFn] = useState("");
-  const [ln, setLn] = useState("");
-  const [branch, setBranch] = useState("");
-  const [gender, setGender] = useState("");
-  const [dob, setDob] = useState("");
-  const [mail, setMail] = useState("");
-  const [pno, setPno] = useState("");
-  const [pswd, setPswd] = useState("");
-  return (
-    <div
-      className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form p-4"
-      id="registration_container"
-    >
-      <form className="form-signin">
-        <h3 className="mb-2 fs-3 text-center">Create New Account</h3>
+export default class Register extends Component {
+  constructor(props) {
+    super(props);
+    this.onChangeUsn = this.onChangeUsn.bind(this);
+    this.onChangeFnm = this.onChangeFnm.bind(this);
+    this.onChangeLnm = this.onChangeLnm.bind(this);
+    this.onChangeBranch = this.onChangeBranch.bind(this);
+    this.onChangeGender = this.onChangeGender.bind(this);
+    this.onChangeDob = this.onChangeDob.bind(this);
+    this.onChangeMail = this.onChangeMail.bind(this);
+    this.onChangePno = this.onChangePno.bind(this);
+    this.onChangePswd = this.onChangePswd.bind(this);
+    this.saveData = this.saveData.bind(this);
 
-        <div className="form-label-group">
-          <input
-            type="text"
-            id="usn"
-            className="form-control"
-            placeholder="University Serial Number (USN)"
-            onInput={(e) => setUsn(e.target.value)}
+    this.state = {
+      usn: null,
+      first_name: "",
+      last_name: "",
+      branch: "",
+      gender: "",
+      dob: "",
+      email: "",
+      phone: "",
+      password: "",
+    };
+  }
+
+  onChangeUsn(e) {
+    this.setState({
+      usn: e.target.value,
+    });
+  }
+  onChangeFnm(e) {
+    this.setState({
+      first_name: e.target.value,
+    });
+  }
+  onChangeLnm(e) {
+    this.setState({
+      last_name: e.target.value,
+    });
+  }
+  onChangeBranch(e) {
+    this.setState({
+      branch: e.target.value,
+    });
+  }
+  onChangeGender(e) {
+    this.setState({
+      gender: e.target.value,
+    });
+  }
+  onChangeDob(e) {
+    this.setState({
+      dob: e.target.value,
+    });
+  }
+  onChangeMail(e) {
+    this.setState({
+      email: e.target.value,
+    });
+  }
+  onChangePno(e) {
+    this.setState({
+      phone: e.target.value,
+    });
+  }
+
+  onChangePswd(e) {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+
+  // funct to register, returns profile and status flags if success else error flags according to spec
+  saveData() {
+    var data = {
+      usn: this.state.usn,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      branch: this.state.branch,
+      gender: this.state.gender,
+      dob: this.state.dob,
+      email: this.state.email,
+      phone: this.state.phone,
+      password: this.state.password,
+    };
+    console.log(data);
+    DataService.creates(data)
+      .then((response) => {
+        this.setState({
+          usn: response.data.usn,
+          first_name: response.data.first_name,
+          last_name: response.data.last_name,
+          branch: response.data.branch,
+          gender: response.data.gender,
+          dob: response.data.dob,
+          email: response.data.email,
+          phone: response.data.phone,
+          password: response.data.password,
+        });
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  render() {
+    return (
+      <div
+        className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form p-4"
+        id="registration_container"
+      >
+        <form className="form-signin">
+          <h3 className="mb-2 fs-3 text-center">Create New Account</h3>
+
+          <div className="form-label-group">
+            <input
+              type="text"
+              id="usn"
+              className="form-control"
+              placeholder="University Serial Number (USN)"
+              onChange={this.onChangeUsn}
+              required
+              autoFocus
+            />
+            <label htmlFor="usn">University Serial Number (USN)</label>
+          </div>
+          <div className="form-label-group">
+            <input
+              type="text"
+              id="first_name"
+              className="form-control"
+              placeholder="First Name"
+              onChange={this.onChangeFnm}
+              required
+            />
+            <label htmlFor="first_name">First Name</label>
+          </div>
+          <div className="form-label-group">
+            <input
+              type="text"
+              id="last_name"
+              className="form-control"
+              placeholder="Last Name"
+              onChange={this.onChangeLnm}
+            />
+            <label htmlFor="last_name">Last Name</label>
+          </div>
+
+          <select
+            class="form-select mb-3 fs-6 selectStyle"
+            id="branch"
             required
-            autoFocus
-          />
-          <label htmlFor="usn">University Serial Number (USN)</label>
-        </div>
-        <div className="form-label-group">
-          <input
-            type="text"
-            id="first_name"
-            className="form-control"
-            placeholder="First Name"
-            onInput={(e) => setFn(e.target.value)}
-            required
-          />
-          <label htmlFor="first_name">First Name</label>
-        </div>
-        <div className="form-label-group">
-          <input
-            type="text"
-            id="last_name"
-            className="form-control"
-            placeholder="Last Name"
-            onInput={(e) => setLn(e.target.value)}
-          />
-          <label htmlFor="last_name">Last Name</label>
-        </div>
-
-        <select class="form-select mb-3 fs-6 selectStyle" id="branch" required>
-          <option selected disabled>
-            Select Your Branch
-          </option>
-          <option value="CSE" onInput={(e) => setBranch(e.target.value)}>
-            CSE - Computer Science and Engineering
-          </option>
-          <option value="ISE" onInput={(e) => setBranch(e.target.value)}>
-            ISE - Information Science and Engineering
-          </option>
-          <option value="ECE" onInput={(e) => setBranch(e.target.value)}>
-            ECE - Electronics and Communication Engineering
-          </option>
-          <option value="EEE" onInput={(e) => setBranch(e.target.value)}>
-            EEE - Electrical and Electronics Engineering
-          </option>
-          <option value="EIE" onInput={(e) => setBranch(e.target.value)}>
-            EIE - Electronics & Instrumentation Engineering
-          </option>
-          <option value="MECH" onInput={(e) => setBranch(e.target.value)}>
-            MECH - Mechanical Engineering
-          </option>
-          <option value="CIVIL" onInput={(e) => setBranch(e.target.value)}>
-            CIV - Civil Engineering
-          </option>
-          <option value="AI&ML" onInput={(e) => setBranch(e.target.value)}>
-            AI&ML - Artificial intelligence & Machine Learning{" "}
-          </option>
-        </select>
-
-        <select class="form-select mb-3 fs-6 selectStyle" id="gender" required>
-          <option selected disabled>
-            Gender
-          </option>
-          <option value="male" onInput={(e) => setGender(e.target.value)}>
-            Male
-          </option>
-          <option value="Female" onInput={(e) => setGender(e.target.value)}>
-            Female
-          </option>
-        </select>
-
-        <div className="form-label-group">
-          <input
-            type="date"
-            id="dob"
-            className="form-control"
-            placeholder="Date of Birth"
-            onInput={(e) => setDob(e.target.value)}
-            required
-          />
-          <label htmlFor="dob">Date of Birth</label>
-        </div>
-
-        <div className="form-label-group">
-          <input
-            type="tel"
-            id="phone"
-            className="form-control"
-            placeholder="Phone No."
-            onInput={(e) => setPno(e.target.value)}
-            pattern="^[6-9]\d{9}"
-            required
-          />
-          <label htmlFor="phone">Phone No.</label>
-        </div>
-
-        <div className="form-label-group">
-          <input
-            type="email"
-            id="email"
-            className="form-control"
-            placeholder="Email ID"
-            onInput={(e) => setMail(e.target.value)}
-            required
-          />
-          <label htmlFor="email">Email ID</label>
-        </div>
-
-        <div className="form-label-group">
-          <input
-            type="password"
-            id="password"
-            className="form-control"
-            placeholder="Password"
-            onInput={(e) => setPswd(e.target.value)}
-            required
-          />
-          <label htmlFor="password">Password</label>
-        </div>
-
-        <div
-          className="form-group btn btn-outline-secondary sign-btn m-2"
-          id="signin-btn"
-        >
-          <button
-            onClick={() =>
-              storeData(usn, fn, ln, branch, gender, dob, mail, pno, pswd)
-            }
-            className="form-submit fs-4 px-5"
+            onChange={this.onChangeBranch}
           >
-            Register
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-};
+            <option selected disabled>
+              Select Your Branch
+            </option>
+            <option value="CSE">CSE - Computer Science and Engineering</option>
+            <option value="ISE">
+              ISE - Information Science and Engineering
+            </option>
+            <option value="ECE">
+              ECE - Electronics and Communication Engineering
+            </option>
+            <option value="EEE">
+              EEE - Electrical and Electronics Engineering
+            </option>
+            <option value="EIE">
+              EIE - Electronics & Instrumentation Engineering
+            </option>
+            <option value="MECH">MECH - Mechanical Engineering</option>
+            <option value="CIVIL">CIV - Civil Engineering</option>
+            <option value="AI&ML">
+              AI&ML - Artificial intelligence & Machine Learning{" "}
+            </option>
+          </select>
 
-export default Register;
+          <select
+            class="form-select mb-3 fs-6 selectStyle"
+            id="gender"
+            required
+            onChange={this.onChangeGender}
+          >
+            <option value="Select" selected disabled>
+              Gender
+            </option>
+            <option value="male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+
+          <div className="form-label-group">
+            <input
+              type="date"
+              id="dob"
+              className="form-control"
+              placeholder="Date of Birth"
+              onChange={this.onChangeDob}
+              required
+            />
+            <label htmlFor="dob">Date of Birth</label>
+          </div>
+
+          <div className="form-label-group">
+            <input
+              type="tel"
+              id="phone"
+              className="form-control"
+              placeholder="Phone No."
+              onChange={this.onChangePno}
+              pattern="^[6-9]\d{9}"
+              required
+            />
+            <label htmlFor="phone">Phone No.</label>
+          </div>
+
+          <div className="form-label-group">
+            <input
+              type="email"
+              id="email"
+              className="form-control"
+              placeholder="Email ID"
+              onChange={this.onChangeMail}
+              required
+            />
+            <label htmlFor="email">Email ID</label>
+          </div>
+
+          <div className="form-label-group">
+            <input
+              type="password"
+              id="password"
+              className="form-control"
+              placeholder="Password"
+              onChange={this.onChangePswd}
+              required
+            />
+            <label htmlFor="password">Password</label>
+          </div>
+
+          <div
+            className="form-group btn btn-outline-secondary sign-btn m-2"
+            id="signin-btn"
+          >
+            <button onClick={this.saveData} className="form-submit fs-4 px-5">
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
