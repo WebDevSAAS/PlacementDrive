@@ -1,11 +1,11 @@
+import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import StudentDetailsForm from "./components/StudentDetailsForm/StudentDetailsForm";
 import Footer from "./components/Footer/Footer";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
-import "./App.css";
-import Register from "./components/Register/Register";
 
 class App extends React.Component {
   constructor(props) {
@@ -32,10 +32,14 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <Navbar />
-          {/* <Login /> */}
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" exact element={<Register />} />
+            <Route
+              path="/signed_in/student"
+              exact
+              element={<StudentDetailsForm />}
+            />
           </Routes>
           <Footer />
         </div>
@@ -45,3 +49,5 @@ class App extends React.Component {
   }
 }
 export default App;
+
+

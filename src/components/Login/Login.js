@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form text-center p-4">
+    <div
+      className="container-fluid col-sm-8 col-md-6 col-lg-5 text-center p-4"
+      id="login-form"
+    >
       <form className="form-signin">
         <h3 className="mb-5 pt-1 fs-2">
           Placement Management
@@ -40,7 +43,7 @@ const Login = () => {
           className="form-group btn btn-outline-secondary sign-btn m-2"
           id="signin-btn"
         >
-          <Link to="/sign_in" className="form-submit fs-4 px-5">
+          <Link to="/signed_in/student" className="form-submit fs-4 px-5">
             Sign In
           </Link>
         </div>

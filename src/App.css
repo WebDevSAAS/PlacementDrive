@@ -10,36 +10,11 @@ html {
   margin: 0;
 }
 
-.app {
-  width: 960px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  background-color: transparent;
-  margin-bottom: 20px;
-}
-
-nav ul li {
-  padding: 20px;
-}
-
-nav ul li a {
+.App {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), transparent),
+    url("components/Login/images/bg_image4.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
-  text-decoration: none;
-}
-
-.current {
-  border-bottom: 4px solid white;
-}
-
-h1 {
-  margin-bottom: 20px;
-}
-
-p {
-  margin-bottom: 15px;
 }

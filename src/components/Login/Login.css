@@ -6,15 +6,6 @@ h3 {
   line-height: 1.5;
 }
 
-body {
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.8), transparent),
-    url("./images/bg_image4.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: white;
-}
 :root {
   --input-padding-x: 1.5rem;
   --input-padding-y: 0.75rem;
@@ -81,11 +72,13 @@ body {
   color: #777;
 }
 
-a, Link {
+a,
+Link {
   color: white;
   text-decoration: none;
 }
-a:hover, Link:hover {
+a:hover,
+Link:hover {
   color: white;
 }
 
@@ -94,7 +87,7 @@ a:hover, Link:hover {
   font-weight: bold;
   background-color: white;
 }
-.form-submit:hover{
+.form-submit:hover {
   color: #212529;
 }
 
@@ -103,7 +96,7 @@ a:hover, Link:hover {
   font-weight: bold;
 } */
 
-.login-form {
+#login-form {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -113,5 +106,4 @@ a:hover, Link:hover {
 
   background-color: #212529ad;
   border-radius: 1.5rem;
-
 }

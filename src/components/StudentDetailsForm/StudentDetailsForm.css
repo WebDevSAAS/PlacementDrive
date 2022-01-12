@@ -1,6 +1,5 @@
-#registration_container {
+#student-details-form {
   margin-top: 9vh;
-  min-height: 700px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -11,14 +10,12 @@
   background-color: #212529ad;
   border-radius: 1.5rem;
 }
-
-.selectStyle {
-  border-radius: 25px;
-  height: 48px;
-  padding-left: 10px;
-  text-indent: 12px;
+#submit-btn {
+  color: white;
+  text-decoration: none;
 }
-
-.form-submit:hover {
+#submit-btn:hover {
   color: #212529;
+  font-weight: bold;
+  background-color: white;
 }
