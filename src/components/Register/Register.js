@@ -170,7 +170,7 @@ export default class Register extends Component {
   render() {
     return (
       <div
-        className="container-fluid col-sm-8 col-md-6 col-lg-5 login-form p-4"
+        className="container-fluid col-sm-8 col-md-6 col-lg-5 p-4"
         id="registration_container"
       >
         <form className="form-signin">
@@ -235,7 +235,7 @@ export default class Register extends Component {
             <option value="MECH">MECH - Mechanical Engineering</option>
             <option value="CIVIL">CIV - Civil Engineering</option>
             <option value="AI&ML">
-              AI&ML - Artificial intelligence & Machine Learning{" "}
+              AI&ML - Artificial intelligence & Machine Learning
             </option>
           </select>
 
@@ -305,7 +305,7 @@ export default class Register extends Component {
             className="form-group btn btn-outline-secondary sign-btn m-2"
             id="signin-btn"
           >
-            <button onClick={this.saveData} className="form-submit fs-4 px-5">
+            <button className="form-submit fs-4 px-5" onClick={this.saveData}>
               Register
             </button>
           </div>
