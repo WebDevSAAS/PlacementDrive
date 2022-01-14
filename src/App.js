@@ -1,6 +1,6 @@
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import Login from "./components/Login/Login";
+import { Login } from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import StudentDetailsForm from "./components/StudentDetailsForm/StudentDetailsForm";
 import Footer from "./components/Footer/Footer";
@@ -49,5 +49,3 @@ class App extends React.Component {
   }
 }
 export default App;
-
-
