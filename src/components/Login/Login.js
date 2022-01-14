@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 
+var usnData;
+
 const Login = () => {
+  const sendUSN = (e) => {
+    console.log(e.target.dataset.mssg);
+    usnData = e.target.dataset.mssg;
+  };
+
+  const [usn, onChangeUsn] = useState("USN");
+
+  const fetchUSN = (e) => {
+    onChangeUsn(e.target.value);
+  };
+
   return (
     <div
       className="container-fluid col-sm-8 col-md-6 col-lg-5 text-center p-4"
@@ -15,14 +28,15 @@ const Login = () => {
         </h3>
         <div className="form-label-group px-3">
           <input
-            type="email"
-            id="inputEmail"
+            type="text"
+            id="inputUsn"
             className="form-control"
-            placeholder="Email address"
+            placeholder="USN"
+            onChange={fetchUSN}
             required
             autoFocus
           />
-          <label htmlFor="inputEmail">Email ID</label>
+          <label htmlFor="inputUSN">USN</label>
         </div>
         <div className="form-label-group px-3">
           <input
@@ -43,7 +57,12 @@ const Login = () => {
           className="form-group btn btn-outline-secondary sign-btn m-2"
           id="signin-btn"
         >
-          <Link to="/signed_in/student" className="form-submit fs-4 px-5">
+          <Link
+            className="form-submit fs-4 px-5"
+            data-mssg={usn}
+            onClick={sendUSN}
+            to="/signed_in/student"
+          >
             Sign In
           </Link>
         </div>
@@ -60,4 +79,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export { Login, usnData };
