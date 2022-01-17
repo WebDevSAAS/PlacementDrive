@@ -30,9 +30,10 @@ module.exports = function (app, db) {
             })
         }
         // check if values aren't null
-        else if (k.usn && k.password) {
+        else if (k.usn && k.password && k.accountType) {
             // Fetch fields matching Usn and pass
-            db.query("SELECT * FROM student WHERE usn = ? AND password = ?;", [k.usn, k.password], (error, results, fields) => {
+            let q = `SELECT * FROM  + ${k.accountType === "admin" ? "users" : "student"} WHERE usn = ? AND password = ?;`
+            db.query(q, [k.usn, k.password], (error, results, fields) => {
                 if (error) {
                     res.json({
                         status: "error",
@@ -46,6 +47,7 @@ module.exports = function (app, db) {
                     // log in by saving to session
                     req.session.userid = k.usn
                     req.session.profile = results[0]
+                    req.session.accountType = k.accountType === "admin" ? "admin" : "student"
                     delete req.session.profile.password // Hide password from response
                     req.session.lastUpdated = new Date()
                     //req.session.keys = fields;            // Not required
@@ -56,6 +58,7 @@ module.exports = function (app, db) {
                         lastUpdated: new Date(),
                         isLatest: true,
                         isLogged: true,
+                        isAdmin: k.accountType === "admin",
                         // keys: fields,
                         profile: req.session.profile,
                     })
@@ -171,7 +174,8 @@ module.exports = function (app, db) {
     app.get("/status", (req, res) => {
         // already logged in, redirect user to their profile
         if (req.session && req.session.userid) {
-            db.query("SELECT * FROM student WHERE usn = ? ;", [req.session.userid], (error, results, fields) => {
+            let q = `SELECT * FROM  + ${req.session.accountType === "admin" ? "users" : "student"} WHERE usn = ? ;`
+            db.query(q, [req.session.userid], (error, results, fields) => {
                 if (error) {
                     res.json({
                         status: "success",
@@ -179,6 +183,7 @@ module.exports = function (app, db) {
                         isLogged: true,
                         lastUpdated: req.session.lastUpdated,
                         isLatest: false,
+                        isAdmin: k.accountType === "admin",
                         errorLatest: error,
                         // keys: req.session.keys,
                         profile: req.session.profile,
@@ -193,6 +198,7 @@ module.exports = function (app, db) {
                         lastUpdated: new Date(),
                         isLatest: true,
                         isLogged: true,
+                        isAdmin: k.accountType === "admin",
                         // keys: req.session.keys,
                         profile: results,
                     })
