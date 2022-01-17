@@ -32,7 +32,7 @@ module.exports = function (app, db) {
         // check if values aren't null
         else if (k.usn && k.password && k.accountType) {
             // Fetch fields matching Usn and pass
-            let q = `SELECT * FROM  + ${k.accountType === "admin" ? "users" : "student"} WHERE usn = ? AND password = ?;`
+            let q = `SELECT * FROM ${k.accountType === "admin" ? "users" : "student"} WHERE usn = ? AND password = ?;`
             db.query(q, [k.usn, k.password], (error, results, fields) => {
                 if (error) {
                     res.json({
@@ -174,7 +174,7 @@ module.exports = function (app, db) {
     app.get("/status", (req, res) => {
         // already logged in, redirect user to their profile
         if (req.session && req.session.userid) {
-            let q = `SELECT * FROM  + ${req.session.accountType === "admin" ? "users" : "student"} WHERE usn = ? ;`
+            let q = `SELECT * FROM ${req.session.accountType === "admin" ? "users" : "student"} WHERE usn = ? ;`
             db.query(q, [req.session.userid], (error, results, fields) => {
                 if (error) {
                     res.json({
