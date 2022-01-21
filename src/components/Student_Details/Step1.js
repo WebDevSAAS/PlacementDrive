@@ -128,6 +128,7 @@ export default function Step1({ formData, setFormData }) {
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
+            on
             value={formData.father_name}
             onChange={(event) =>
               setFormData({ ...formData, father_name: event.target.value })

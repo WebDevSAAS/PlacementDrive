@@ -2,9 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { SignIn } from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import StudentDetails from "./components/StudentDetails";
+import StudentDetails from "./components/Student_Details/StudentDetails";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
+import StudentDashboard from "./components/Student_Dashboard/StudentDashboard";
+import StudentDashboardEvents from "./components/Student_Dashboard/StudentDashboardEvents"
 
 function App() {
   return (
@@ -16,9 +18,20 @@ function App() {
           <Route path="/signin" exact element={<SignIn />} />
           <Route path="/register" exact element={<SignUp />} />
           <Route path="/signed_in/student" exact element={<StudentDetails />} />
+          
+          {/* Student Dashboard */}
+          {/* <Route path="/signed_in/student_dashboard" exact element={<StudentDashboard />} /> */}
+          {/* <Route path="/signed_in/student_dashboard/notifications" exact element={<StudentDashboardNotifications />} /> */}
+          {/* <Route path="/signed_in/student_dashboard/profile" exact element={<StudentDashboardProfile />} /> */}
+          {/* <Route path="/signed_in/student_dashboard/records" exact element={<StudentDashboardRecords />} /> */}
+          {/* <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} /> */}
+          {/* <Route path="/signed_in/student_dashboard/analytics" exact element={<StudentDashboardAnalytics />} /> */}
+          {/* <Route path="/signed_out" exact element={<SignOut />} /> */}
+
         </Routes>
         <Footer />
       </div>
+      
     </Router>
   );
 }
