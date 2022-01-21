@@ -87,6 +87,7 @@ export default function Footer() {
           institution to nourish and produce the best of engineering talents in
           the country. RNSIT is one of the best and top accredited engineering
           colleges in Bengaluru.
+          
         </Typography>
         <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
 

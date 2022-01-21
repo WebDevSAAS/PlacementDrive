@@ -1,5 +1,5 @@
 import * as React from "react";
-import DataService from "./service";
+import DataService from "../service";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -21,7 +21,7 @@ import Step6 from "./Step6";
 import Step7 from "./Step7";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { usnData } from "./SignIn";
+import { usnData } from "../SignIn";
 
 function Copyright() {
   return (
