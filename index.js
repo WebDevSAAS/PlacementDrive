@@ -1,9 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser")
-var cors = require('cors')
 const sessions = require('express-session')
 const db = require("./src/config/database.config.js")
+const db_stu = require("./src/config/database.config.js")
 // creating of express app
 const app = express()
 
@@ -47,9 +47,14 @@ db.query("SELECT * FROM student;", (error, results, fields) => {
     if (error) throw error
     console.log(results)
 })
+db_stu.query("SELECT * FROM student;", (error, results, fields) => {
+    if (error) throw error
+    console.log(results)
+})
 
 // Require routes
-require("./src/routes")(app, db)
+require("./src/Routers/routes")(app, db)
+require("./src/Routers/student_getall")(app, db_stu)
 
 // server listening
 app.listen(port, () => {
