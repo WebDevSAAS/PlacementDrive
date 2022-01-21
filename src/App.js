@@ -5,8 +5,12 @@ import SignUp from "./components/SignUp";
 import StudentDetails from "./components/Student_Details/StudentDetails";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
+import { AdminSignIn } from "./components/Admin/AdminSignIn"
 import StudentDashboard from "./components/Student_Dashboard/StudentDashboard";
 import StudentDashboardEvents from "./components/Student_Dashboard/StudentDashboardEvents"
+
+
+
 
 function App() {
   return (
@@ -15,6 +19,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" exact element={<Home />} />
+          <Route path="/admin/signin" exact element={<AdminSignIn />} />
           <Route path="/signin" exact element={<SignIn />} />
           <Route path="/register" exact element={<SignUp />} />
           <Route path="/signed_in/student" exact element={<StudentDetails />} />

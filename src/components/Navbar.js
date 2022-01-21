@@ -7,16 +7,13 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Logo from "../images/rnsit-logo.png";
-
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from '@mui/icons-material/Login';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import CallIcon from '@mui/icons-material/Call';
 import InfoIcon from '@mui/icons-material/Info';
-
 import { styled, useTheme } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -24,8 +21,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+
+
 
 const drawerWidth = 240;
 
@@ -135,7 +132,7 @@ const Navbar = () => {
         </DrawerHeader>
 
         <Divider />
-        <List>
+        <List onClick={handleDrawerClose}>
         <NavLink
           to="#"
           style={{ textDecoration: "none", color: "inherit" }}
@@ -175,9 +172,9 @@ const Navbar = () => {
         </List>
 
         <Divider />
-        <List>
+        <List  onClick={handleDrawerClose}>
       <NavLink
-          to="#"
+          to="/admin/signin"
           style={{ textDecoration: "none", color: "inherit" }}
       >
         <ListItem button>
