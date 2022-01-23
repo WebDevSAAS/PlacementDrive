@@ -16,6 +16,8 @@ import MenuItem from "@mui/material/MenuItem";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Copyright(props) {
   return (
@@ -129,6 +131,8 @@ export default function SignUp() {
   };
 
   return (
+    <>      
+    <Navbar/>
     <Container component="main" maxWidth="sm" sx={{ minHeight: "90vh" }}>
       <CssBaseline />
       <Box
@@ -295,5 +299,7 @@ export default function SignUp() {
       </Box>
       <Copyright sx={{ mt: 5, mb: 10 }} />
     </Container>
+    <Footer/>
+    </>
   );
 }

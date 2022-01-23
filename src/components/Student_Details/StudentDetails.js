@@ -19,9 +19,13 @@ import Step4 from "./Step4";
 import Step5 from "./Step5";
 import Step6 from "./Step6";
 import Step7 from "./Step7";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { usnData } from "../SignIn";
+
+
+var usnData;
 
 function Copyright() {
   return (
@@ -143,6 +147,8 @@ export default function StudentDetails() {
   };
 
   return (
+    <>
+    <Navbar/>
     <Container
       component="main"
       maxWidth="lg"
@@ -211,5 +217,7 @@ export default function StudentDetails() {
       </Paper>
       <Copyright />
     </Container>
+    <Footer/>
+    </>
   );
 }
