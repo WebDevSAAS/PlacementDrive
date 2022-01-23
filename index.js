@@ -42,7 +42,9 @@ app.use(cookieParser())
 const port = process.env.PORT || 8000
 
 // Require routes
-require("./src/routes")(app, db)
+require("./src/router/signin")(app, db)
+require("./src/router/routes")(app, db)
+require("./src/router/routesAdmin")(app, db)
 
 //##################################### Test codes Starts ############################################
 // test database connection
