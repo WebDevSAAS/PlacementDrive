@@ -5,11 +5,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Divider from "@mui/material/Divider";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 
 
 export default function Home() {
   return (
+    <>
+    <Navbar/>
     <Box sx={{ minHeight: "90vh" }}>
       <Box sx={{minHeight: "60vh"}}></Box>
       <Box
@@ -57,5 +61,7 @@ export default function Home() {
       {/* <Divider sx={{ marginTop: 1, marginBottom: 1 }} /> */}
       </Box>
     </Box>
+    <Footer/>
+    </>
   );
 }
