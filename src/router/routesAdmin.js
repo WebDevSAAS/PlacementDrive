@@ -63,7 +63,7 @@ module.exports = function (app, db) {
     }
 
     // Get list of students with info
-    app.get("/getStudents", (req, res) => {
+    app.post("/getStudents", (req, res) => {
         try {
             let k = req.body
             /*Expected Params...
@@ -101,6 +101,11 @@ module.exports = function (app, db) {
                     console.log(q)
                     res.send(q)
                 }
+            } else {
+                res.send({
+                    status: "error",
+                    message: "403 unauthorised",
+                })
             }
         } catch (error) {
             console.log(error)
