@@ -4,9 +4,10 @@ const cookieParser = require("cookie-parser")
 const sessions = require('express-session')
 const db = require("./src/config/database.config.js")
 const db_stu = require("./src/config/database.config.js")
+
 // creating of express app
 const app = express()
-
+const email = require("./src/mailer") // wait few seconds before using email to make transporter ready...
 // creating 24 hours from milliseconds
 const oneDay = 1000 * 60 * 60 * 24
 
@@ -42,6 +43,12 @@ app.use(cookieParser())
 // port set-up
 const port = process.env.PORT || 8000
 
+// Require routes
+require("./src/router/signin")(app, db)
+require("./src/router/routes")(app, db)
+require("./src/router/routesAdmin")(app, db)
+
+//##################################### Test codes Starts ############################################
 // test database connection
 db.query("SELECT * FROM student;", (error, results, fields) => {
     if (error) throw error
@@ -55,6 +62,25 @@ db_stu.query("SELECT * FROM student;", (error, results, fields) => {
 // Require routes
 require("./src/Routers/routes")(app, db)
 require("./src/Routers/student_getall")(app, db_stu)
+
+// test email connection after waiting 2 seconds for first time after server starts
+setTimeout(() => {
+    email({
+        from: "Sender Name <sender@example.com>",
+        to: "Recipient <recipient@example.com>",
+        subject: "Nodemailer is unicode friendly ✔",
+        text: "Hello to myself!",
+        html: "<p><b>Hello</b> to myself!</p>",
+    })
+        .then(data => {
+            console.log(data)
+        })
+        .catch(e => {
+            console.log(e)
+        })
+}, 2000)
+
+//##################################### Test codes Ends ############################################
 
 // server listening
 app.listen(port, () => {
