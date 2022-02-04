@@ -7,6 +7,7 @@ create table student(
 	'dob' DATE NOT NULL,
 	'email' VARCHAR(100) NOT NULL,
 	'phone' VARCHAR(14) NOT NULL,
+	'dateModified' TIMESTAMP,
 	'password' VARCHAR(256) NOT NULL,
 	'father_name' VARCHAR(80) DEFAULT NULL,
 	'mother_name' VARCHAR(80) DEFAULT NULL,
