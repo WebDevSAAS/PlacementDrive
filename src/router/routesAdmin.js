@@ -27,18 +27,15 @@ module.exports = function (app, db) {
                 if (data.id.phone.length > 9) return { status: "success", sql: `SELECT * FROM student WHERE phone LIKE %${data.id.phone}% LIMIT ${data.rows} ;` }
             } else return { status: "error", message: "Bad ids" }
         } else if (data.keywords) {
+            let q = `SELECT * FROM student WHERE `
+            if (data.keywords.name) q += `CONCAT(first_name,' ', last_name) LIKE %${data.keywords.name}% `
+            if (data.keywords.dob) q += `dob LIKE %${data.keywords.dob}% `
+            if (data.keywords.branch) q += `branch LIKE %${data.keywords.branch}% `
+            if (data.keywords.gender) q += `gender LIKE %${data.keywords.gender}% `
+            q += ` ;`
             return {
                 status: "success",
-                sql:
-                    `SELECT * FROM student WHERE` + data.keywords.name.length
-                        ? ` CONCAT(first_name,' ', last_name) LIKE %${data.keywords.name}% `
-                        : `` + data.keywords.dob
-                        ? ` dob LIKE %${data.keywords.dob}% `
-                        : `` + data.keywords.branch
-                        ? ` branch LIKE %${data.keywords.branch}% `
-                        : `` + data.keywords.gender
-                        ? ` gender LIKE %${data.keywords.gender}% `
-                        : `` + `;`,
+                sql: q,
             }
         } else {
             if (!data.range) data.range = { from: 1, to: data.rows }

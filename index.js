@@ -3,7 +3,6 @@ const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser")
 const sessions = require('express-session')
 const db = require("./src/config/database.config.js")
-const db_stu = require("./src/config/database.config.js")
 
 // creating of express app
 const app = express()
@@ -47,6 +46,7 @@ const port = process.env.PORT || 8000
 require("./src/router/signin")(app, db)
 require("./src/router/routes")(app, db)
 require("./src/router/routesAdmin")(app, db)
+require("./src/router/actions")(app, db)
 
 //##################################### Test codes Starts ############################################
 // test database connection
@@ -54,15 +54,11 @@ db.query("SELECT * FROM student;", (error, results, fields) => {
     if (error) throw error
     console.log(results)
 })
-db_stu.query("SELECT * FROM student;", (error, results, fields) => {
-    if (error) throw error
-    console.log(results)
-})
 
-// Require routes
-require("./src/Routers/routes")(app, db)
-require("./src/Routers/student_getall")(app, db_stu)
+// Require routes NOT FOR PRODUCTION !!!!!!!!!
+require("./src/Routers/student_getall")(app, db)
 
+/*
 // test email connection after waiting 2 seconds for first time after server starts
 setTimeout(() => {
     email({
@@ -79,7 +75,7 @@ setTimeout(() => {
             console.log(e)
         })
 }, 2000)
-
+*/
 //##################################### Test codes Ends ############################################
 
 // server listening
