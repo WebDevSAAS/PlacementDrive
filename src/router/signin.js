@@ -19,8 +19,8 @@ module.exports = function (app, db) {
         else if (k.usn && k.password && k.accountType) {
             // Fetch fields matching Usn and pass
             let q = `SELECT * FROM ${req.session.accountType === "admin" ? "admins" : "student"} WHERE usn = ? ;`
-            if (req.session.accountType === "admin" ||  req.session.accountType === "mentor") let q = `SELECT * FROM admins WHERE usn = ?;`
-            else  let q = `SELECT * FROM students WHERE usn = ?;`
+            /*if (req.session.accountType === "admin" ||  req.session.accountType === "mentor") let q = `SELECT * FROM admins WHERE usn = ?;`
+            else  let q = `SELECT * FROM students WHERE usn = ?;`*/
             db.query(q, [k.usn, k.password], (error, results, fields) => {
                 if (error) {
                     res.json({
@@ -90,8 +90,8 @@ module.exports = function (app, db) {
         // already logged in, redirect user to their profile
         if (req.session && req.session.userid) {
             let q = `SELECT * FROM ${req.session.accountType === "admin" ? "admins" : "student"} WHERE usn = ? ;`
-            if (req.session.accountType === "admin" ||  req.session.accountType === "mentor") let q = `SELECT * FROM admins WHERE usn = ?;`
-            else  let q = `SELECT * FROM students WHERE usn = ?;`
+            /*if (req.session.accountType === "admin" ||  req.session.accountType === "mentor") let q = `SELECT * FROM admins WHERE usn = ?;`
+            else  let q = `SELECT * FROM students WHERE usn = ?;`*/
             db.query(q, [req.session.userid], (error, results, fields) => {
                 if (error) {
                     res.json({
