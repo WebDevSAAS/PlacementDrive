@@ -6,9 +6,11 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import { AdminSignIn } from "./components/Admin/AdminSignIn"
 import StudentDashboard from "./components/Student_Dashboard/StudentDashboard";
-import StudentDashboardEvents from "./components/Student_Dashboard/StudentDashboardEvents"
-import StudentDashboardProfile from "./components/Student_Dashboard/StudentDashboardProfile"
-
+import StudentDashboardEvents from "./components/Student_Dashboard/StudentDashboardEvents";
+import StudentDashboardProfile from "./components/Student_Dashboard/StudentDashboardProfile";
+import StudentDashboardNotifications from "./components/Student_Dashboard/StudentDashboardNotifications";
+import StudentDashboardRecords from "./components/Student_Dashboard/StudentDashboardRecords";
+import StudentDashboardAnalytics from "./components/Student_Dashboard/StudentDashboardAnalytics";
 
 
 
@@ -25,11 +27,11 @@ function App() {
           
           {/* Student Dashboard */}
           {/* <Route path="/signed_in/student_dashboard" exact element={<StudentDashboard />} /> */}
-          {/* <Route path="/signed_in/student_dashboard/notifications" exact element={<StudentDashboardNotifications />} /> */}
+          <Route path="/signed_in/student_dashboard/notifications" exact element={<StudentDashboardNotifications />} />
           <Route path="/signed_in/student_dashboard/profile" exact element={<StudentDashboardProfile />} />
-          {/* <Route path="/signed_in/student_dashboard/records" exact element={<StudentDashboardRecords />} /> */}
-          {/* <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} /> */}
-          {/* <Route path="/signed_in/student_dashboard/analytics" exact element={<StudentDashboardAnalytics />} /> */}
+          <Route path="/signed_in/student_dashboard/records" exact element={<StudentDashboardRecords />} />
+          <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} />
+          <Route path="/signed_in/student_dashboard/analytics" exact element={<StudentDashboardAnalytics />} />
           {/* <Route path="/signed_out" exact element={<SignOut />} /> */}
 
         </Routes>
