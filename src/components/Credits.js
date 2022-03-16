@@ -1,34 +1,22 @@
 import * as React from "react";
-// import CssBaseline from "@mui/material/CssBaseline";
+import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-// import Typography from "@mui/material/Typography";
-// import Container from "@mui/material/Container";
-// import Link from "@mui/material/Link";
-// import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
+import Divider from "@mui/material/Divider";
 import Navbar from "./Navbar";
-// import Footer from "./Footer";
-import DashboardGrid from "../components/Student_Dashboard/DashboardGrid";
-// import StudentDashboard from "../components/Student_Dashboard/StudentDashboard";
-import StudentNav from "../components/Student_Dashboard/StudentNav";
-// import Credits from "./Credits";
+import Footer from "./Footer";
 
 
 export default function Home() {
-  let isSignedIn= true;
   return (
-    <>
-    <Navbar/>
-    <Box sx={{ minHeight: "90vh" }}>
-      <Box sx={{minHeight: "60vh"}}>
-      {/* <DashboardGrid/> */}
-       {isSignedIn  ?  <StudentNav/> : <DashboardGrid/>}
-      {/* <StudentDashboard/> */}
-      </Box>
-      {/* <Credits/> */}
-      {/* <Box
+    <> 
+      
+      <Box
       component="footer"
       sx={{
-        minHeight: "30vh",
+        minHeight: "auto",
         py: 3,
         px: 2,
         mt: "auto",
@@ -66,10 +54,10 @@ export default function Home() {
           Aman Kumar, CSE 3<sup>rd</sup> semester <br/>
         </Typography>  
         <Divider sx={{ marginTop: 1 }} />
-      </Container> */}
+      </Container>
       {/* <Divider sx={{ marginTop: 1, marginBottom: 1 }} /> */}
-      {/* </Box> */}
-    </Box>
+      </Box>
+    
     {/* <Footer/> */}
     </>
   );
