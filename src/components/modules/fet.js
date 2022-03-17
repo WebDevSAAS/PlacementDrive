@@ -8,7 +8,7 @@ let fet = async (url, method, body) => {
     fetch(url, {
       method,
       mode: "cors",
-      credentials: "same-origin",
+      credentials: "include",
       body,
     })
       .then((data) => data.json())
