@@ -14,9 +14,14 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
+import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import EditIcon from "@mui/icons-material/Edit";
+import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button'
+
 import { mainListItems, secondaryListItems } from "./listItems";
 
 function Copyright(props) {
@@ -168,37 +173,1048 @@ function DashboardContentRecords() {
           <Toolbar />
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={12} lg={12}>
                 <Paper
                   sx={{
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 240,
+                    height: 140,
                   }}
-                ></Paper>
+                >
+                  <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <Grid item xs={11}>
+                      <Typography
+                        variant="h6"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        CLASS 10
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        86.5%
+                      </Typography>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Proof
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                    <RouterLink
+                     to="/signed_in/student_dashboard/records/class10"
+                     style={{ textDecoration: "none", color: "inherit" }}
+                     >
+                      <IconButton color="primary">
+                        <EditIcon />
+                      </IconButton>
+                    </RouterLink>
+                    </Grid>
+                  </Grid>
+                </Paper>
               </Grid>
-
-              <Grid item xs={12} md={4} lg={3}>
+              <Grid item xs={12} md={12} lg={12}>
                 <Paper
                   sx={{
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 240,
+                    height: 140,
                   }}
-                ></Paper>
+                >
+                  <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <Grid item xs={11}>
+                      <Typography
+                        variant="h6"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        CLASS 12
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        86.5%
+                      </Typography>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Proof
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                    <RouterLink
+                     to="/signed_in/student_dashboard/records/class12"
+                     style={{ textDecoration: "none", color: "inherit" }}
+                     >
+                      <IconButton color="primary">
+                        <EditIcon />
+                      </IconButton>
+                    </RouterLink>
+                    </Grid>
+                  </Grid>
+                </Paper>
               </Grid>
-
-              <Grid item xs={12}>
+              <Grid item xs={12} md={12} lg={12}>
                 <Paper
                   sx={{
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: "80vh",
+                    height: 280,
                   }}
-                ></Paper>
+                >
+                  <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <Grid item xs={11}>
+                      <Typography
+                        variant="h6"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1, mb: 1 }}
+                      >
+                        DIPLOMA
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Sem 1: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        sem 2: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        sem 3: --
+                      </Typography>
+                      <br></br>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Sem 4: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        sem 5: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        sem 6: --
+                      </Typography>
+                      <br></br>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                      <br></br>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                    <RouterLink
+                     to="/signed_in/student_dashboard/records/diploma"
+                     style={{ textDecoration: "none", color: "inherit" }}
+                     >
+                      <IconButton color="primary">
+                        <EditIcon />
+                      </IconButton>
+                    </RouterLink>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={12} lg={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 350,
+                  }}
+                >
+                  <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <Grid item xs={11}>
+                      <Typography
+                        variant="h6"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1, mb: 1 }}
+                      >
+                        GRADUATION (B.Tech / B.E.) -
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Sem 1: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        sem 2: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        sem 3: --
+                      </Typography>
+                      <br></br>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Sem 4: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        sem 5: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        sem 6: --
+                      </Typography>
+                      <br></br>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 10, mt: 1 }}
+                      >
+                        Sem 7: --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 16, mt: 1 }}
+                      >
+                        Sem 8: --
+                      </Typography>
+                      <br></br>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Sem 1 : --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        Sem 2 : --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        Sem 3 : --
+                      </Typography>
+                      <br></br>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Sem 4 : --
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 12, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                      <br></br>
+                      <br></br>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 10, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 16, mt: 1 }}
+                      >
+                        Pending Proof
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                    <RouterLink
+                     to="/signed_in/student_dashboard/records/graduation"
+                     style={{ textDecoration: "none", color: "inherit" }}
+                     >
+                      <IconButton color="primary">
+                        <EditIcon />
+                      </IconButton>
+                    </RouterLink>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={12} lg={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 100,
+                  }}
+                >
+                  <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <Grid item xs={11}>
+                      <Typography
+                        variant="h6"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        BACKLOGS
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Current Backlogs: 0
+                      </Typography>
+                      <Typography
+                        variant="h8"
+                        color="text.primary"
+                        sx={{ ml: 3, mt: 1 }}
+                      >
+                        Cleared Backlogs: 0
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                    <RouterLink
+                     to="/signed_in/student_dashboard/records/backlogs"
+                     style={{ textDecoration: "none", color: "inherit" }}
+                     >
+                      <IconButton color="primary">
+                        <EditIcon />
+                      </IconButton>
+                    </RouterLink>
+                    </Grid>
+                  </Grid>
+                </Paper>
+                <br></br>
+                <Grid item xs={12} md={12} lg={12}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 3000,
+                    }}
+                  >
+                    <Paper
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                        height: 90,
+                      }}
+                    >
+                      <Typography variant="h4" color="text.primary">
+                        Additional Records
+                      </Typography>
+                      <Typography variant="h9" color="text.primary">
+                        Additional records of student
+                      </Typography>
+                    </Paper>
+                    <br></br>
+                    <Grid
+                      container
+                      spacing={0}
+                      direction="column"
+                      alignItems="center"
+                      justify="center"
+                    >
+                      <Grid item xs={1}>
+                        <img src="https://images.unsplash.com/photo-1494959764136-6be9eb3c261e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="profilephoto" height={60} />
+                        <br></br>
+                        <input type= "file" />
+                      </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                        CLASS 10
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Name of the School
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Year of Passing
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                        CLASS 12
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Name of the School/College
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Year of Passing
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                        DIPLOMA
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Year of Passing
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                        GRADUATION
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Year of Passing
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                       GRADUATION PROJECT DETAILS
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Title
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Project Type
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="Select Type" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Company
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Duration in months
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Description
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                       GRADUATION INTERNSHIP DETAILS
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Title
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Company
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="Select Type" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Role
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Duration in months
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Description
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                        POST GRADUATION 
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Year of Passing
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                       POST GRADUATION PROJECT DETAILS
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Title
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Project Type
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="Select Type" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Company
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Duration in months
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Description
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    </Grid>
+                    <br></br><br></br>
+                    <Divider light={true} />
+                    <br></br>
+                    <Typography
+                        variant="h6"
+                        color="text.primary"
+                        align="center"
+                      >
+                       PERSONAL DETAILS
+                      </Typography>
+                      <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Parent's Mobile Number
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Permanent Address
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" label="Select Type" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Current Address
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        PAN Number
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Passport Number
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        DL Number
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Achievements
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Blood Group
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Resume
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <br></br>
+                    <input type="file" /> 
+                    </Grid>
+                    <Grid item xs={4}>
+
+                    </Grid>
+                    <Grid item xs={8}>
+                    <br></br>
+                    <Button variant="contained">Submit</Button>
+                    </Grid>
+                    </Grid>
+                  </Paper>
+                </Grid>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
