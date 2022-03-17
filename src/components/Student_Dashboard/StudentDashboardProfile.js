@@ -3,7 +3,9 @@ import * as React from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
+import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Button from '@mui/material/Button'
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
@@ -19,7 +21,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-
 
 function Copyright(props) {
   return (
@@ -126,7 +127,10 @@ function DashboardContentProfile() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard <Typography variant="p" color="#ffeb3b">Profile</Typography>
+              Dashboard{" "}
+              <Typography variant="p" color="#ffeb3b">
+                Profile
+              </Typography>
               {/*   color="#29b6f6"  */}
             </Typography>
             <IconButton color="inherit">
@@ -202,10 +206,197 @@ function DashboardContentProfile() {
                     minHeight: "80vh",
                   }}
                 >
-                    
-                
-
-
+                  <Typography variant="h4" color="text.primary" align="center">
+                    Profile
+                  </Typography>
+                  <br></br>
+                  <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        First Name :
+                        <br></br>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="Tushar"
+                        color="primary"
+                        focused 
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: 'center' }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        Last Name :
+                        <br></br>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="DMR"
+                        color="primary"
+                        focused 
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: 'center' }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        USN :
+                        <br></br><br></br>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="1RN20IS113"
+                        color="primary"
+                        focused 
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: 'center' }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        BRANCH :
+                        <br></br>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="ISE"
+                        color="primary"
+                        focused 
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: 'center' }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        Gender :
+                        <br></br>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="Male"
+                        color="primary"
+                        focused 
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: 'center' }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        Date of Birth :
+                        <br></br>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="01/09/2002"
+                        color="primary"
+                        focused 
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: 'center' }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        Phone :
+                        <br></br><br></br>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="7023678992"
+                        color="primary"
+                        focused 
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: 'center' }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        Email :
+                        <br></br>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="dmrtushar@gmail.com"
+                        color="primary"
+                        focused 
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: 'center' }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <Button variant="contained">Submit</Button>
+                    </Grid>
+                  </Grid>
                 </Paper>
               </Grid>
             </Grid>
