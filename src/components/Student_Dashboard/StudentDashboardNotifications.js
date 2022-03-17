@@ -124,7 +124,7 @@ function DashboardContentNotifications() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Dashboard <Typography variant="p" color="#ffeb3b">Notifications</Typography>
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="error">
