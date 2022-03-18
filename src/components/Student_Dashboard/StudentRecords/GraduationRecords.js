@@ -18,9 +18,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import TextField from "@mui/material/TextField";
-import Button from '@mui/material/Button'
+import Button from "@mui/material/Button";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Link as RouterLink } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 
 import { mainListItems, secondaryListItems } from "../listItems";
 
@@ -97,7 +101,20 @@ function StudentGraduationRecord() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [Specialization, Sset] = React.useState("");
+  const [Course, Cset] = React.useState("");
+  const [ScoreFrequency, Fset] = React.useState("");
 
+  const handleChange1 = (event) => {
+    Cset(event.target.value);
+    console.log(event.target.value);
+  };
+  const handleChange2 = (event) => {
+    Sset(event.target.value);
+  };
+  const handleChange3 = (event) => {
+    Fset(event.target.value);
+  };
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -182,23 +199,24 @@ function StudentGraduationRecord() {
                     height: 2600,
                   }}
                 >
-                <Paper
-                      sx={{
-                        p: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        height: 90,
-                      }}
-                    >
-                      <Typography variant="h4" color="text.primary">
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 90,
+                    }}
+                  >
+                    <Typography variant="h4" color="text.primary">
                       Graduation Records
-                      </Typography>
-                      <Typography variant="h9" color="text.primary">
-                      Note - File formats supported – JPG, PNG or PDF. Maximum file size – 200 KB
-                      </Typography>
-                    </Paper> 
-                    <br></br>
-                    <Grid
+                    </Typography>
+                    <Typography variant="h9" color="text.primary">
+                      Note - File formats supported – JPG, PNG or PDF. Maximum
+                      file size – 200 KB
+                    </Typography>
+                  </Paper>
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -215,7 +233,28 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                      <FormControl sx={{ width: 200 }}>
+                        <InputLabel id="demo-simple-select-label">
+                          Select
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={Course}
+                          onChange={handleChange1}
+                        >
+                          <MenuItem value={10}>B.E/B.Tech</MenuItem>
+                          <MenuItem value={20}>B.A</MenuItem>
+                          <MenuItem value={30}>B.Arch</MenuItem>
+                          <MenuItem value={40}>BBA/BBM/BMS</MenuItem>
+                          <MenuItem value={50}>B.E/B.Tech</MenuItem>
+                          <MenuItem value={60}>B.Com</MenuItem>
+                          <MenuItem value={70}>BHM</MenuItem>
+                          <MenuItem value={80}>B.Sc</MenuItem>
+                          <MenuItem value={90}>B.Sc Agriculture</MenuItem>
+                          <MenuItem value={100}>Others</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -228,7 +267,54 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Select Type" variant="standard" />
+                      <FormControl sx={{ width: 200 }}>
+                      <InputLabel id="demo-simple-select-label">
+                          Select
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={Specialization}
+                          onChange={handleChange2}
+                        >
+                          <MenuItem value={10}>Select Course</MenuItem>
+                          <MenuItem value={20}>Aerospace</MenuItem>
+                          <MenuItem value={30}>Agriculture</MenuItem>
+                          <MenuItem value={40}>Aviation</MenuItem>
+                          <MenuItem value={50}>Automobile</MenuItem>
+                          <MenuItem value={60}>
+                            Bio Chemistry/ Bio-Technology
+                          </MenuItem>
+                          <MenuItem value={70}>Bio-Medical</MenuItem>
+                          <MenuItem value={80}>Ceramice</MenuItem>
+                          <MenuItem value={90}>Chemical</MenuItem>
+                          <MenuItem value={100}>Computer Science</MenuItem>
+                          <MenuItem value={110}>
+                            Electrical and Electronics
+                          </MenuItem>
+                          <MenuItem value={120}>
+                            Electronics and Communication
+                          </MenuItem>
+                          <MenuItem value={130}>Energy</MenuItem>
+                          <MenuItem value={140}>
+                            Electronics and Instrumentation
+                          </MenuItem>
+                          <MenuItem value={150}>Environmental</MenuItem>
+                          <MenuItem value={160}>
+                            Industrial Engineering and Management
+                          </MenuItem>
+                          <MenuItem value={170}>Instrumentation</MenuItem>
+                          <MenuItem value={180}>Information Science</MenuItem>
+                          <MenuItem value={190}>Marine</MenuItem>
+                          <MenuItem value={200}>Mechanical</MenuItem>
+                          <MenuItem value={210}>Mechatronics</MenuItem>
+                          <MenuItem value={220}>Metallurgy</MenuItem>
+                          <MenuItem value={230}>Industrial Production</MenuItem>
+                          <MenuItem value={240}>Telecommunication</MenuItem>
+                          <MenuItem value={250}>Textile</MenuItem>
+                          <MenuItem value={260}>Tools and Die Making</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -241,7 +327,11 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Select Type" variant="standard" />
+                      <TextField
+                        defaultValue="CGPA"
+                        id="standard-basic"
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -254,13 +344,27 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Select Type" variant="standard" />
+                      <FormControl sx={{ width: 200 }}>
+                        <InputLabel id="demo-simple-select-label">
+                          Select
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={ScoreFrequency}
+                          onChange={handleChange3}
+                        >
+                          <MenuItem value={10}>Semester</MenuItem>
+                          <MenuItem value={20}>Year</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -276,7 +380,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -289,7 +393,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -302,14 +406,15 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                       <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -325,7 +430,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -338,7 +443,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -351,14 +456,15 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                       <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -374,7 +480,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -387,7 +493,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -400,14 +506,15 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                       <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -423,7 +530,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -436,7 +543,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -449,14 +556,15 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                       <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -472,7 +580,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -485,7 +593,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -498,14 +606,15 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                       <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -521,7 +630,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -534,7 +643,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -547,13 +656,14 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                       <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -569,7 +679,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -582,7 +692,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -595,13 +705,14 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                       <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -617,7 +728,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -630,7 +741,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -643,13 +754,14 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                       <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -666,33 +778,43 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    <br></br>
-                    <Typography
+                      <TextField
+                        id="standard-basic"
+                        variant="standard"
+                      />
+                      <br></br>
+                      <Typography
                         variant="h10"
                         color="text.primary"
-                        sx={{ ml: 8 , fontSize: 11}}
+                        sx={{ ml: 8, fontSize: 11 }}
                       >
                         <br></br>
-                        Note: Aggregate CGPA is simply the sum of all SGPAs divided by Semesters for which data is entered. This field is automatically calculated everytime you open this page in edit mode. If your university follows grade point or a special system and your final CGPA does not match aggregate CGPA, please update this field manually. Kindly ensure that the updated Aggregate CGPA is correct and is visible on the main records page along with "GRADUATION (B.Tech / B.E.)" header - before submitting your records for validation.
-                      </Typography>        
+                        Note: Aggregate CGPA is simply the sum of all SGPAs
+                        divided by Semesters for which data is entered. This
+                        field is automatically calculated everytime you open
+                        this page in edit mode. If your university follows grade
+                        point or a special system and your final CGPA does not
+                        match aggregate CGPA, please update this field manually.
+                        Kindly ensure that the updated Aggregate CGPA is correct
+                        and is visible on the main records page along with
+                        "GRADUATION (B.Tech / B.E.)" header - before submitting
+                        your records for validation.
+                      </Typography>
                     </Grid>
-                    <Grid item xs={4}>
-                    </Grid>
+                    <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                        <Button variant="contained">Submit</Button>
+                      <br></br>
+                      <Button variant="contained">Submit</Button>
                     </Grid>
-                    <Grid item xs={9}>
-                    </Grid>
+                    <Grid item xs={9}></Grid>
                     <Grid item xs={3}>
-                        <br></br>
-                        <Button variant="contained">Reset Record</Button>
+                      <br></br>
+                      <Button variant="contained">Reset Record</Button>
                     </Grid>
-                    </Grid>
+                  </Grid>
                 </Paper>
                 <br></br>
-              <RouterLink
+                <RouterLink
                   to="/signed_in/student_dashboard/records"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
@@ -703,8 +825,8 @@ function StudentGraduationRecord() {
                       flexWrap: "wrap",
                     }}
                   >
-                  <KeyboardBackspaceIcon fontSize="large" />
-                  <span>&nbsp; BACK</span>
+                    <KeyboardBackspaceIcon fontSize="large" />
+                    <span>&nbsp; BACK</span>
                   </div>
                 </RouterLink>
               </Grid>
@@ -718,5 +840,5 @@ function StudentGraduationRecord() {
 }
 
 export default function StudentGraduationRecords() {
-  return < StudentGraduationRecord />;
+  return <StudentGraduationRecord />;
 }

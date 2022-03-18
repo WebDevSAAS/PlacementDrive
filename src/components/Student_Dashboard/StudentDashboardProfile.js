@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import Button from '@mui/material/Button'
+import Button from "@mui/material/Button";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
@@ -21,6 +21,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 
 function Copyright(props) {
   return (
@@ -94,6 +98,12 @@ function DashboardContentProfile() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const [Gender, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
   };
 
   return (
@@ -221,8 +231,7 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        First Name :
-                        <br></br>
+                        First Name :<br></br>
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
@@ -230,10 +239,10 @@ function DashboardContentProfile() {
                         id="outlined-read-only-input"
                         defaultValue="Tushar"
                         color="primary"
-                        focused 
+                        focused
                         InputProps={{
                           readOnly: true,
-                          style: { fontSize: 20, textAlign: 'center' }
+                          style: { fontSize: 20, textAlign: "center" },
                         }}
                       />
                     </Grid>
@@ -243,19 +252,18 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        Last Name :
-                        <br></br>
+                        Last Name :<br></br>
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField
+                      <TextField
                         id="outlined-read-only-input"
                         defaultValue="DMR"
                         color="primary"
-                        focused 
+                        focused
                         InputProps={{
                           readOnly: true,
-                          style: { fontSize: 20, textAlign: 'center' }
+                          style: { fontSize: 20, textAlign: "center" },
                         }}
                       />
                     </Grid>
@@ -265,19 +273,19 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        USN :
-                        <br></br><br></br>
+                        USN :<br></br>
+                        <br></br>
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField
+                      <TextField
                         id="outlined-read-only-input"
                         defaultValue="1RN20IS113"
                         color="primary"
-                        focused 
+                        focused
                         InputProps={{
                           readOnly: true,
-                          style: { fontSize: 20, textAlign: 'center' }
+                          style: { fontSize: 20, textAlign: "center" },
                         }}
                       />
                     </Grid>
@@ -287,19 +295,18 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        BRANCH :
-                        <br></br>
+                        BRANCH :<br></br>
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField
+                      <TextField
                         id="outlined-read-only-input"
                         defaultValue="ISE"
                         color="primary"
-                        focused 
+                        focused
                         InputProps={{
                           readOnly: true,
-                          style: { fontSize: 20, textAlign: 'center' }
+                          style: { fontSize: 20, textAlign: "center" },
                         }}
                       />
                     </Grid>
@@ -309,21 +316,25 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        Gender :
-                        <br></br>
+                        Gender :<br></br>
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField
-                        id="outlined-read-only-input"
-                        defaultValue="Male"
-                        color="primary"
-                        focused 
-                        InputProps={{
-                          readOnly: true,
-                          style: { fontSize: 20, textAlign: 'center' }
-                        }}
-                      />
+                      <FormControl focused sx={{ width: 200 }}>
+                        <InputLabel id="demo-simple-select-label">
+                          Gender
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={Gender}
+                          label="Gender"
+                          onChange={handleChange}
+                        >
+                          <MenuItem value={10}>Male</MenuItem>
+                          <MenuItem value={20}>Female</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -331,19 +342,18 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        Date of Birth :
-                        <br></br>
+                        Date of Birth :<br></br>
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField
+                      <TextField
                         id="outlined-read-only-input"
                         defaultValue="01/09/2002"
                         color="primary"
-                        focused 
+                        focused
                         InputProps={{
                           readOnly: true,
-                          style: { fontSize: 20, textAlign: 'center' }
+                          style: { fontSize: 20, textAlign: "center" },
                         }}
                       />
                     </Grid>
@@ -353,48 +363,46 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        Phone :
-                        <br></br><br></br>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField
-                        id="outlined-read-only-input"
-                        defaultValue="7023678992"
-                        color="primary"
-                        focused 
-                        InputProps={{
-                          readOnly: true,
-                          style: { fontSize: 20, textAlign: 'center' }
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h5"
-                        color="text.primary"
-                        sx={{ ml: 3 }}
-                      >
-                        Email :
+                        Phone :<br></br>
                         <br></br>
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField
+                      <TextField
                         id="outlined-read-only-input"
-                        defaultValue="dmrtushar@gmail.com"
+                        defaultValue="7023678992"
                         color="primary"
-                        focused 
+                        focused
                         InputProps={{
                           readOnly: true,
-                          style: { fontSize: 20, textAlign: 'center' }
+                          style: { fontSize: 20, textAlign: "center" },
                         }}
                       />
                     </Grid>
                     <Grid item xs={4}>
+                      <Typography
+                        variant="h5"
+                        color="text.primary"
+                        sx={{ ml: 3 }}
+                      >
+                        Email :<br></br>
+                      </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <Button variant="contained">Submit</Button>
+                      <TextField
+                        id="outlined-read-only-input"
+                        defaultValue="dmrtushar@gmail.com"
+                        color="primary"
+                        focused
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: "center" },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}></Grid>
+                    <Grid item xs={8}>
+                      <Button variant="contained">Submit</Button>
                     </Grid>
                   </Grid>
                 </Paper>
