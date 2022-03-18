@@ -18,35 +18,36 @@ module.exports = function (app, db) {
         // check if values aren't null
         else if (k.usn && k.password && k.accountType) {
             // Fetch fields matching Usn and pass
-            let q = `SELECT * FROM ${req.session.accountType === "admin" ? "admins" : "student"} WHERE usn = ? ;`
+            let q = (k.accountType === "admin") ? "admins" : "students"
             /*if (req.session.accountType === "admin" ||  req.session.accountType === "mentor") let q = `SELECT * FROM admins WHERE usn = ?;`
             else  let q = `SELECT * FROM students WHERE usn = ?;`*/
-            db.query(q, [k.usn, k.password], (error, results, fields) => {
+            db.collection(q).findOne({usn : k.usn, password : k.password}, {projection : {
+                _id : 1,
+                profile : 1
+            }}, (error, result) => {
                 if (error) {
                     res.json({
                         status: "error",
                         message: error,
                         isLogged: false,
                     })
-                    throw error
+                    console.log(error)
                 }
                 // if user exists...
-                else if (results.length > 0) {
+                else if (result) {
                     // log in by saving to session
                     req.session.userid = k.usn
-                    req.session.profile = results[0]
-                    req.session.accountType = req.session.profile
-                    delete req.session.profile.password // Hide password from response
+                    req.session.profile = result.profile
+                    req.session.accountType = result.profile.accountType
                     req.session.lastUpdated = new Date()
-                    //req.session.keys = fields;            // Not required
                     // return details
                     res.json({
                         status: "success",
                         message: "Log in success !",
-                        lastUpdated: new Date(),
+                        lastUpdated: req.session.lastUpdated,
                         isLatest: true,
                         isLogged: true,
-                        isAdmin: k.accountType === "admin",
+                        isAdmin: result.profile.accountType === "admin",
                         // keys: fields,
                         profile: req.session.profile,
                     })

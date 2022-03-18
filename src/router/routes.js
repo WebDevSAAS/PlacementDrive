@@ -3,11 +3,8 @@ module.exports = function (app, db) {
     // root-route for server
     app.get("/", (req, res) => {
         try {
-            db.query("SELECT * FROM student;", (error, results, fields) => {
-                if (error) throw error
-                console.log(results)
-                res.send(results)
-            })
+            db.collection("admins").find({}).toArray((err, res) => console.log(res, err))
+            
         } catch (error) {
             console.log(error)
             res.send(error)

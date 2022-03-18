@@ -3,10 +3,10 @@ const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser")
 const sessions = require('express-session')
 const db = require("./src/config/database.config.js")
-
+console.log(db)
 // creating of express app
 const app = express()
-const email = require("./src/mailer") // wait few seconds before using email to make transporter ready...
+//const email = require("./src/mailer") // wait few seconds before using email to make transporter ready...
 // creating 24 hours from milliseconds
 const oneDay = 1000 * 60 * 60 * 24
 
@@ -48,7 +48,7 @@ require("./src/router/signin")(app, db)
 require("./src/router/routes")(app, db)
 require("./src/router/routesAdmin")(app, db)
 require("./src/router/actions")(app, db)
-
+/*
 //##################################### Test codes Starts ############################################
 // test database connection
 db.query("SELECT * FROM student;", (error, results, fields) => {
@@ -58,7 +58,7 @@ db.query("SELECT * FROM student;", (error, results, fields) => {
 
 // Require routes NOT FOR PRODUCTION !!!!!!!!!
 require("./src/Routers/student_getall")(app, db)
-
+*/
 /*
 // test email connection after waiting 2 seconds for first time after server starts
 setTimeout(() => {
