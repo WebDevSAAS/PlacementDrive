@@ -11,12 +11,16 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import { AdminSignIn } from "./components/Admin/AdminSignIn"
 import StudentDashboard from "./components/Student_Dashboard/StudentDashboard";
-import StudentDashboardRecords from "./components/Student_Dashboard/StudentDashboardRecords";
+import StudentDashboardRecords from "./components/Student_Dashboard/StudentDashboardRecords"
 import StudentDashboardProfile from "./components/Student_Dashboard/StudentDashboardProfile"
 import StudentDashboardNotifications from "./components/Student_Dashboard/StudentDashboardNotifications"
+
 import StudentDashboardAnalytics from "./components/Student_Dashboard/StudentDashboardAnalytics"
 import StudentDashboardEvents from "./components/Student_Dashboard/StudentDashboardEvents"
 import AdminDashboard from "./components/Admin/AdminDashboard"
+
+import StudentDashboardAnalytics from "./components/Student_Dashboard/StudentDashboardAnalytics";
+
 
 
 function App() {
@@ -43,8 +47,14 @@ function App() {
           <Route path="/signed_in/student_dashboard/records/diploma" exact element={<StudentDiplomaRecords />} />
           <Route path="/signed_in/student_dashboard/records/backlogs" exact element={<StudentBacklogsRecords />} />   
 
+
           <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} />
           
+=======
+          {/* <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} /> */}
+          {/* <Route path="/signed_in/student_dashboard/analytics" exact element={<StudentDashboardAnalytics />} /> */}
+          <Route path="/signed_in/student_dashboard/records" exact element={<StudentDashboardRecords />} />
+
           <Route path="/signed_in/student_dashboard/analytics" exact element={<StudentDashboardAnalytics />} />
 
           

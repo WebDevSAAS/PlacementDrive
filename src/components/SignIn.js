@@ -36,6 +36,8 @@ function Copyright(props) {
   );
 }
 
+var usnData;
+
 const initialValues = {
   usn: "",
   password: "",
@@ -92,14 +94,15 @@ async function hashredirect(values) {
       .then((data) => data.json())
       .then((response) => {
         console.log(response);
-        if (response.status !== "error")
-          window.location = "./signed_in/student_dashboard";
+        /* if (response.status !== "error")
+           window.location = "./signed_in/student_dashboard"; */
       });
 }
 
 function SignIn() {
   const onSubmit = (values) => {
     console.log(values);
+    usnData = values['usn']
     hashredirect(values);
   };
 
