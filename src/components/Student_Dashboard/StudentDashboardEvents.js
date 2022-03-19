@@ -168,7 +168,7 @@ function DashboardContentEvents() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Dashboard <Typography variant="p" color="#ffeb3b">Events</Typography>
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="error">

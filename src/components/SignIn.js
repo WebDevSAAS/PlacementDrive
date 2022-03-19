@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DataService from "./service";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,11 +13,10 @@ import Container from "@mui/material/Container";
 import { NavLink } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { Formik, Form, Field } from "formik"
-import * as Yup from "yup"
-import { TextField } from 'formik-mui';
-import { CheckboxWithLabel  } from 'formik-mui';
-
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { TextField } from "formik-mui";
+import { CheckboxWithLabel } from "formik-mui";
 
 function Copyright(props) {
   return (
@@ -36,63 +36,104 @@ function Copyright(props) {
   );
 }
 
-
 const initialValues = {
-  usn: '',
-  password: '',
+  usn: "",
+  password: "",
   rememberMe: false,
 };
 
-
 const usnRegex = /^1RN\d\d[A-Z][A-Z]\d\d\d$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 var validationSchema = Yup.object().shape({
-  usn: Yup.string().matches(usnRegex, "Invalid USN").required('Required'),
-  password: Yup.string().matches(passwordRegex, "Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character").required("Required"),
-  rememberMe: Yup.boolean()
-});
+  usn: Yup.string().matches(usnRegex, "Invalid USN").required("Required"),
+  password: Yup.string()
+  .matches(
+    passwordRegex,
+    "Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    )
+    .required("Required"),
+    rememberMe: Yup.boolean(),
+  });
+
+async function sha256(message) {
+  // encode as UTF-8
+  const msgBuffer = new TextEncoder().encode(message);
+
+  // hash the message
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+
+  // convert ArrayBuffer to Array
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+  // convert bytes to hex string
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return hashHex;
+}
+
+async function hashredirect(values) {
+  console.log(values);
+    let hash = await sha256(values["password"]);
+    fetch("http://localhost:3000/signin", {
+      method: "POST",
+      mode: "cors",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usn: values["usn"],
+        password: hash.toString(),
+        accountType: "student",
+      }),
+    })
+      .then((data) => data.json())
+      .then((response) => {
+        console.log(response);
+        if (response.status !== "error")
+          window.location = "./signed_in/student_dashboard";
+      });
+}
 
 function SignIn() {
-
-
   const onSubmit = (values) => {
-    console.log(values)
-  }
-
+    console.log(values);
+    hashredirect(values);
+  };
 
   return (
     <>
-    <Navbar/>
-    <Container component="main" maxWidth="xs" sx={{ minHeight: "90vh" }}>
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Box sx={{ mt: 1 }}>
-
-
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}>
-            {({ isValid, values }) => {
+      <Navbar />
+      <Container component="main" maxWidth="xs" sx={{ minHeight: "90vh" }}>
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box sx={{ mt: 1 }}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={onSubmit}
+            >
+              {({ isValid, values }) => {
                 return (
                   <Form>
-                  <Grid item container spacing={1} justify="center">
+                    <Grid item container spacing={1} justify="center">
                       <Grid item xs={12}>
                         <Field
-                          
                           margin="normal"
                           label="USN"
                           variant="outlined"
@@ -116,48 +157,48 @@ function SignIn() {
                       <Grid item xs={12}>
                         <Field
                           margin="normal"
-                          Label={{ label: 'Remember Me' }}
+                          Label={{ label: "Remember Me" }}
                           fullWidth
                           type="checkbox"
                           name="rememberMe"
-                          component={CheckboxWithLabel }
+                          component={CheckboxWithLabel}
                         />
                       </Grid>
-                  </Grid>
+                    </Grid>
                     <Button
                       fullWidth
                       disabled={!isValid}
                       variant="contained"
                       color="primary"
                       type="Submit"
-                      sx={{marginY:"1rem",}}
-                      >
+                      sx={{ marginY: "1rem" }}
+                    >
                       Sign In
                     </Button>
                   </Form>
-                )
+                );
               }}
-        </Formik>
-          
-          <Grid container>
-            <Grid item xs>
-              <Link href="/forgot_password" variant="body2">
-                Forgot password?
-              </Link>
+            </Formik>
+
+            <Grid container>
+              <Grid item xs>
+                <Link href="/forgot_password" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/register" variant="body2">
+                  {"Don't have an account? Register"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Register"}
-              </Link>
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
-    <Footer/>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+      <Footer />
     </>
   );
 }
 
-export { SignIn } ;
+export { SignIn };

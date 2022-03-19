@@ -46,8 +46,8 @@ export default function Home() {
             <Typography
           variant="subtitle2" color="text.secondary">
           Frontend Team :<br/></Typography>
-          Sagun, CSE 5<sup>th</sup> semester &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-          Tishya Tripathi, CSE 5<sup>th</sup> semester<br/>
+          Tishya Tripathi, CSE 5<sup>th</sup> semester &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+          Sagun, CSE 5<sup>th</sup> semester<br/>
           Ajith, CSE 3<sup>rd</sup> semester<br />
             <Typography
           variant="subtitle2" color="text.secondary">

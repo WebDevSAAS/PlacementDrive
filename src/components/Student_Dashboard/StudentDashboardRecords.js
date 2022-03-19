@@ -26,6 +26,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { mainListItems, secondaryListItems } from "./listItems";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
 
 function Copyright(props) {
   return (
@@ -110,7 +113,7 @@ function DashboardContentRecords() {
   const [Duration1, Dset1] = React.useState("");
   const [Duration2, Dset2] = React.useState("");
   const [Duration3, Dset3] = React.useState("");
-
+  const [dateOfBirth, setDateOfBirth] = React.useState(new Date());
 
   const handleChange1 = (event) => {
     Yset1(event.target.value);
@@ -174,7 +177,10 @@ function DashboardContentRecords() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Dashboard{" "}
+              <Typography variant="p" color="#ffeb3b">
+                Records
+              </Typography>
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="error">
@@ -660,7 +666,7 @@ function DashboardContentRecords() {
                       p: 2,
                       display: "flex",
                       flexDirection: "column",
-                      height: 3000,
+                      height: 3150,
                     }}
                   >
                     <Paper
@@ -800,7 +806,6 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
-                          label="School Name"
                           variant="standard"
                         />
                       </Grid>
@@ -986,7 +991,6 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
-                          label="School Name"
                           variant="standard"
                         />
                       </Grid>
@@ -1109,7 +1113,6 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
-                          label="School Name"
                           variant="standard"
                         />
                       </Grid>
@@ -1126,7 +1129,6 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
-                          label="Select Type"
                           variant="standard"
                         />
                       </Grid>
@@ -1279,7 +1281,6 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
-                          label="School Name"
                           variant="standard"
                         />
                       </Grid>
@@ -1383,6 +1384,7 @@ function DashboardContentRecords() {
                     >
                       PERSONAL DETAILS
                     </Typography>
+                    <br></br>
                     <Grid
                       container
                       rowSpacing={1}
@@ -1400,6 +1402,23 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
+                        <LocalizationProvider
+                          dateAdapter={AdapterDateFns}
+                          sx={{ marginX: 3 }}
+                        >
+                          <DatePicker
+                            views={["day"]}
+                            label="Date of Birth"
+                            value={dateOfBirth}
+                            onChange={(newValue) => {
+                              setDateOfBirth(newValue);
+                            }}
+                            renderInput={(params) => (
+                              <TextField {...params} helperText={null} />
+                            )}
+                            fullWidth
+                          />
+                        </LocalizationProvider>
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1427,7 +1446,6 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
-                          label="Select Type"
                           variant="standard"
                         />
                       </Grid>
