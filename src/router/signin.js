@@ -54,11 +54,13 @@ module.exports = function (app, db) {
                 }
                 // No rows matched ...
                 else {
-                    res.jsom({
-                        status: "error",
-                        message: "Invalid userid or password",
-                        isLogged: false,
-                    })
+                    try {
+                        res.jsom({
+                            status: "error",
+                            message: "Invalid userid or password",
+                            isLogged: false,
+                        })
+                    } catch (e) {console.log(e)}
                 }
             })
         }

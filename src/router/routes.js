@@ -4,7 +4,7 @@ module.exports = function (app, db) {
     app.get("/", (req, res) => {
         try {
             db.collection("admins").find({}).toArray((err, res) => console.log(res, err))
-            
+            res.send("All Set !")
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -30,9 +30,8 @@ module.exports = function (app, db) {
         // check if any value is not null
         else if (k.usn && k.first_name && k.last_name && k.branch && k.gender && k.dob && k.email && k.phone && k.password) {
             // check if record already exists...
-            db.query("SELECT first_name FROM student where usn = ?;", [req.body.usn], (error, results, fields) => {
-                // user already exists ...
-                if (results.length != 0) {
+            db.collection("students").findOne({usn : k.usn}, {projection : {_id : 1, usn : 1}}, (error, result) => {
+                if (result && result._id) {
                     res.json({
                         status: "error",
                         message: "User already exists !",
@@ -41,34 +40,29 @@ module.exports = function (app, db) {
                 }
                 // usn doesn't exists, create one
                 else {
-                    db.query(
-                        "INSERT INTO student ( usn , first_name , last_name , branch , gender , dob , email , phone , password ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ;",
-                        [k.usn, k.first_name, k.last_name, k.branch, k.gender, k.dob, k.email, k.phone, k.password],
-                        (error, results, fields) => {
+                    let obj = {usn : k.usn, profile: {usn : k.usn, first_name : k.first_name, last_name : k.last_name, branch : k.branch, gender :k.gender, dob : k.dob, email : k.email, phone : k.phone }, password : k.password}
+                    db.collection("students").insertOne(obj, (error, results) => {
                             if (error) {
-                                throw error
                                 res.json({
                                     status: "error",
                                     message: error,
                                     isLogged: false,
                                 })
+                                throw error
                             }
                             // Records inserted, auto log in
                             else {
                                 // log it in
                                 req.session.userid = k.usn
-                                req.session.profile = results[0]
-                                req.session.keys = fields
+                                req.session.profile = obj.profile
                                 req.session.lastUpdated = new Date()
-                                delete k.password // Hide password in response
                                 res.json({
                                     status: "success",
                                     message: "Account created !",
-                                    lastUpdated: new Date(),
+                                    lastUpdated: req.session.lastUpdated,
                                     isLatest: true,
                                     isLogged: true,
-                                    // keys: fields,
-                                    profile: k,
+                                    profile: obj.profile,
                                 })
                             }
                         }
