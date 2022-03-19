@@ -127,6 +127,21 @@ function DashboardContentEvents() {
       width: 100,
     },
     {
+      field: "Venue",
+      headerName: "Venue",
+      width: 100,
+    },
+    {
+      field: "Stages",
+      headerName: "Stages",
+      width: 100,
+    },
+    {
+      field: "Apply",
+      headerName: "Apply",
+      width: 100,
+    },
+    {
       field: "CTC",
       headerName: "CTC",
       width: 80,
@@ -134,7 +149,7 @@ function DashboardContentEvents() {
   ];
 
   const rows = [
-    { id: 1, Logo: "Logo", Company: "Heptagon", DriveData: "123", ApplicationEndDate: '456', Description:"890", Sector:"1", CTC:"4.5" },
+    { id: 1, Logo: "Logo", Company: "Heptagon", DriveData: "123", ApplicationEndDate: '456', Description:"890", Sector:"1", Venue:"Banglore", Stages: "2", Apply:"1",CTC:"4.5" },
   ];
 
   return (

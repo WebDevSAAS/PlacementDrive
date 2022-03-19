@@ -18,10 +18,7 @@ import StudentDashboardEvents from "./components/Student_Dashboard/StudentDashbo
 import StudentDashboardNotifications from "./components/Student_Dashboard/StudentDashboardNotifications"
 
 import StudentDashboardAnalytics from "./components/Student_Dashboard/StudentDashboardAnalytics"
-import StudentDashboardEvents from "./components/Student_Dashboard/StudentDashboardEvents"
 import AdminDashboard from "./components/Admin/AdminDashboard"
-
-import StudentDashboardAnalytics from "./components/Student_Dashboard/StudentDashboardAnalytics";
 
 
 
