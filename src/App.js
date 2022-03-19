@@ -7,19 +7,19 @@ import StudentClass12Records from "./components/Student_Dashboard/StudentRecords
 import StudentBacklogsRecords from "./components/Student_Dashboard/StudentRecords/BacklogsRecords";
 import StudentDiplomaRecords from "./components/Student_Dashboard/StudentRecords/DiplomaRecords";
 import StudentGraduationRecords from "./components/Student_Dashboard/StudentRecords/GraduationRecords";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import Home from "./components/Home";
 import { AdminSignIn } from "./components/Admin/AdminSignIn"
 import StudentDashboard from "./components/Student_Dashboard/StudentDashboard";
-import StudentDashboardRecords from "./components/Student_Dashboard/StudentDashboardRecords"
+import StudentDashboardRecords from "./components/Student_Dashboard/StudentDashboardRecords";
 import StudentDashboardProfile from "./components/Student_Dashboard/StudentDashboardProfile"
 import StudentDashboardNotifications from "./components/Student_Dashboard/StudentDashboardNotifications"
-
 import StudentDashboardAnalytics from "./components/Student_Dashboard/StudentDashboardAnalytics"
 import StudentDashboardEvents from "./components/Student_Dashboard/StudentDashboardEvents"
 import AdminDashboard from "./components/Admin/AdminDashboard"
-
-import StudentDashboardAnalytics from "./components/Student_Dashboard/StudentDashboardAnalytics";
+import AdminDashboardNotifications from "./components/Admin/AdminDashboardNotifications"
+import AdminDashboardStudents from "./components/Admin/AdminDashboardStudents"
+import AdminDashboardEvents from "./components/Admin/AdminDashboardEvents"
 
 
 
@@ -47,21 +47,17 @@ function App() {
           <Route path="/signed_in/student_dashboard/records/diploma" exact element={<StudentDiplomaRecords />} />
           <Route path="/signed_in/student_dashboard/records/backlogs" exact element={<StudentBacklogsRecords />} />   
 
-
           <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} />
           
-=======
-          {/* <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} /> */}
-          {/* <Route path="/signed_in/student_dashboard/analytics" exact element={<StudentDashboardAnalytics />} /> */}
-          <Route path="/signed_in/student_dashboard/records" exact element={<StudentDashboardRecords />} />
-
           <Route path="/signed_in/student_dashboard/analytics" exact element={<StudentDashboardAnalytics />} />
 
           
           {/* Admin Dashboard */}
           <Route path="/admin/signin" exact element={<AdminSignIn />} />
           <Route path="/admin/signed_in/dashboard" exact element={<AdminDashboard />} /> 
-
+          <Route path="/admin/signed_in/dashboard/notifications" exact element={<AdminDashboardNotifications />} />
+          <Route path="/admin/signed_in/dashboard/students" exact element={<AdminDashboardStudents />} />
+          <Route path="/admin/signed_in/dashboard/events" exact element={<AdminDashboardEvents />} />
 
         </Routes>
       </div>
