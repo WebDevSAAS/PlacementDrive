@@ -51,10 +51,11 @@ function Copyright(props) {
 //   .then((data) => data.json())
 //   .then((data) => console.log(data));
 console.log("working");
+/*
 fet("http://localhost:3000/status")
   .then((data) => console.log(data))
   .catch((err) => console.error(err));
-
+*/
 const initialValues = {
   father_name: null,
   mother_name: null,

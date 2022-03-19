@@ -18,6 +18,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { fet, hash } from "./modules/fet";
 
 function Copyright(props) {
   return (
@@ -99,17 +100,19 @@ const initialValues = {
 };
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     values.dob = dateOfBirth
       .toISOString()
-      .replace("-", "/")
       .split("T")[0]
-      .replace("-", "/");
-    DataService.creates(values);
-    console.log(values.dob);
-
+    values.password = await hash(values.password).toString()
+    //DataService.creates(values);
     console.log(values);
+    fet("/register", "POST", values).then(res => {
+      console.log("Signup response : ", res)
+      /* if (response.status !== "error")
+            window.location = "./signed_in/student_dashboard"; */
+    })
   };
 
   const [values, setValues] = React.useState(initialValues);
