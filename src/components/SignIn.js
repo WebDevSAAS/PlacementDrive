@@ -17,6 +17,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-mui";
 import { CheckboxWithLabel } from "formik-mui";
+import { fet, hash } from "./modules/fet";
 
 function Copyright(props) {
   return (
@@ -58,52 +59,21 @@ var validationSchema = Yup.object().shape({
     rememberMe: Yup.boolean(),
   });
 
-async function sha256(message) {
-  // encode as UTF-8
-  const msgBuffer = new TextEncoder().encode(message);
-
-  // hash the message
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-
-  // convert ArrayBuffer to Array
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-
-  // convert bytes to hex string
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  return hashHex;
-}
-
-async function hashredirect(values) {
-  console.log(values);
-    let hash = await sha256(values["password"]);
-    fetch("http://localhost:3000/signin", {
-      method: "POST",
-      mode: "cors",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        usn: values["usn"],
-        password: hash.toString(),
-        accountType: "student",
-      }),
+function SignIn() {
+  const onSubmit = async (values) => {
+    usnData = values['usn']
+    let h = await hash(values["password"]).toString();
+    console.log(values);
+    fet("http://localhost:6969/signin", "POST", {
+      usn: values["usn"],
+      password: h,
+      accountType: "student",
     })
-      .then((data) => data.json())
       .then((response) => {
         console.log(response);
         /* if (response.status !== "error")
-           window.location = "./signed_in/student_dashboard"; */
+            window.location = "./signed_in/student_dashboard"; */
       });
-}
-
-function SignIn() {
-  const onSubmit = (values) => {
-    console.log(values);
-    usnData = values['usn']
-    hashredirect(values);
   };
 
   return (
