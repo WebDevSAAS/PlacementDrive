@@ -37,6 +37,24 @@ function Copyright(props) {
     </Typography>
   );
 }
+function AdminBadge() {
+  return (
+    <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} >
+    </Badge>
+  );
+}
+function DfpcBadge() {
+  return (
+    <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3, }}>
+    </Badge>
+  );
+}
+function TpcBadge() {
+  return (
+    <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3, }}>
+    </Badge>
+  );
+}
 
 const drawerWidth = 240;
 
@@ -93,6 +111,19 @@ function AdminDashboardContentStudents() {
     setOpen(!open);
   };
 
+  const userCategory = "admin";       //    INSERT userCategory VALUE FROM BACKEND !!
+  var badge;
+  if (userCategory == "admin") {
+    badge = <AdminBadge />
+  } 
+  else if (userCategory == "dfpc") {
+    badge = <DfpcBadge />
+  }
+  else if (userCategory == "tpc") {
+    badge =  <TpcBadge />
+  }
+
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -128,13 +159,7 @@ function AdminDashboardContentStudents() {
                 Dashboard <Typography variant="p" color="#ffeb3b">
                 Students
               </Typography>
-
-              {/* ------Conditionally render these Badges for TPC, DFPC and Admin------  */}
-
-              <Badge badgeContent={"Admin"} color="success" sx={{px:3,}} ></Badge>
-              {/* <Badge badgeContent={"TPC"} color="secondary" sx={{px:3,}}></Badge> */}
-              {/* <Badge badgeContent={"DFPC"} color="error" sx={{px:3,}}></Badge> */}
-            
+              {badge}
             </Typography>
           </Toolbar>
         </AppBar>

@@ -20,7 +20,7 @@ import AdminDashboard from "./components/Admin/AdminDashboard"
 import AdminDashboardNotifications from "./components/Admin/AdminDashboardNotifications"
 import AdminDashboardStudents from "./components/Admin/AdminDashboardStudents"
 import AdminDashboardEvents from "./components/Admin/AdminDashboardEvents"
-
+import { ForgotPassword } from "./components/ForgotPassword"
 
 
 function App() {
@@ -31,7 +31,9 @@ function App() {
           <Route path="/" exact element={<Home />} />
           <Route path="/signin" exact element={<SignIn />} />
           <Route path="/register" exact element={<SignUp />} />
+          <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
           <Route path="/signed_in/student" exact element={<StudentDetails />} />
+          
           
           {/* Student Dashboard */}
           <Route path="/signed_in/student_dashboard" exact element={<StudentDashboard />} />
