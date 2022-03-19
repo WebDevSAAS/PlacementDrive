@@ -15,10 +15,7 @@ import { Link } from "react-router-dom";
 export const mainListItems = (
   <div>
     {/* <Link color="inherit" underline="none" href="/signed_in/student_dashboard/notification"> */}
-    <Link
-      to="/signed_in/student_dashboard/notifications"
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
+    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>
           <NotificationsIcon fontSize="large" />
@@ -27,10 +24,7 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link
-      to="/signed_in/student_dashboard/profile"
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
+    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>
           <AccountCircleIcon fontSize="large" />
@@ -39,10 +33,7 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link
-      to="/signed_in/student_dashboard/records"
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
+    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon fontSize="large" />
@@ -51,10 +42,7 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link
-      to="/signed_in/student_dashboard/events"
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
+    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>
           <EventIcon fontSize="large" />
@@ -63,10 +51,7 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link
-      to="/signed_in/student_dashboard/analytics"
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
+    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>
           <AssessmentIcon fontSize="large" />
@@ -80,16 +65,13 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     {/* <ListSubheader inset>SUB-HEADER</ListSubheader> */}
-    <Link
-      to="/signin"
-      style={{ textDecoration: "none", color: "inherit" }}
-    >
-    <ListItem button>
-      <ListItemIcon>
-        <LogoutIcon fontSize="large" />
-      </ListItemIcon>
-      <ListItemText primary="Logout" />
-    </ListItem>
+    <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+      <ListItem button>
+        <ListItemIcon>
+          <LogoutIcon fontSize="large" />
+        </ListItemIcon>
+        <ListItemText primary="Logout" />
+      </ListItem>
     </Link>
   </div>
 );
