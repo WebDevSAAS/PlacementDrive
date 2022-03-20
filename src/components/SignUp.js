@@ -110,15 +110,19 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
-    values.dob = dateOfBirth.toISOString().split("T")[0];
-    values.password = await hash(values.password).toString();
-    //DataService.creates(values);
-    console.log(values);
-    fet("/register", "POST", values).then((res) => {
-      console.log("Signup response : ", res);
-      /* if (response.status !== "error")
-            window.location = "./signed_in/student_dashboard"; */
-    });
+    values.dob = dateOfBirth
+      .toISOString()
+      .split("T")[0]
+    hash(values.password).then(h => {
+      values.password = h
+      console.log(values);
+      fet("/register", "POST", values).then(res => {
+        //console.log("Signup response : ", res)
+        if (response.status !== "error")
+              window.location = "./signed_in/student_dashboard";
+      })
+
+    })
   };
 
   const [values, setValues] = React.useState(initialValues);
