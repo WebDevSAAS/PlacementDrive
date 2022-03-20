@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 export const mainListItems = (
   <div>
     {/* <Link color="inherit" underline="none" href="/signed_in/student_dashboard/notification"> */}
-    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
+    <Link to="/admin/signed_in/dashboard/notifications" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>
           <NotificationsIcon fontSize="large" />
@@ -24,25 +24,17 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
+    <Link to="/admin/signed_in/dashboard/students" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>
           <AccountCircleIcon fontSize="large" />
         </ListItemIcon>
-        <ListItemText primary="Profile" />
+        <ListItemText primary="Students" />
       </ListItem>
     </Link>
 
-    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon fontSize="large" />
-        </ListItemIcon>
-        <ListItemText primary="Records" />
-      </ListItem>
-    </Link>
 
-    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
+    <Link to="/admin/signed_in/dashboard/events" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>
           <EventIcon fontSize="large" />
@@ -51,20 +43,12 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link to="#" style={{ textDecoration: "none", color: "inherit" }}>
-      <ListItem button>
-        <ListItemIcon>
-          <AssessmentIcon fontSize="large" />
-        </ListItemIcon>
-        <ListItemText primary="Analytics" />
-      </ListItem>
-    </Link>
+
   </div>
 );
 
 export const secondaryListItems = (
   <div>
-    {/* <ListSubheader inset>SUB-HEADER</ListSubheader> */}
     <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem button>
         <ListItemIcon>

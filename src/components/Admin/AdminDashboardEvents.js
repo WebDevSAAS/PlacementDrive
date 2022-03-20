@@ -18,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
+import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
 
 function Copyright(props) {
   return (
@@ -55,6 +56,7 @@ function TpcBadge() {
     </Badge>
   );
 }
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -104,13 +106,12 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 // --------------------------------------------------------------------------------------------
-function AdminDashboardContent() {
+function AdminDashboardContentEvents() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-// rendering the User's Badge 
   const userCategory = "admin";       //    INSERT userCategory VALUE FROM BACKEND !!
   var badge;
   if (userCategory == "admin") {
@@ -123,8 +124,7 @@ function AdminDashboardContent() {
     badge =  <TpcBadge />
   }
 
-    
-    
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -149,6 +149,7 @@ function AdminDashboardContent() {
             >
               <MenuIcon />
             </IconButton>
+            
             <Typography
               component="h1"
               variant="h6"
@@ -156,12 +157,11 @@ function AdminDashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             <Typography variant="p" color="#ffeb3b">Admin</Typography> Dashboard
+                Dashboard <Typography variant="p" color="#ffeb3b">
+                Events
+              </Typography>
               {badge}
-            {/* <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} ></Badge> */}
-
             </Typography>
-            
           </Toolbar>
         </AppBar>
 
@@ -211,7 +211,7 @@ function AdminDashboardContent() {
               </Grid>
             </Grid>
 
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Paper
                 sx={{
                   mt: 5,
@@ -221,7 +221,7 @@ function AdminDashboardContent() {
                   minHeight: 280,
                 }}
               ></Paper>
-            </Grid>
+            </Grid> */}
 
             <Copyright sx={{ pt: 4 }} />
           </Container>
@@ -231,6 +231,6 @@ function AdminDashboardContent() {
   );
 }
 
-export default function AdminDashboard() {
-  return <AdminDashboardContent />;
+export default function AdminDashboardEvents() {
+  return <AdminDashboardContentEvents />;
 }
