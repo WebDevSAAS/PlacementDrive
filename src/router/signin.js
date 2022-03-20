@@ -55,7 +55,7 @@ module.exports = function (app, db) {
                 // No rows matched ...
                 else {
                     try {
-                        res.jsom({
+                        res.json({
                             status: "error",
                             message: "Invalid userid or password",
                             isLogged: false,
@@ -92,6 +92,7 @@ module.exports = function (app, db) {
     app.get("/status", (req, res) => {
         // already logged in, redirect user to their profile
         if (req.session && req.session.userid) {
+            console.log(req.session)
             let q = `SELECT * FROM ${req.session.accountType === "admin" ? "admins" : "student"} WHERE usn = ? ;`
             /*if (req.session.accountType === "admin" ||  req.session.accountType === "mentor") let q = `SELECT * FROM admins WHERE usn = ?;`
             else  let q = `SELECT * FROM students WHERE usn = ?;`*/
