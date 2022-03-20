@@ -62,18 +62,19 @@ var validationSchema = Yup.object().shape({
 function SignIn() {
   const onSubmit = async (values) => {
     usnData = values['usn']
-    let h = await hash(values["password"]).toString();
-    console.log(values);
-    fet("http://localhost:6969/signin", "POST", {
-      usn: values["usn"],
-      password: h,
-      accountType: "student",
+    hash(values["password"]).then(h => {
+      console.log(values);
+      fet("http://localhost:6969/signin", "POST", {
+        usn: values["usn"],
+        password: h,
+        accountType: "student",
+      })
+        .then((response) => {
+          console.log(response);
+          /* if (response.status !== "error")
+              window.location = "./signed_in/student_dashboard"; */
+        });
     })
-      .then((response) => {
-        console.log(response);
-        /* if (response.status !== "error")
-            window.location = "./signed_in/student_dashboard"; */
-      });
   };
 
   return (
