@@ -20,9 +20,15 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import EditIcon from "@mui/icons-material/Edit";
 import TextField from "@mui/material/TextField";
-import Button from '@mui/material/Button'
-
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 import { mainListItems, secondaryListItems } from "./listItems";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
 
 function Copyright(props) {
   return (
@@ -97,6 +103,48 @@ function DashboardContentRecords() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [Year1, Yset1] = React.useState("");
+  const [Year2, Yset2] = React.useState("");
+  const [Year3, Yset3] = React.useState("");
+  const [Year4, Yset4] = React.useState("");
+  const [Year5, Yset5] = React.useState("");
+  const [ProjectType1, Pset1] = React.useState("");
+  const [ProjectType2, Pset2] = React.useState("");
+  const [Duration1, Dset1] = React.useState("");
+  const [Duration2, Dset2] = React.useState("");
+  const [Duration3, Dset3] = React.useState("");
+  const [dateOfBirth, setDateOfBirth] = React.useState(new Date());
+
+  const handleChange1 = (event) => {
+    Yset1(event.target.value);
+  };
+  const handleChange2 = (event) => {
+    Yset2(event.target.value);
+  };
+  const handleChange3 = (event) => {
+    Yset3(event.target.value);
+  };
+  const handleChange4 = (event) => {
+    Yset4(event.target.value);
+  };
+  const handleChange5 = (event) => {
+    Yset5(event.target.value);
+  };
+  const handleChange6 = (event) => {
+    Pset1(event.target.value);
+  };
+  const handleChange7 = (event) => {
+    Pset2(event.target.value);
+  };
+  const handleChange8 = (event) => {
+    Dset1(event.target.value);
+  };
+  const handleChange9 = (event) => {
+    Dset2(event.target.value);
+  };
+  const handleChange10 = (event) => {
+    Dset3(event.target.value);
+  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -129,8 +177,9 @@ function DashboardContentRecords() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard <Typography variant="p" color="#ffeb3b">
-                 Records
+              Dashboard{" "}
+              <Typography variant="p" color="#ffeb3b">
+                Records
               </Typography>
             </Typography>
             <IconButton color="inherit">
@@ -214,14 +263,14 @@ function DashboardContentRecords() {
                       </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                    <RouterLink
-                     to="/signed_in/student_dashboard/records/class10"
-                     style={{ textDecoration: "none", color: "inherit" }}
-                     >
-                      <IconButton color="primary">
-                        <EditIcon />
-                      </IconButton>
-                    </RouterLink>
+                      <RouterLink
+                        to="/signed_in/student_dashboard/records/class10"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <IconButton color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </RouterLink>
                     </Grid>
                   </Grid>
                 </Paper>
@@ -265,14 +314,14 @@ function DashboardContentRecords() {
                       </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                    <RouterLink
-                     to="/signed_in/student_dashboard/records/class12"
-                     style={{ textDecoration: "none", color: "inherit" }}
-                     >
-                      <IconButton color="primary">
-                        <EditIcon />
-                      </IconButton>
-                    </RouterLink>
+                      <RouterLink
+                        to="/signed_in/student_dashboard/records/class12"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <IconButton color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </RouterLink>
                     </Grid>
                   </Grid>
                 </Paper>
@@ -391,14 +440,14 @@ function DashboardContentRecords() {
                       </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                    <RouterLink
-                     to="/signed_in/student_dashboard/records/diploma"
-                     style={{ textDecoration: "none", color: "inherit" }}
-                     >
-                      <IconButton color="primary">
-                        <EditIcon />
-                      </IconButton>
-                    </RouterLink>
+                      <RouterLink
+                        to="/signed_in/student_dashboard/records/diploma"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <IconButton color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </RouterLink>
                     </Grid>
                   </Grid>
                 </Paper>
@@ -549,14 +598,14 @@ function DashboardContentRecords() {
                       </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                    <RouterLink
-                     to="/signed_in/student_dashboard/records/graduation"
-                     style={{ textDecoration: "none", color: "inherit" }}
-                     >
-                      <IconButton color="primary">
-                        <EditIcon />
-                      </IconButton>
-                    </RouterLink>
+                      <RouterLink
+                        to="/signed_in/student_dashboard/records/graduation"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <IconButton color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </RouterLink>
                     </Grid>
                   </Grid>
                 </Paper>
@@ -599,14 +648,14 @@ function DashboardContentRecords() {
                       </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                    <RouterLink
-                     to="/signed_in/student_dashboard/records/backlogs"
-                     style={{ textDecoration: "none", color: "inherit" }}
-                     >
-                      <IconButton color="primary">
-                        <EditIcon />
-                      </IconButton>
-                    </RouterLink>
+                      <RouterLink
+                        to="/signed_in/student_dashboard/records/backlogs"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <IconButton color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </RouterLink>
                     </Grid>
                   </Grid>
                 </Paper>
@@ -617,7 +666,7 @@ function DashboardContentRecords() {
                       p: 2,
                       display: "flex",
                       flexDirection: "column",
-                      height: 3000,
+                      height: 3150,
                     }}
                   >
                     <Paper
@@ -644,576 +693,859 @@ function DashboardContentRecords() {
                       justify="center"
                     >
                       <Grid item xs={1}>
-                        <img src="https://images.unsplash.com/photo-1494959764136-6be9eb3c261e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="profilephoto" height={60} />
+                        <img
+                          src="https://images.unsplash.com/photo-1494959764136-6be9eb3c261e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                          alt="profilephoto"
+                          height={60}
+                        />
                         <br></br>
-                        <input type= "file" />
+                        <input type="file" />
                       </Grid>
                     </Grid>
-                    <br></br><br></br>
+                    <br></br>
+                    <br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                        CLASS 10
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      CLASS 10
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Name of the School
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          id="standard-basic"
+                          label="School Name"
+                          variant="standard"
+                        />
+                      </Grid>
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Year of Passing
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={Year1}
+                            onChange={handleChange1}
+                          >
+                            <MenuItem value={10}>2010</MenuItem>
+                            <MenuItem value={20}>2011</MenuItem>
+                            <MenuItem value={30}>2012</MenuItem>
+                            <MenuItem value={40}>2013</MenuItem>
+                            <MenuItem value={50}>2014</MenuItem>
+                            <MenuItem value={60}>2015</MenuItem>
+                            <MenuItem value={70}>2016</MenuItem>
+                            <MenuItem value={80}>2017</MenuItem>
+                            <MenuItem value={90}>2018</MenuItem>
+                            <MenuItem value={110}>2019</MenuItem>
+                            <MenuItem value={120}>2020</MenuItem>
+                            <MenuItem value={130}>2021</MenuItem>
+                            <MenuItem value={140}>2022</MenuItem>
+                            <MenuItem value={150}>2023</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Name of the School
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Year of Passing
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    </Grid>
-                    <br></br><br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                        CLASS 12
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      CLASS 12
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Name of the School/College
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          id="standard-basic"
+                          variant="standard"
+                        />
+                      </Grid>
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Year of Passing
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={Year2}
+                            onChange={handleChange2}
+                          >
+                            <MenuItem value={10}>2010</MenuItem>
+                            <MenuItem value={20}>2011</MenuItem>
+                            <MenuItem value={30}>2012</MenuItem>
+                            <MenuItem value={40}>2013</MenuItem>
+                            <MenuItem value={50}>2014</MenuItem>
+                            <MenuItem value={60}>2015</MenuItem>
+                            <MenuItem value={70}>2016</MenuItem>
+                            <MenuItem value={80}>2017</MenuItem>
+                            <MenuItem value={90}>2018</MenuItem>
+                            <MenuItem value={110}>2019</MenuItem>
+                            <MenuItem value={120}>2020</MenuItem>
+                            <MenuItem value={130}>2021</MenuItem>
+                            <MenuItem value={140}>2022</MenuItem>
+                            <MenuItem value={150}>2023</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Name of the School/College
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Year of Passing
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    </Grid>
-                    <br></br><br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                        DIPLOMA
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      DIPLOMA
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Year of Passing
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={Year3}
+                            onChange={handleChange3}
+                          >
+                            <MenuItem value={10}>2010</MenuItem>
+                            <MenuItem value={20}>2011</MenuItem>
+                            <MenuItem value={30}>2012</MenuItem>
+                            <MenuItem value={40}>2013</MenuItem>
+                            <MenuItem value={50}>2014</MenuItem>
+                            <MenuItem value={60}>2015</MenuItem>
+                            <MenuItem value={70}>2016</MenuItem>
+                            <MenuItem value={80}>2017</MenuItem>
+                            <MenuItem value={90}>2018</MenuItem>
+                            <MenuItem value={110}>2019</MenuItem>
+                            <MenuItem value={120}>2020</MenuItem>
+                            <MenuItem value={130}>2021</MenuItem>
+                            <MenuItem value={140}>2022</MenuItem>
+                            <MenuItem value={150}>2023</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Year of Passing
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    </Grid>
-                    <br></br><br></br>
+                    <br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                        GRADUATION
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      GRADUATION
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Year of Passing
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={Year4}
+                            onChange={handleChange4}
+                          >
+                            <MenuItem value={10}>2010</MenuItem>
+                            <MenuItem value={20}>2011</MenuItem>
+                            <MenuItem value={30}>2012</MenuItem>
+                            <MenuItem value={40}>2013</MenuItem>
+                            <MenuItem value={50}>2014</MenuItem>
+                            <MenuItem value={60}>2015</MenuItem>
+                            <MenuItem value={70}>2016</MenuItem>
+                            <MenuItem value={80}>2017</MenuItem>
+                            <MenuItem value={90}>2018</MenuItem>
+                            <MenuItem value={110}>2019</MenuItem>
+                            <MenuItem value={120}>2020</MenuItem>
+                            <MenuItem value={130}>2021</MenuItem>
+                            <MenuItem value={140}>2022</MenuItem>
+                            <MenuItem value={150}>2023</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Year of Passing
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    </Grid>
-                    <br></br><br></br>
+                    <br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                       GRADUATION PROJECT DETAILS
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      GRADUATION PROJECT DETAILS
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Title
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          id="standard-basic"
+                          variant="standard"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Project Type
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={ProjectType1}
+                            onChange={handleChange6}
+                          >
+                            <MenuItem value={20}>Individual</MenuItem>
+                            <MenuItem value={30}>Group</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Company
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Duration in months
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={Duration1}
+                            onChange={handleChange8}
+                          >
+                            <MenuItem value={10}>1</MenuItem>
+                            <MenuItem value={20}>2</MenuItem>
+                            <MenuItem value={30}>3</MenuItem>
+                            <MenuItem value={40}>4</MenuItem>
+                            <MenuItem value={50}>5</MenuItem>
+                            <MenuItem value={60}>6</MenuItem>
+                            <MenuItem value={70}>7</MenuItem>
+                            <MenuItem value={80}>8</MenuItem>
+                            <MenuItem value={90}>9</MenuItem>
+                            <MenuItem value={100}>10</MenuItem>
+                            <MenuItem value={110}>12</MenuItem>
+                            <MenuItem value={120}>12</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Description
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Title
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Project Type
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Select Type" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Company
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Duration in months
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Description
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    </Grid>
-                    <br></br><br></br>
+                    <br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                       GRADUATION INTERNSHIP DETAILS
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      GRADUATION INTERNSHIP DETAILS
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Title
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          id="standard-basic"
+                          variant="standard"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Company
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          id="standard-basic"
+                          variant="standard"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Role
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Duration in months
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={Duration2}
+                            onChange={handleChange9}
+                          >
+                            <MenuItem value={10}>1</MenuItem>
+                            <MenuItem value={20}>2</MenuItem>
+                            <MenuItem value={30}>3</MenuItem>
+                            <MenuItem value={40}>4</MenuItem>
+                            <MenuItem value={50}>5</MenuItem>
+                            <MenuItem value={60}>6</MenuItem>
+                            <MenuItem value={70}>7</MenuItem>
+                            <MenuItem value={80}>8</MenuItem>
+                            <MenuItem value={90}>9</MenuItem>
+                            <MenuItem value={100}>10</MenuItem>
+                            <MenuItem value={110}>12</MenuItem>
+                            <MenuItem value={120}>12</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Description
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Title
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Company
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Select Type" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Role
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Duration in months
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Description
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    </Grid>
-                    <br></br><br></br>
+                    <br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                        POST GRADUATION 
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      POST GRADUATION
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Year of Passing
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={Year5}
+                            onChange={handleChange5}
+                          >
+                            <MenuItem value={10}>2010</MenuItem>
+                            <MenuItem value={20}>2011</MenuItem>
+                            <MenuItem value={30}>2012</MenuItem>
+                            <MenuItem value={40}>2013</MenuItem>
+                            <MenuItem value={50}>2014</MenuItem>
+                            <MenuItem value={60}>2015</MenuItem>
+                            <MenuItem value={70}>2016</MenuItem>
+                            <MenuItem value={80}>2017</MenuItem>
+                            <MenuItem value={90}>2018</MenuItem>
+                            <MenuItem value={110}>2019</MenuItem>
+                            <MenuItem value={120}>2020</MenuItem>
+                            <MenuItem value={130}>2021</MenuItem>
+                            <MenuItem value={140}>2022</MenuItem>
+                            <MenuItem value={150}>2023</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Year of Passing
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    </Grid>
-                    <br></br><br></br>
+                    <br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                       POST GRADUATION PROJECT DETAILS
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      POST GRADUATION PROJECT DETAILS
+                    </Typography>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Title
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          id="standard-basic"
+                          variant="standard"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Project Type
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={ProjectType2}
+                            onChange={handleChange7}
+                          >
+                            <MenuItem value={20}>Individual</MenuItem>
+                            <MenuItem value={30}>Group</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Company
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Duration in months
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={Duration3}
+                            onChange={handleChange10}
+                          >
+                            <MenuItem value={10}>1</MenuItem>
+                            <MenuItem value={20}>2</MenuItem>
+                            <MenuItem value={30}>3</MenuItem>
+                            <MenuItem value={40}>4</MenuItem>
+                            <MenuItem value={50}>5</MenuItem>
+                            <MenuItem value={60}>6</MenuItem>
+                            <MenuItem value={70}>7</MenuItem>
+                            <MenuItem value={80}>8</MenuItem>
+                            <MenuItem value={90}>9</MenuItem>
+                            <MenuItem value={100}>10</MenuItem>
+                            <MenuItem value={110}>12</MenuItem>
+                            <MenuItem value={120}>12</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Description
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                    </Grid>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Title
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Project Type
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Select Type" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Company
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Duration in months
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Description
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    </Grid>
-                    <br></br><br></br>
+                    <br></br>
                     <Divider light={true} />
                     <br></br>
                     <Typography
-                        variant="h6"
-                        color="text.primary"
-                        align="center"
-                      >
-                       PERSONAL DETAILS
-                      </Typography>
-                      <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                      variant="h6"
+                      color="text.primary"
+                      align="center"
+                    >
+                      PERSONAL DETAILS
+                    </Typography>
                     <br></br>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    >
+                      <br></br>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Date of Birth
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <LocalizationProvider
+                          dateAdapter={AdapterDateFns}
+                          sx={{ marginX: 3 }}
+                        >
+                          <DatePicker
+                            views={["day"]}
+                            label="Date of Birth"
+                            value={dateOfBirth}
+                            onChange={(newValue) => {
+                              setDateOfBirth(newValue);
+                            }}
+                            renderInput={(params) => (
+                              <TextField {...params} helperText={null} />
+                            )}
+                            fullWidth
+                          />
+                        </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Parent's Mobile Number
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Permanent Address
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          id="standard-basic"
+                          variant="standard"
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Current Address
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          PAN Number
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Passport Number
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          DL Number
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Achievements
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Blood Group
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField id="standard-basic" variant="standard" />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography
+                          variant="h9"
+                          color="text.primary"
+                          sx={{ ml: 8 }}
+                        >
+                          <br></br>
+                          Resume
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={8}>
                         <br></br>
-                        Parent's Mobile Number
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
+                        <input type="file" />
+                      </Grid>
+                      <Grid item xs={4}></Grid>
+                      <Grid item xs={8}>
                         <br></br>
-                        Permanent Address
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Select Type" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Current Address
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        PAN Number
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Passport Number
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        DL Number
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Achievements
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Blood Group
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography
-                        variant="h9"
-                        color="text.primary"
-                        sx={{ ml: 8 }}
-                      >
-                        <br></br>
-                        Resume
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={8}>
-                    <br></br>
-                    <input type="file" /> 
-                    </Grid>
-                    <Grid item xs={4}>
-
-                    </Grid>
-                    <Grid item xs={8}>
-                    <br></br>
-                    <Button variant="contained">Submit</Button>
-                    </Grid>
+                        <Button variant="contained">Submit</Button>
+                      </Grid>
                     </Grid>
                   </Paper>
                 </Grid>

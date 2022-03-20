@@ -19,10 +19,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 
-
-
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 function Copyright(props) {
   return (
@@ -96,11 +93,64 @@ function DashboardContentEvents() {
     setOpen(!open);
   };
 
-  const { data } = useDemoData({
-    dataSet: 'Commodity',
-    rowLength: 100,
-    maxColumns: 6,
-  });
+  const columns = [
+    { field: "id", headerName: "NO", width: 90 },
+    {
+      field: "Logo",
+      headerName: "Logo",
+      width: 100,
+    },
+    {
+      field: "Company",
+      headerName: "Company",
+      width: 100,
+    },
+    {
+      field: "DriveData",
+      headerName: "Drive Data",
+      width: 100,
+    },
+    {
+      field: "ApplicationEndDate",
+      headerName: "Application End Date",
+      sortable: false,
+      width: 100,
+    },
+    {
+      field: "Description",
+      headerName: "Description",
+      width: 100,
+    },
+    {
+      field: "Sector",
+      headerName: "Sector",
+      width: 100,
+    },
+    {
+      field: "Venue",
+      headerName: "Venue",
+      width: 100,
+    },
+    {
+      field: "Stages",
+      headerName: "Stages",
+      width: 100,
+    },
+    {
+      field: "Apply",
+      headerName: "Apply",
+      width: 100,
+    },
+    {
+      field: "CTC",
+      headerName: "CTC",
+      width: 80,
+    },
+  ];
+
+  const rows = [
+    { id: 1, Logo: "Logo", Company: "Heptagon", DriveData: "123", ApplicationEndDate: '456', Description:"890", Sector:"1", Venue:"Banglore", Stages: "2", Apply:"1",CTC:"4.5" },
+  ];
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -187,16 +237,15 @@ function DashboardContentEvents() {
                   }}
                 >
                   {/* Company Data-Grid */}
-                  <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        {...data}
-        components={{
-          Toolbar: GridToolbar,
-        }}
-      />
-    </div>
-                  
-                  
+                  <div style={{ height: 400, width: "100%" }}>
+                    <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      components={{
+                        Toolbar: GridToolbar,
+                      }}
+                    />
+                  </div>
                 </Paper>
               </Grid>
             </Grid>

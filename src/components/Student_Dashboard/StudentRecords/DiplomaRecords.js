@@ -21,6 +21,10 @@ import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button'
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Link as RouterLink } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 
 import { mainListItems, secondaryListItems } from "../listItems";
 
@@ -97,7 +101,11 @@ function StudentDiplomaRecord() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [Course, set] = React.useState("");
 
+  const handleChange = (event) => {
+    set(event.target.value);
+  };
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -215,7 +223,45 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    <FormControl sx={{ width: 150 }}>
+                        <InputLabel id="demo-simple-select-label">
+                          Select
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={Course}
+                          label="Board"
+                          onChange={handleChange}
+                        >
+                          <MenuItem value={10}>Select Course</MenuItem>
+                          <MenuItem value={20}>Aerospace</MenuItem>
+                          <MenuItem value={30}>Agriculture</MenuItem>
+                          <MenuItem value={40}>Aviation</MenuItem>
+                          <MenuItem value={50}>Automobile</MenuItem>
+                          <MenuItem value={60}> Bio Chemistry/ Bio-Technology</MenuItem>
+                          <MenuItem value={70}>Bio-Medical</MenuItem>
+                          <MenuItem value={80}>Ceramice</MenuItem>
+                          <MenuItem value={90}>Chemical</MenuItem>
+                          <MenuItem value={100}>Computer Science</MenuItem>
+                          <MenuItem value={110}>Electrical and Electronics</MenuItem>
+                          <MenuItem value={120}>Electronics and Communication</MenuItem>
+                          <MenuItem value={130}>Energy</MenuItem>
+                          <MenuItem value={140}>Electronics and Instrumentation</MenuItem>
+                          <MenuItem value={150}>Environmental</MenuItem>
+                          <MenuItem value={160}>Industrial Engineering and Management</MenuItem>
+                          <MenuItem value={170}>Instrumentation</MenuItem>
+                          <MenuItem value={180}>Information Science</MenuItem>
+                          <MenuItem value={190}>Marine</MenuItem>
+                          <MenuItem value={200}>Mechanical</MenuItem>
+                          <MenuItem value={210}>Mechatronics</MenuItem>
+                          <MenuItem value={220}>Metallurgy</MenuItem>
+                          <MenuItem value={230}>Industrial Production</MenuItem>
+                          <MenuItem value={240}>Telecommunication</MenuItem>
+                          <MenuItem value={250}>Textile</MenuItem>
+                          <MenuItem value={260}>Tools and Die Making</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
