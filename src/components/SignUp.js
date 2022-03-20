@@ -117,9 +117,9 @@ export default function SignUp() {
       values.password = h
       console.log(values);
       fet("/register", "POST", values).then(res => {
-        console.log("Signup response : ", res)
-        /* if (response.status !== "error")
-              window.location = "./signed_in/student_dashboard"; */
+        //console.log("Signup response : ", res)
+        if (response.status !== "error")
+              window.location = "./signed_in/student_dashboard";
       })
 
     })
