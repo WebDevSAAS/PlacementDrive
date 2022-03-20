@@ -21,6 +21,10 @@ import TextField from "@mui/material/TextField";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Link as RouterLink } from "react-router-dom";
 import Button from '@mui/material/Button'
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 
 import { mainListItems, secondaryListItems } from "../listItems";
 
@@ -96,6 +100,11 @@ function StudentClass10Record() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+  const [Board, set] = React.useState("");
+
+  const handleChange = (event) => {
+    set(event.target.value);
   };
 
   return (
@@ -215,7 +224,23 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="School Name" variant="standard" />
+                    <FormControl sx={{ width: 150 }}>
+                        <InputLabel id="demo-simple-select-label">
+                          Select
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={Board}
+                          label="Board"
+                          onChange={handleChange}
+                        >
+                          <MenuItem value={10}>CBSE</MenuItem>
+                          <MenuItem value={20}>ICSE</MenuItem>
+                          <MenuItem value={30}>International</MenuItem>
+                          <MenuItem value={40}>State</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -228,7 +253,7 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Select Type" variant="standard" />
+                    <TextField sx={{ mt: 2}} defaultValue="CGPA" id="standard-basic" variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography

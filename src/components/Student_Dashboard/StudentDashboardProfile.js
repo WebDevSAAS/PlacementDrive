@@ -23,6 +23,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 import { fet } from "../modules/fet";
 
 function Copyright(props) {
@@ -165,6 +169,12 @@ function DashboardContentProfile() {
     setOpen(!open);
   };
 
+  const [Gender, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -277,6 +287,7 @@ function DashboardContentProfile() {
                         id="outlined-read-only-input"
                         defaultValue="Tushar"
                         color="primary"
+                        focused
                         disabled
                         InputProps={{
                           readOnly: true,
@@ -298,6 +309,7 @@ function DashboardContentProfile() {
                         id="outlined-read-only-input"
                         defaultValue="DMR"
                         color="primary"
+                        focused
                         disabled
                         InputProps={{
                           readOnly: true,
@@ -320,6 +332,7 @@ function DashboardContentProfile() {
                         id="outlined-read-only-input"
                         defaultValue="1RN20IS113"
                         color="primary"
+                        focused
                         disabled
                         InputProps={{
                           readOnly: true,
@@ -333,14 +346,16 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        Branch :<br></br>
-                      </Typography>
+                        <br></br>
+                        <br></br>
+                     </Typography>
                     </Grid>
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
                         defaultValue="ISE"
                         color="primary"
+                        focused
                         disabled
                         InputProps={{
                           readOnly: true,
@@ -358,6 +373,21 @@ function DashboardContentProfile() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
+                      <FormControl focused sx={{ width: 200 }}>
+                        <InputLabel id="demo-simple-select-label">
+                          Gender
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={Gender}
+                          label="Gender"
+                          onChange={handleChange}
+                        >
+                          <MenuItem value={10}>Male</MenuItem>
+                          <MenuItem value={20}>Female</MenuItem>
+                        </Select>
+                      </FormControl>
                       <TextField
                         id="outlined-read-only-input"
                         defaultValue="Male"
@@ -368,6 +398,7 @@ function DashboardContentProfile() {
                           style: { fontSize: 20, textAlign: "center" },
                         }}
                       />
+
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -383,6 +414,7 @@ function DashboardContentProfile() {
                         id="outlined-read-only-input"
                         defaultValue="01/09/2002"
                         color="primary"
+                        focused
                         disabled
                         InputProps={{
                           readOnly: true,
@@ -405,6 +437,7 @@ function DashboardContentProfile() {
                         id="outlined-read-only-input"
                         defaultValue="7023678992"
                         color="primary"
+                        focused
                         disabled
                         InputProps={{
                           readOnly: true,
@@ -426,7 +459,9 @@ function DashboardContentProfile() {
                         id="outlined-read-only-input"
                         defaultValue="dmrtushar@gmail.com"
                         color="primary"
+                        focused
                         disabled
+
                         InputProps={{
                           readOnly: true,
                           style: { fontSize: 20, textAlign: "center" },
@@ -435,6 +470,7 @@ function DashboardContentProfile() {
                     </Grid>
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
+                      <Button variant="contained">Submit</Button>
                       <Button variant="contained">Ok</Button>
                     </Grid>
                   </Grid>
