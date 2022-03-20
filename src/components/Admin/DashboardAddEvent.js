@@ -105,7 +105,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 // --------------------------------------------------------------------------------------------
-function AdminDashboardContentStudents() {
+function AdminDashboardContentAddEvent() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -157,7 +157,7 @@ function AdminDashboardContentStudents() {
               sx={{ flexGrow: 1 }}
             >
                 Dashboard <Typography variant="p" color="#ffeb3b">
-                Students
+                Add Event
               </Typography>
               {badge}
             </Typography>
@@ -230,6 +230,6 @@ function AdminDashboardContentStudents() {
   );
 }
 
-export default function AdminDashboardStudents() {
-  return <AdminDashboardContentStudents />;
+export default function AdminDashboardAddEvent() {
+  return <AdminDashboardContentAddEvent />;
 }

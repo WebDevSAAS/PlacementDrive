@@ -19,9 +19,12 @@ import StudentDashboardNotifications from "./components/Student_Dashboard/Studen
 import StudentDashboardAnalytics from "./components/Student_Dashboard/StudentDashboardAnalytics"
 import AdminDashboard from "./components/Admin/AdminDashboard"
 
-import AdminDashboardNotifications from "./components/Admin/AdminDashboardNotifications"
-import AdminDashboardStudents from "./components/Admin/AdminDashboardStudents"
-import AdminDashboardEvents from "./components/Admin/AdminDashboardEvents"
+import AdminDashboardNotifications from "./components/Admin/DashboardNotifications"
+import AdminDashboardRecords from "./components/Admin/DashboardRecords"
+import AdminDashboardAddEvent from "./components/Admin/DashboardAddEvent"
+import AdminDashboardCompanyReports from "./components/Admin/DashboardCompanyReports"
+import AdminDashboardStudentReports from "./components/Admin/DashboardStudentReports"
+import AdminDashboardEvents from "./components/Admin/DashboardEvents"
 import { ForgotPassword } from "./components/ForgotPassword"
 
 
@@ -67,8 +70,12 @@ function App() {
           <Route path="/admin/signin" exact element={<AdminSignIn />} />
           <Route path="/admin/signed_in/dashboard" exact element={<AdminDashboard />} /> 
           <Route path="/admin/signed_in/dashboard/notifications" exact element={<AdminDashboardNotifications />} />
-          <Route path="/admin/signed_in/dashboard/students" exact element={<AdminDashboardStudents />} />
+          <Route path="/admin/signed_in/dashboard/records" exact element={<AdminDashboardRecords />} />
           <Route path="/admin/signed_in/dashboard/events" exact element={<AdminDashboardEvents />} />
+          <Route path="/admin/signed_in/dashboard/add_event" exact element={<AdminDashboardAddEvent />} />
+          <Route path="/admin/signed_in/dashboard/company_report" exact element={<AdminDashboardCompanyReports />} />
+          <Route path="/admin/signed_in/dashboard/student_report" exact element={<AdminDashboardStudentReports />} />
+
 
         </Routes>
       </div>
