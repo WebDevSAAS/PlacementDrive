@@ -42,7 +42,7 @@ var usnData;
 const initialValues = {
   usn: "",
   password: "",
-  rememberMe: false,
+  rememberMe: true
 };
 
 const usnRegex = /^1RN\d\d[A-Z][A-Z]\d\d\d$/;
@@ -70,7 +70,7 @@ function SignIn() {
         accountType: "student",
       })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           if (response.status !== "error")
               window.location = "./signed_in/student_dashboard";
         });
@@ -124,6 +124,7 @@ function SignIn() {
                           variant="outlined"
                           fullWidth
                           name="password"
+                          type="password"
                           value={values.password}
                           component={TextField}
                         />
