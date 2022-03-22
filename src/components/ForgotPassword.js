@@ -87,7 +87,7 @@ function ForgotPassword() {
                           margin="normal"
                           label="Enter your registered e-mail"
                           variant="outlined"
-                          fullWidth
+                          fullwidth
                           name="email"
                           value={values.email}
                           component={TextField}

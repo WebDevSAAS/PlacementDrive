@@ -118,8 +118,8 @@ export default function SignUp() {
       console.log(values);
       fet("/register", "POST", values).then(res => {
         console.log("Signup response : ", res)
-        /* if (response.status !== "error")
-              window.location = "./signed_in/student_dashboard"; */
+        if (res.status !== "error")
+              window.location = "./signed_in/student_dashboard";
       })
 
     })

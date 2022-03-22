@@ -71,8 +71,8 @@ function SignIn() {
       })
         .then((response) => {
           console.log(response);
-          /* if (response.status !== "error")
-              window.location = "./signed_in/student_dashboard"; */
+          if (response.status !== "error")
+              window.location = "./signed_in/student_dashboard";
         });
     })
   };
