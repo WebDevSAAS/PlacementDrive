@@ -19,6 +19,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+
 
 function Copyright(props) {
   return (
@@ -123,6 +125,77 @@ function AdminDashboardContentCompanyReports() {
     badge =  <TpcBadge />
   }
 
+  const rows = [
+    {
+      id: 1,
+      drivename: "Cognizant - GenC Nxt" ,
+      band: 2,
+      eligible: 450,
+      applied: 120,
+      appeared: 100,
+      offer: 25,
+      conversionrate: 60,
+      rejected: 15,
+    }
+  ]
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "No.",
+      flex: 1,
+      minWidth: 50,
+    },
+    {
+      field: "drivename",
+      headerName: "Drive Name",
+      flex: 1,
+      minWidth: 300,
+    },
+    {
+      field: "band",
+      headerName: "Band",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "eligible",
+      headerName: "Eligible",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "applied",
+      headerName: "Applied",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "appeared",
+      headerName: "Appeared",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "offer",
+      headerName: "Offers",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "conversionrate",
+      headerName: "Conversion",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "rejected",
+      headerName: "Rejected",
+      flex: 1,
+      minWidth: 100,
+    },
+  ];
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -196,7 +269,7 @@ function AdminDashboardContentCompanyReports() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper
@@ -206,22 +279,16 @@ function AdminDashboardContentCompanyReports() {
                     flexDirection: "column",
                     minHeight: 280,
                   }}
-                ></Paper>
+                >
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    components={{
+                      Toolbar: GridToolbar,
+                    }}/>
+                </Paper>
               </Grid>
             </Grid>
-
-            {/* <Grid item xs={12}>
-              <Paper
-                sx={{
-                  mt: 5,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  minHeight: 280,
-                }}
-              ></Paper>
-            </Grid> */}
-
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
