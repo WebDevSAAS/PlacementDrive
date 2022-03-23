@@ -18,7 +18,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 function Copyright(props) {
   return (
@@ -38,22 +39,13 @@ function Copyright(props) {
   );
 }
 function AdminBadge() {
-  return (
-    <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} >
-    </Badge>
-  );
+  return <Badge badgeContent={"Admin"} color="success" sx={{ px: 3 }}></Badge>;
 }
 function DfpcBadge() {
-  return (
-    <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3, }}>
-    </Badge>
-  );
+  return <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3 }}></Badge>;
 }
 function TpcBadge() {
-  return (
-    <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3, }}>
-    </Badge>
-  );
+  return <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3 }}></Badge>;
 }
 
 const drawerWidth = 240;
@@ -111,18 +103,85 @@ function AdminContentStudentReports() {
     setOpen(!open);
   };
 
-  const userCategory = "admin";       //    INSERT userCategory VALUE FROM BACKEND !!
+  const userCategory = "admin"; //    INSERT userCategory VALUE FROM BACKEND !!
   var badge;
   if (userCategory == "admin") {
-    badge = <AdminBadge />
-  } 
-  else if (userCategory == "dfpc") {
-    badge = <DfpcBadge />
+    badge = <AdminBadge />;
+  } else if (userCategory == "dfpc") {
+    badge = <DfpcBadge />;
+  } else if (userCategory == "tpc") {
+    badge = <TpcBadge />;
   }
-  else if (userCategory == "tpc") {
-    badge =  <TpcBadge />
-  }
+  const rows = [
+    {
+      id: 1,
+      studentname: "Jeremy Zucker",
+      email: "1rn19cs001.jeremy@gmail.com",
+      phone: 9123123877,
+      branch: "C.S.E.",
+      usn: "1RN19CS001",
+      drivename: "Cognizant - GenC Nxt",
+      ctc: 8,
+      sector: "Information Technology",
+    },
+  ];
 
+  const columns = [
+    {
+      field: "id",
+      headerName: "No.",
+      flex: 1,
+      minWidth: 50,
+    },
+    {
+      field: "studentname",
+      headerName: "Name",
+      flex: 1,
+      minWidth: 150,
+    },
+    {
+      field: "email",
+      headerName: "E-Mail",
+      flex: 1,
+      minWidth: 250,
+    },
+    {
+      field: "phone",
+      headerName: "Phone",
+      flex: 1,
+      minWidth: 150,
+    },
+    {
+      field: "branch",
+      headerName: "Branch",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "usn",
+      headerName: "U.S.N.",
+      flex: 1,
+      minWidth: 150,
+    },
+    {
+      field: "drivename",
+      headerName: "Drive Name",
+      flex: 1,
+      minWidth: 200,
+    },
+    {
+      field: "ctc",
+      headerName: "C.T.C.",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "sector",
+      headerName: "Sector",
+      flex: 1,
+      minWidth: 200,
+    },
+  ];
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -148,7 +207,7 @@ function AdminContentStudentReports() {
             >
               <MenuIcon />
             </IconButton>
-            
+
             <Typography
               component="h1"
               variant="h6"
@@ -156,7 +215,8 @@ function AdminContentStudentReports() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-                Dashboard <Typography variant="p" color="#ffeb3b">
+              Dashboard{" "}
+              <Typography variant="p" color="#ffeb3b">
                 Student Reports
               </Typography>
               {badge}
@@ -196,7 +256,7 @@ function AdminContentStudentReports() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper
@@ -206,22 +266,17 @@ function AdminContentStudentReports() {
                     flexDirection: "column",
                     minHeight: 280,
                   }}
-                ></Paper>
+                >
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    components={{
+                      Toolbar: GridToolbar,
+                    }}
+                  />
+                </Paper>
               </Grid>
             </Grid>
-
-            {/* <Grid item xs={12}>
-              <Paper
-                sx={{
-                  mt: 5,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  minHeight: 280,
-                }}
-              ></Paper>
-            </Grid> */}
-
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

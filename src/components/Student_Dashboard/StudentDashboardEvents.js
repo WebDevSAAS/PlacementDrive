@@ -94,62 +94,84 @@ function DashboardContentEvents() {
   };
 
   const columns = [
-    { field: "id", headerName: "NO", width: 90 },
+    { field: "id", headerName: "NO", flex: 1, minWidth: 50 },
     {
       field: "Logo",
       headerName: "Logo",
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "Company",
       headerName: "Company",
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "DriveData",
       headerName: "Drive Data",
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "ApplicationEndDate",
       headerName: "Application End Date",
       sortable: false,
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "Description",
       headerName: "Description",
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "Sector",
       headerName: "Sector",
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "Venue",
       headerName: "Venue",
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "Stages",
       headerName: "Stages",
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "Apply",
       headerName: "Apply",
-      width: 100,
+      flex: 1,
+      minWidth: 200,
     },
     {
       field: "CTC",
-      headerName: "CTC",
-      width: 80,
+      headerName: "C.T.C. (in LPA)",
+      flex: 1,
+      minWidth: 200,
     },
   ];
 
   const rows = [
-    { id: 1, Logo: "Logo", Company: "Heptagon", DriveData: "123", ApplicationEndDate: '456', Description:"890", Sector:"1", Venue:"Banglore", Stages: "2", Apply:"1",CTC:"4.5" },
+    {
+      id: 1,
+      Logo: "{image}",
+      Company: "Heptagon",
+      DriveData: "123",
+      ApplicationEndDate: "456",
+      Description: "890",
+      Sector: "1",
+      Venue: "Banglore",
+      Stages: "2",
+      Apply: "1",
+      CTC: "4.5",
+    },
   ];
 
   return (
@@ -183,7 +205,10 @@ function DashboardContentEvents() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard <Typography variant="p" color="#ffeb3b">Events</Typography>
+              Dashboard{" "}
+              <Typography variant="p" color="#ffeb3b">
+                Events
+              </Typography>
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="error">
