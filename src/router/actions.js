@@ -1,17 +1,17 @@
 module.exports = function (app, db) {
     app.get("/getCompanies", (req, res) => {
         // if logged in , continue
+        let q = {}
+
         if (req.session && req.session.userid) {
-            let q = `SELECT * FROM company `
             if (req.body.params) {
                 k = req.body.params
-                q += `WHERE `
-                if (k.branch) q += `branch LIKE %${k.branch}% `
-                if (k.cgpa) q += `cgpa <= %${k.cgpa}% `
-                if (k.package) q += `pay_package >= %${k.package}% `
+                if (k.branch) q.branch = new RegExp('.*' + k.branch + '.*')
+                if (k.cgpa) q.cgpa = new RegExp('.*' + k.cgpa + '.*')
+                if (k.package) q.package = new RegExp('.*' + k.package + '.*')
                 q += `;`
             }
-            db.query(q, (error, results, fields) => {
+            db.collection('companies').findOne(q, (error, results) => {
                 if (error) {
                     res.json({
                         status: "error_company_info",
@@ -19,7 +19,6 @@ module.exports = function (app, db) {
                         isLogged: true,
                         isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
                         errorLatest: error,
-                        // keys: req.session.keys,
                         data: results,
                     })
                     throw error
