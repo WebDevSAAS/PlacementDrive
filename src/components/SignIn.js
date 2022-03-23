@@ -45,7 +45,7 @@ const initialValues = {
   rememberMe: true
 };
 
-const usnRegex = /^1RN\d\d[A-Z][A-Z]\d\d\d$/;
+const usnRegex = /^1[rR][nN]\d\d[a-zA-Z][a-zA-Z]\d\d\d$/;
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 var validationSchema = Yup.object().shape({
