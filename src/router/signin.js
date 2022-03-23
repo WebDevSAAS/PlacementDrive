@@ -93,10 +93,11 @@ module.exports = function (app, db) {
         // already logged in, redirect user to their profile
         if (req.session && req.session.userid) {
             console.log(req.session)
-            let q = `SELECT * FROM ${req.session.accountType === "admin" ? "admins" : "student"} WHERE usn = ? ;`
-            /*if (req.session.accountType === "admin" ||  req.session.accountType === "mentor") let q = `SELECT * FROM admins WHERE usn = ?;`
-            else  let q = `SELECT * FROM students WHERE usn = ?;`*/
-            db.query(q, [req.session.userid], (error, results, fields) => {
+            let q = (k.accountType === "admin") ? "admins" : "students"
+            db.collection(q).findOne({usn : req.session.userid}, {projection : {
+                _id : 0,
+                profile : 1
+            }}, (error, result) => {
                 if (error) {
                     res.json({
                         status: "success",
@@ -111,8 +112,6 @@ module.exports = function (app, db) {
                     })
                     throw error
                 } else {
-                    results = results[0]
-                    delete results.password
                     res.json({
                         status: "success",
                         message: "Session exists !",
@@ -120,8 +119,7 @@ module.exports = function (app, db) {
                         isLatest: true,
                         isLogged: true,
                         isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
-                        // keys: req.session.keys,
-                        profile: results,
+                        profile: result,
                     })
                 }
             })
