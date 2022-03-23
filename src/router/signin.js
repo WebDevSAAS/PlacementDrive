@@ -119,7 +119,7 @@ module.exports = function (app, db) {
                         isLatest: true,
                         isLogged: true,
                         isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
-                        profile: result,
+                        profile: result.profile,
                     })
                 }
             })
