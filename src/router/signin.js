@@ -93,7 +93,7 @@ module.exports = function (app, db) {
         // already logged in, redirect user to their profile
         if (req.session && req.session.userid) {
             console.log(req.session)
-            let q = (k.accountType === "admin") ? "admins" : "students"
+            let q = (req.session.accountType === "admin") ? "admins" : "students"
             db.collection(q).findOne({usn : req.session.userid}, {projection : {
                 _id : 0,
                 profile : 1
@@ -105,7 +105,7 @@ module.exports = function (app, db) {
                         isLogged: true,
                         lastUpdated: req.session.lastUpdated,
                         isLatest: false,
-                        isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
+                        isAdmin: ((req.session.accountType === "admin") || (req.session.accountType === "mentor")) ? true: false,
                         errorLatest: error,
                         // keys: req.session.keys,
                         profile: req.session.profile,
@@ -118,7 +118,7 @@ module.exports = function (app, db) {
                         lastUpdated: new Date(),
                         isLatest: true,
                         isLogged: true,
-                        isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
+                        isAdmin: ((req.session.accountType === "admin") || (req.session.accountType === "mentor")) ? true: false,
                         profile: result.profile,
                     })
                 }
