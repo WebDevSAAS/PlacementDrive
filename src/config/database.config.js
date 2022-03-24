@@ -3,7 +3,7 @@
 const {MongoClient} = require('mongodb');
 
 const url = "mongodb://localhost:27017/placement"
-let collections = ["students", "company", "admins"]
+let collections = ["students", "companies", "admins", "applied_selected"]
 
 let flag = false
 let dbo
