@@ -4,46 +4,51 @@ module.exports = function (app, db) {
         if (!data.rows) data.rows = 20
         let usnr = /1[a-zA-Z]+\d\d[a-zA-Z]+\d\d\d/i
         let emailr = /\S+@\S+\.\S+/i
+        let q = {}
         if (data.id) {
             if (data.id.usn) {
                 if (data.id.usn.length == 10) {
-                    if (usnr.test(data.id.usn)) return { status: "success", sql: `SELECT * FROM student WHERE usn = ${data.id.usn};` }
+                    if (usnr.test(data.id.usn)) {
+                        q.usn = data.id.usn
+                        return { status: "success", param: q }
+                    }
                     else return { status: "error", message: "Bad USN id" }
-                } else if (data.id.usn && usnr.test(data.id.range.from)) {
+                } else if (data.id.usn && usnr.test(data.id.range.from) && usnr.test(data.id.range.to)) {
+                    q.usn = { $gt : data.id.range.from, $lt : data.id.range.to }
                     return {
                         status: "success",
-                        sql:
-                            `SELECT * FROM student WHERE STRCMP(usn, '${data.id.range.from}') >= 0` +
-                            // prettier-ignore
-                            usnr.test(data.id.range.to)
-                                ? `AND STRCMP(usn, '${data.id.range.to}') <= 0 `
-                                : ` ` + `ORDER BY LENGTH(usn), usn LIMIT ${data.rows} ;`,
+                        param: q
                     }
                 } else return { status: "error", message: "Bad USN range from" }
             } else if (data.id.email) {
-                if (emailr.test(data.id.email)) return { status: "success", sql: `SELECT * FROM student WHERE email = ${data.id.email};` }
+                q.email = data.id.email
+                if (emailr.test(data.id.email)) return { status: "success", param: q }
                 else return { status: "error", message: "Bad email id" }
             } else if (data.id.phone) {
-                if (data.id.phone.length > 9) return { status: "success", sql: `SELECT * FROM student WHERE phone LIKE %${data.id.phone}% LIMIT ${data.rows} ;` }
+                q.phone = data.id.phone
+                if (data.id.phone.length > 9) return { status: "success", param: q }
             } else return { status: "error", message: "Bad ids" }
         } else if (data.keywords) {
-            let q = `SELECT * FROM student WHERE `
-            if (data.keywords.name) q += `CONCAT(first_name,' ', last_name) LIKE %${data.keywords.name}% `
-            if (data.keywords.dob) q += `dob LIKE %${data.keywords.dob}% `
-            if (data.keywords.branch) q += `branch LIKE %${data.keywords.branch}% `
-            if (data.keywords.gender) q += `gender LIKE %${data.keywords.gender}% `
-            q += ` ;`
+            if (data.keywords.name) {
+                q.first_name = new RegExp('.*' + data.keywords.name + '.*')
+                q.last_name = new RegExp('.*' + data.keywords.name + '.*')
+            }
+            if (data.keywords.dob) q.dob = new RegExp('.*' + data.keywords.dob + '.*')
+            if (data.keywords.branch) q.branch = new RegExp('.*' + data.keywords.branch + '.*')
+            if (data.keywords.gender) q.gender = new RegExp('.*' + data.keywords.gender + '.*')
             return {
                 status: "success",
-                sql: q,
+                param: q,
             }
         } else {
+            return {status : 'error', message: 'not supported yet'}
+            /*
             if (!data.range) data.range = { from: 1, to: data.rows }
             else if (!data.range.to) data.range.to = data.range.from + data.rows
             return {
                 status: "success",
                 sql: `SELECT * FROM students ORDER BY dateModified ASC LIMIT ${data.range.from - 1}, ${data.rows}`,
-            }
+            }*/
         }
         // query 1 : SELECT COUNT(*) FROM students WHERE dob >= '1980-01-01';
         /* query 2 : 
@@ -89,17 +94,24 @@ module.exports = function (app, db) {
             if (req.session && req.session.userid && (req.session.accountType === "admin" || req.session.accountType === "mentor")) {
                 const q = getStudentsQuery(k.params)
                 if (q.status === "success") {
-                    db.query(q.sql, (error, results, fields) => {
-                        if (error) throw error
+                    db.collection("students").find(q, {projection : {_id: 1, profile: 1}}, (error, results) => {
+                        if (error) {
+                            res.json({
+                                status: 'error',
+                                message: 'unable to fetch data with requested params',
+                                isLogged: true
+                            })
+                            throw error
+                        }
                         console.log(results)
-                        res.send(results)
+                        res.json(results)
                     })
                 } else {
                     console.log(q)
                     res.send(q)
                 }
             } else {
-                res.send({
+                res.json({
                     status: "error",
                     message: "403 unauthorised",
                 })
