@@ -14,7 +14,7 @@ module.exports = function (app, db) {
             db.collection('companies').findOne(q, (error, results) => {
                 if (error) {
                     res.json({
-                        status: "error_company_info",
+                        status: "error",
                         message: "error retriving company details",
                         isLogged: true,
                         isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
@@ -53,10 +53,14 @@ module.exports = function (app, db) {
         // if logged in , continue
         if (req.session && req.session.userid && req.session.accountType === "student" ) {
             if ( req.body.companyId ) {
-                db.query(`SELECT s_usn, cids FROM applied_selected WHERE s_usn = ? ;`, [req.session.userid], (error, results, fields) => {
+                db.collection("applied_selected").findOne({s_usn : req.session.userid}, {projection : {
+                    _id: 1,
+                    s_usn : 1,
+                    cids : 1
+                }}, (error, result) => {
                     if (error) {
                         res.json({
-                            status: "error_fetching_query",
+                            status: "error",
                             message: "error retriving application database",
                             isLogged: true,
                             isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
@@ -65,7 +69,7 @@ module.exports = function (app, db) {
                         })
                         throw error
                     } else {
-                        if (results.length > 0 && results[0].cids.includes(req.body.companyId)) {
+                        if (result && result.cids.includes(req.body.companyId)) {
                             res.json({
                                 status: "error",
                                 message: "already applied to this company",
@@ -75,40 +79,65 @@ module.exports = function (app, db) {
                                 // keys: req.session.keys,
                             })
                         } else {
-                            let q = ``
-                            if (results.length > 0) {
-                                let cids = results[0].cids
-                                cids += `, ${req.body.companyId}`
-                                q += `UPDATE applied_selected SET cids = ${cids} WHERE s_usn = ${re.session.userid}`
-                            } else q += `INSERT INTO applied_selected (s_usn, cids, s_name, s_cname) VALUES (${req.session.userid}, ${req.body.companyId}, ${req.session.profile.f_name} ${req.body.companyName}) ;`
-                            db.query(q, (error, results, fields) => {
-                                if (error) {
-                                    res.json({
-                                        status: "error_adding_companyfo",
-                                        message: "error updating applied company",
-                                        isLogged: true,
-                                        isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
-                                        errorLatest: error,
-                                        // keys: req.session.keys,
-                                    })
-                                    throw error
-                                } else {
-                                    res.json({
-                                        status: "success",
-                                        message: "company details insertion success",
-                                        isLogged: true,
-                                        isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
-                                        errorLatest: error,
-                                        // keys: req.session.keys,
-                                    })
-                                }
-                            })
+                            if (result) {
+                                let cids = result.cids
+                                cids.push(req.body.companyId)
+                                db.collection("applied_selected").updateOne({s_usn : req.session.userid}, {$set : {cids: cids}}, (error, result) => {
+                                    if (error) {
+                                        res.json({
+                                            status: "error",
+                                            message: "error updating applied company",
+                                            isLogged: true,
+                                            isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
+                                            errorLatest: error,
+                                        })
+                                        throw error
+                                    } else {
+                                        res.json({
+                                            status: "success",
+                                            message: "company details insertion success",
+                                            isLogged: true,
+                                            isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
+                                            errorLatest: error,
+                                            result
+                                        })
+                                    }
+                                })
+                            } else {
+                                db.collection("applied_selected").insertOne({
+                                    s_usn: req.session.userid,
+                                    cids: req.body.companyId,
+                                    s_name: req.session.profile.first_name,
+                                    s_cname: req.body.companyName
+                                }, (error, results) => {
+                                    if (error) {
+                                        res.json({
+                                            status: "error_adding_companyfo",
+                                            message: "error updating applied company",
+                                            isLogged: true,
+                                            isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
+                                            errorLatest: error,
+                                            // keys: req.session.keys,
+                                        })
+                                        throw error
+                                    } else {
+                                        res.json({
+                                            status: "success",
+                                            message: "company details insertion success",
+                                            isLogged: true,
+                                            isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
+                                            errorLatest: error,
+                                            // keys: req.session.keys,
+                                        })
+                                    }
+                                })
+                            }
                         }
                     }
                 })
             } else {
                 res.json({
-                    status: "error_invalid_company_id",
+                    status: "error",
                     message: "no valid company id provided",
                     isLogged: true,
                     isAdmin: ((k.accountType === "admin") || (k.accountType === "mentor")) ? true: false,
