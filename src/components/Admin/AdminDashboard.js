@@ -37,6 +37,24 @@ function Copyright(props) {
   );
 }
 
+function AdminBadge() {
+  return (
+    <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} >
+    </Badge>
+  );
+}
+function DfpcBadge() {
+  return (
+    <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3, }}>
+    </Badge>
+  );
+}
+function TpcBadge() {
+  return (
+    <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3, }}>
+    </Badge>
+  );
+}
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -92,6 +110,21 @@ function AdminDashboardContent() {
     setOpen(!open);
   };
 
+// rendering the User's Badge 
+  const userCategory = "admin";       //    INSERT userCategory VALUE FROM BACKEND !!
+  var badge;
+  if (userCategory == "admin") {
+    badge = <AdminBadge />
+  } 
+  else if (userCategory == "dfpc") {
+    badge = <DfpcBadge />
+  }
+  else if (userCategory == "tpc") {
+    badge =  <TpcBadge />
+  }
+
+    
+    
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -124,12 +157,11 @@ function AdminDashboardContent() {
               sx={{ flexGrow: 1 }}
             >
              <Typography variant="p" color="#ffeb3b">Admin</Typography> Dashboard
+              {badge}
+            {/* <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} ></Badge> */}
+
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            
           </Toolbar>
         </AppBar>
 

@@ -18,8 +18,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-
+import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+
 
 function Copyright(props) {
   return (
@@ -36,6 +37,24 @@ function Copyright(props) {
       {new Date().getFullYear()}
       {"."}
     </Typography>
+  );
+}
+function AdminBadge() {
+  return (
+    <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} >
+    </Badge>
+  );
+}
+function DfpcBadge() {
+  return (
+    <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3, }}>
+    </Badge>
+  );
+}
+function TpcBadge() {
+  return (
+    <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3, }}>
+    </Badge>
   );
 }
 
@@ -87,92 +106,96 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme();
 
-function DashboardContentEvents() {
+// --------------------------------------------------------------------------------------------
+function AdminDashboardContentCompanyReports() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const columns = [
-    { field: "id", headerName: "NO", flex: 1, minWidth: 50 },
-    {
-      field: "Logo",
-      headerName: "Logo",
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "Company",
-      headerName: "Company",
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "DriveData",
-      headerName: "Drive Data",
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "ApplicationEndDate",
-      headerName: "Application End Date",
-      sortable: false,
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "Description",
-      headerName: "Description",
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "Sector",
-      headerName: "Sector",
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "Venue",
-      headerName: "Venue",
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "Stages",
-      headerName: "Stages",
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "Apply",
-      headerName: "Apply",
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: "CTC",
-      headerName: "C.T.C. (in LPA)",
-      flex: 1,
-      minWidth: 200,
-    },
-  ];
+  const userCategory = "admin";       //    INSERT userCategory VALUE FROM BACKEND !!
+  var badge;
+  if (userCategory == "admin") {
+    badge = <AdminBadge />
+  } 
+  else if (userCategory == "dfpc") {
+    badge = <DfpcBadge />
+  }
+  else if (userCategory == "tpc") {
+    badge =  <TpcBadge />
+  }
 
   const rows = [
     {
       id: 1,
-      Logo: "{image}",
-      Company: "Heptagon",
-      DriveData: "123",
-      ApplicationEndDate: "456",
-      Description: "890",
-      Sector: "1",
-      Venue: "Banglore",
-      Stages: "2",
-      Apply: "1",
-      CTC: "4.5",
+      drivename: "Cognizant - GenC Nxt" ,
+      band: 2,
+      eligible: 450,
+      applied: 120,
+      appeared: 100,
+      offer: 25,
+      conversionrate: 60,
+      rejected: 15,
+    }
+  ]
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "No.",
+      flex: 1,
+      minWidth: 50,
+    },
+    {
+      field: "drivename",
+      headerName: "Drive Name",
+      flex: 1,
+      minWidth: 300,
+    },
+    {
+      field: "band",
+      headerName: "Band",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "eligible",
+      headerName: "Eligible",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "applied",
+      headerName: "Applied",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "appeared",
+      headerName: "Appeared",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "offer",
+      headerName: "Offers",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "conversionrate",
+      headerName: "Conversion",
+      flex: 1,
+      minWidth: 100,
+    },
+    {
+      field: "rejected",
+      headerName: "Rejected",
+      flex: 1,
+      minWidth: 100,
     },
   ];
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -183,7 +206,7 @@ function DashboardContentEvents() {
           <Toolbar
             sx={{
               background: "#021B38",
-              pr: "24px", // keep right padding when drawer closed
+              pr: "24px",
             }}
           >
             <IconButton
@@ -198,6 +221,7 @@ function DashboardContentEvents() {
             >
               <MenuIcon />
             </IconButton>
+            
             <Typography
               component="h1"
               variant="h6"
@@ -205,16 +229,11 @@ function DashboardContentEvents() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard{" "}
-              <Typography variant="p" color="#ffeb3b">
-                Events
+                Dashboard <Typography variant="p" color="#ffeb3b">
+                Company Reports
               </Typography>
+              {badge}
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
           </Toolbar>
         </AppBar>
 
@@ -258,19 +277,15 @@ function DashboardContentEvents() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: "75vh",
+                    minHeight: 280,
                   }}
                 >
-                  {/* Company Data-Grid */}
-                  <div style={{ height: 400, width: "100%" }}>
-                    <DataGrid
-                      rows={rows}
-                      columns={columns}
-                      components={{
-                        Toolbar: GridToolbar,
-                      }}
-                    />
-                  </div>
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    components={{
+                      Toolbar: GridToolbar,
+                    }}/>
                 </Paper>
               </Grid>
             </Grid>
@@ -282,6 +297,6 @@ function DashboardContentEvents() {
   );
 }
 
-export default function StudentDashboardEvents() {
-  return <DashboardContentEvents />;
+export default function AdminDashboardCompanyReports() {
+  return <AdminDashboardContentCompanyReports />;
 }

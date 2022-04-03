@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import DataService from "./service";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -11,13 +11,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { NavLink } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-mui";
 import { CheckboxWithLabel } from "formik-mui";
-import { fet, hash } from "./modules/fet";
 
 function Copyright(props) {
   return (
@@ -37,49 +34,27 @@ function Copyright(props) {
   );
 }
 
-var usnData;
-
 const initialValues = {
-  usn: "",
-  password: "",
-  rememberMe: true
+  phoneNum:"",
+  email: "",
 };
 
-const usnRegex = /^1[rR][nN]\d\d[a-zA-Z][a-zA-Z]\d\d\d$/;
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-var validationSchema = Yup.object().shape({
-  usn: Yup.string().matches(usnRegex, "Invalid USN").required("Required"),
-  password: Yup.string()
-  .matches(
-    passwordRegex,
-    "Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-    )
-    .required("Required"),
-    rememberMe: Yup.boolean(),
-  });
 
-function SignIn() {
-  const onSubmit = async (values) => {
-    usnData = values['usn']
-    hash(values["password"]).then(h => {
-      console.log(values);
-      fet("http://localhost:6969/signin", "POST", {
-        usn: values["usn"],
-        password: h,
-        accountType: "student",
-      })
-        .then((response) => {
-          //console.log(response);
-          if (response.status !== "error")
-              window.location = "./signed_in/student_dashboard";
-        });
-    })
+const emailRegex = /^1rn\d\d[a-z][a-z]\d\d\d\.[a-z]+@gmail\.com$/;
+const phRegex = /^\d\d\d\d\d\d\d\d\d\d/;
+
+var validationSchema = Yup.object().shape({
+    email: Yup.string().matches(emailRegex, "Invalid e-mail. Use usn.name@gmail.com").required("Required"),
+    phoneNum: Yup.string().matches(phRegex, "Invalid phone number.").required("Required"),
+});
+
+function ForgotPassword() {
+  const onSubmit = (values) => {
+    console.log(values);
   };
 
   return (
     <>
-      <Navbar />
       <Container component="main" maxWidth="xs" sx={{ minHeight: "90vh" }}>
         <CssBaseline />
         <Box
@@ -94,8 +69,9 @@ function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Forgot your password?
           </Typography>
+          <Typography  variant="caption" sx={{ margin: 2, textAlign: 'center', }}>You'll receive an e-mail with instructions<br/> on how to reset your password.</Typography>
           <Box sx={{ mt: 1 }}>
             <Formik
               initialValues={initialValues}
@@ -109,36 +85,26 @@ function SignIn() {
                       <Grid item xs={12}>
                         <Field
                           margin="normal"
-                          label="USN"
+                          label="Enter your registered e-mail"
                           variant="outlined"
-                          fullWidth
-                          name="usn"
-                          value={values.firstName}
+                          fullwidth
+                          name="email"
+                          value={values.email}
                           component={TextField}
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <Field
                           margin="normal"
-                          label="Password"
+                          label="Enter your registered phone no."
                           variant="outlined"
                           fullWidth
-                          name="password"
-                          type="password"
-                          value={values.password}
+                          name="phoneNum"
+                          value={values.phoneNum}
                           component={TextField}
                         />
                       </Grid>
-                      <Grid item xs={12}>
-                        <Field
-                          margin="normal"
-                          Label={{ label: "Remember Me" }}
-                          fullWidth
-                          type="checkbox"
-                          name="rememberMe"
-                          component={CheckboxWithLabel}
-                        />
-                      </Grid>
+                      
                     </Grid>
                     <Button
                       fullWidth
@@ -148,7 +114,7 @@ function SignIn() {
                       type="Submit"
                       sx={{ marginY: "1rem" }}
                     >
-                      Sign In
+                       Send E-Mail
                     </Button>
                   </Form>
                 );
@@ -157,13 +123,10 @@ function SignIn() {
 
             <Grid container>
               <Grid item xs>
-                <Link href="/ForgotPassword" variant="body2">
-                  Forgot password?
-                </Link>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Register"}
+                <Link href="/signin" variant="body2">
+                  {"Go to Sign In?"}
                 </Link>
               </Grid>
             </Grid>
@@ -171,9 +134,8 @@ function SignIn() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-      <Footer />
     </>
   );
 }
 
-export { SignIn };
+export { ForgotPassword };
