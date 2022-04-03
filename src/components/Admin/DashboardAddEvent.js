@@ -213,7 +213,7 @@ function AdminDashboardContentAddEvent() {
                   }}
                 >
                   <Typography variant="h4" color="text.primary" align="center">
-                    New Event
+                    Add Events
                   </Typography>
                   <br></br>
                   <Grid
