@@ -37,7 +37,7 @@ function Copyright(props) {
   );
 }
 
-var usnData;
+let usnData;
 
 const initialValues = {
   usn: "",
@@ -62,8 +62,8 @@ var validationSchema = Yup.object().shape({
 function SignIn() {
   const onSubmit = async (values) => {
     usnData = values['usn']
-    let h = await hash(values["password"]).toString();
-    console.log(values);
+    let h = await (await hash(values["password"])).toString();
+    console.log(h);
     fet("http://localhost:6969/signin", "POST", {
       usn: values["usn"],
       password: h,
