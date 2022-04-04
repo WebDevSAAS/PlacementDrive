@@ -14,11 +14,20 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 
 function Copyright(props) {
   return (
@@ -38,22 +47,13 @@ function Copyright(props) {
   );
 }
 function AdminBadge() {
-  return (
-    <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} >
-    </Badge>
-  );
+  return <Badge badgeContent={"Admin"} color="success" sx={{ px: 3 }}></Badge>;
 }
 function DfpcBadge() {
-  return (
-    <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3, }}>
-    </Badge>
-  );
+  return <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3 }}></Badge>;
 }
 function TpcBadge() {
-  return (
-    <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3, }}>
-    </Badge>
-  );
+  return <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3 }}></Badge>;
 }
 
 const drawerWidth = 240;
@@ -110,19 +110,23 @@ function AdminDashboardContentAddEvent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [eventDate, setEventDate] = React.useState(new Date());
+  const [applicationDate, setApplicationDate] = React.useState(new Date());
+  const [year, setYear] = React.useState("");
 
-  const userCategory = "admin";       //    INSERT userCategory VALUE FROM BACKEND !!
+  const handleChange = (event) => {
+    setYear(event.target.value);
+  };
+
+  const userCategory = "admin"; //    INSERT userCategory VALUE FROM BACKEND !!
   var badge;
   if (userCategory == "admin") {
-    badge = <AdminBadge />
-  } 
-  else if (userCategory == "dfpc") {
-    badge = <DfpcBadge />
+    badge = <AdminBadge />;
+  } else if (userCategory == "dfpc") {
+    badge = <DfpcBadge />;
+  } else if (userCategory == "tpc") {
+    badge = <TpcBadge />;
   }
-  else if (userCategory == "tpc") {
-    badge =  <TpcBadge />
-  }
-
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -148,7 +152,7 @@ function AdminDashboardContentAddEvent() {
             >
               <MenuIcon />
             </IconButton>
-            
+
             <Typography
               component="h1"
               variant="h6"
@@ -156,7 +160,8 @@ function AdminDashboardContentAddEvent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-                Dashboard <Typography variant="p" color="#ffeb3b">
+              Dashboard{" "}
+              <Typography variant="p" color="#ffeb3b">
                 Add Event
               </Typography>
               {badge}
@@ -206,7 +211,257 @@ function AdminDashboardContentAddEvent() {
                     flexDirection: "column",
                     minHeight: 280,
                   }}
-                ></Paper>
+                >
+                  <Typography variant="h4" color="text.primary" align="center">
+                    Add Events
+                  </Typography>
+                  <br></br>
+                  <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <br></br>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Event Date
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        sx={{ marginX: 3 }}
+                      >
+                        <DatePicker
+                          views={["day"]}
+                          label="Date of Birth"
+                          value={eventDate}
+                          onChange={(newValue) => {
+                            setEventDate(newValue);
+                          }}
+                          renderInput={(params) => (
+                            <TextField {...params} helperText={null} />
+                          )}
+                          fullWidth
+                        />
+                      </LocalizationProvider>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Company
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Job Title
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Sector
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Event Type
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Year Eligible
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Select
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={year}
+                            onChange={handleChange}
+                          >
+                            <MenuItem value={10}>1st</MenuItem>
+                            <MenuItem value={20}>2nd</MenuItem>
+                            <MenuItem value={30}>3rd</MenuItem>
+                            <MenuItem value={40}>4th</MenuItem>
+                          </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        CTC(In LPA)
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Stripend(only in internship)
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Application End Date
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        sx={{ marginX: 3 }}
+                      >
+                        <DatePicker
+                          views={["day"]}
+                          label="Date of Birth"
+                          value={applicationDate}
+                          onChange={(newValue) => {
+                            setApplicationDate(newValue);
+                          }}
+                          renderInput={(params) => (
+                            <TextField {...params} helperText={null} />
+                          )}
+                          fullWidth
+                        />
+                      </LocalizationProvider>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Logo
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <br></br>
+                      <input type="file" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Discription
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField
+                        id="outlined-textarea"
+                        multiline
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Contact Name
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Contact No
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
+                        Contact E-Mail
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic" variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}></Grid>
+                    <Grid item xs={8}>
+                      <br></br>
+                      <Button variant="contained">Submit</Button>
+                    </Grid>
+                  </Grid>
+                </Paper>
               </Grid>
             </Grid>
 
