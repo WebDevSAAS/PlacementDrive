@@ -25,6 +25,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
+import { fet } from "../../modules/fet";
 
 import { mainListItems, secondaryListItems } from "../listItems";
 
@@ -97,24 +98,63 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentGraduationRecord() {
+  const usnData = window.sessionStorage.getItem('uid');
+
+  const xii_records = {
+    usn: usnData,
+    course: '',
+    specialization: '',
+    score_type: '',
+    score_frequency: '',
+    sem1: '',
+    sem2: '',
+    sem3: '',
+    sem4: '',
+    sem5: '',
+    sem6: '',
+    sem7: '',
+    sem8: '',
+    sgpa_scale: '',
+    aggregate_percentage: ''
+  }
+
   const [open, setOpen] = React.useState(false);
+  const [xData, setxData] = React.useState(xii_records);
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const [Specialization, Sset] = React.useState("");
-  const [Course, Cset] = React.useState("");
-  const [ScoreFrequency, Fset] = React.useState("");
 
-  const handleChange1 = (event) => {
-    Cset(event.target.value);
-    console.log(event.target.value);
-  };
-  const handleChange2 = (event) => {
-    Sset(event.target.value);
-  };
-  const handleChange3 = (event) => {
-    Fset(event.target.value);
-  };
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setxData(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
+
+  const onSubmit = async() => {
+    console.log("Form submitted");
+    fet("/update", "POST", xData)
+    .then((response) => {
+        console.log(response);
+      });
+    console.log(xData);
+  }
+
+  // const [Specialization, Sset] = React.useState("");
+  // const [Course, Cset] = React.useState("");
+  // const [ScoreFrequency, Fset] = React.useState("");
+
+  // const handleChange1 = (event) => {
+  //   Cset(event.target.value);
+  //   console.log(event.target.value);
+  // };
+  // const handleChange2 = (event) => {
+  //   Sset(event.target.value);
+  // };
+  // const handleChange3 = (event) => {
+  //   Fset(event.target.value);
+  // };
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -240,19 +280,19 @@ function StudentGraduationRecord() {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          value={Course}
-                          onChange={handleChange1}
+                          name="course"
+                          value={xData.course}
+                          onChange={handleChange}
                         >
-                          <MenuItem value={10}>B.E/B.Tech</MenuItem>
-                          <MenuItem value={20}>B.A</MenuItem>
-                          <MenuItem value={30}>B.Arch</MenuItem>
-                          <MenuItem value={40}>BBA/BBM/BMS</MenuItem>
-                          <MenuItem value={50}>B.E/B.Tech</MenuItem>
-                          <MenuItem value={60}>B.Com</MenuItem>
-                          <MenuItem value={70}>BHM</MenuItem>
-                          <MenuItem value={80}>B.Sc</MenuItem>
-                          <MenuItem value={90}>B.Sc Agriculture</MenuItem>
-                          <MenuItem value={100}>Others</MenuItem>
+                          <MenuItem value={'B.E/B.Tech'}>B.E/B.Tech</MenuItem>
+                          <MenuItem value={'B.A'}>B.A</MenuItem>
+                          <MenuItem value={'B.Arch'}>B.Arch</MenuItem>
+                          <MenuItem value={'BBA/BBM/BMS'}>BBA/BBM/BMS</MenuItem>
+                          <MenuItem value={'B.Com'}>B.Com</MenuItem>
+                          <MenuItem value={'BHM'}>BHM</MenuItem>
+                          <MenuItem value={'B.Sc'}>B.Sc</MenuItem>
+                          <MenuItem value={'B.Sc Agriculture'}>B.Sc Agriculture</MenuItem>
+                          <MenuItem value={'Others'}>Others</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -274,45 +314,46 @@ function StudentGraduationRecord() {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          value={Specialization}
-                          onChange={handleChange2}
+                          name="specialization"
+                          value={xData.specialization}
+                          onChange={handleChange}
                         >
-                          <MenuItem value={10}>Select Course</MenuItem>
-                          <MenuItem value={20}>Aerospace</MenuItem>
-                          <MenuItem value={30}>Agriculture</MenuItem>
-                          <MenuItem value={40}>Aviation</MenuItem>
-                          <MenuItem value={50}>Automobile</MenuItem>
-                          <MenuItem value={60}>
+                          <MenuItem value={'Select Course'}>Select Course</MenuItem>
+                          <MenuItem value={'Aerospace'}>Aerospace</MenuItem>
+                          <MenuItem value={'Agriculture'}>Agriculture</MenuItem>
+                          <MenuItem value={'Aviation'}>Aviation</MenuItem>
+                          <MenuItem value={'Automobile'}>Automobile</MenuItem>
+                          <MenuItem value={'Bio Chemistry/ Bio-Technology'}>
                             Bio Chemistry/ Bio-Technology
                           </MenuItem>
-                          <MenuItem value={70}>Bio-Medical</MenuItem>
-                          <MenuItem value={80}>Ceramice</MenuItem>
-                          <MenuItem value={90}>Chemical</MenuItem>
-                          <MenuItem value={100}>Computer Science</MenuItem>
-                          <MenuItem value={110}>
+                          <MenuItem value={'Bio-Medical'}>Bio-Medical</MenuItem>
+                          <MenuItem value={'Ceramice'}>Ceramice</MenuItem>
+                          <MenuItem value={'Chemical'}>Chemical</MenuItem>
+                          <MenuItem value={'Computer Science'}>Computer Science</MenuItem>
+                          <MenuItem value={'Electrical and Electronics'}>
                             Electrical and Electronics
                           </MenuItem>
-                          <MenuItem value={120}>
+                          <MenuItem value={'Electronics and Communication'}>
                             Electronics and Communication
                           </MenuItem>
-                          <MenuItem value={130}>Energy</MenuItem>
-                          <MenuItem value={140}>
+                          <MenuItem value={'Energy'}>Energy</MenuItem>
+                          <MenuItem value={'Electronics and Instrumentation'}>
                             Electronics and Instrumentation
                           </MenuItem>
-                          <MenuItem value={150}>Environmental</MenuItem>
-                          <MenuItem value={160}>
+                          <MenuItem value={'Environmental'}>Environmental</MenuItem>
+                          <MenuItem value={'Industrial Engineering and Management'}>
                             Industrial Engineering and Management
                           </MenuItem>
-                          <MenuItem value={170}>Instrumentation</MenuItem>
-                          <MenuItem value={180}>Information Science</MenuItem>
-                          <MenuItem value={190}>Marine</MenuItem>
-                          <MenuItem value={200}>Mechanical</MenuItem>
-                          <MenuItem value={210}>Mechatronics</MenuItem>
-                          <MenuItem value={220}>Metallurgy</MenuItem>
-                          <MenuItem value={230}>Industrial Production</MenuItem>
-                          <MenuItem value={240}>Telecommunication</MenuItem>
-                          <MenuItem value={250}>Textile</MenuItem>
-                          <MenuItem value={260}>Tools and Die Making</MenuItem>
+                          <MenuItem value={'Instrumentation'}>Instrumentation</MenuItem>
+                          <MenuItem value={'Information Science'}>Information Science</MenuItem>
+                          <MenuItem value={'Marine'}>Marine</MenuItem>
+                          <MenuItem value={'Mechanical'}>Mechanical</MenuItem>
+                          <MenuItem value={'Mechatronics'}>Mechatronics</MenuItem>
+                          <MenuItem value={'Metallurgy'}>Metallurgy</MenuItem>
+                          <MenuItem value={'Industrial Production'}>Industrial Production</MenuItem>
+                          <MenuItem value={'Telecommunication'}>Telecommunication</MenuItem>
+                          <MenuItem value={'Textile'}>Textile</MenuItem>
+                          <MenuItem value={'Tools and Die Making'}>Tools and Die Making</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -330,6 +371,9 @@ function StudentGraduationRecord() {
                       <TextField
                         defaultValue="CGPA"
                         id="standard-basic"
+                        name="score_type"
+                        value={xData.score_type}
+                        onChange={handleChange}
                         variant="standard"
                       />
                     </Grid>
@@ -351,11 +395,12 @@ function StudentGraduationRecord() {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          value={ScoreFrequency}
-                          onChange={handleChange3}
+                          name="score_frequency"
+                          value={xData.score_frequency}
+                          onChange={handleChange}
                         >
-                          <MenuItem value={10}>Semester</MenuItem>
-                          <MenuItem value={20}>Year</MenuItem>
+                          <MenuItem value={'Semester'}>Semester</MenuItem>
+                          <MenuItem value={'Year'}>Year</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -380,7 +425,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic" 
+                          name="sem1"
+                          value={xData.sem1} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -393,7 +440,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sgpa_scale"
+                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -430,7 +479,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sem2"
+                          value={xData.sem2} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -443,7 +494,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sgpa_scale"
+                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -480,7 +533,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sem3"
+                          value={xData.sem3} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -493,7 +548,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sgpa_scale"
+                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -530,7 +587,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sem4"
+                          value={xData.sem4} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -543,7 +602,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sgpa_scale"
+                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -580,7 +641,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sem5"
+                          value={xData.sem5} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -593,7 +656,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sgpa_scale"
+                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -630,7 +695,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sem6"
+                          value={xData.sem6} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -643,7 +710,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sgpa_scale"
+                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -679,7 +748,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sem7"
+                          value={xData.sem7} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -692,7 +763,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sgpa_scale"
+                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -728,7 +801,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sem8"
+                          value={xData.sem8} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -741,7 +816,9 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sgpa_scale"
+                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -780,6 +857,9 @@ function StudentGraduationRecord() {
                     <Grid item xs={8}>
                       <TextField
                         id="standard-basic"
+                        name="aggregate_percentage"
+                        value={xData.aggregate_percentage}
+                        onChange={handleChange}
                         variant="standard"
                       />
                       <br></br>
@@ -804,7 +884,7 @@ function StudentGraduationRecord() {
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
                       <br></br>
-                      <Button variant="contained">Submit</Button>
+                      <Button onClick={onSubmit} variant="contained">Submit</Button>
                     </Grid>
                     <Grid item xs={9}></Grid>
                     <Grid item xs={3}>
