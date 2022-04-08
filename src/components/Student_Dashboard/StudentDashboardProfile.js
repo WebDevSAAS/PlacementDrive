@@ -2,7 +2,7 @@ import * as React from "react";
 // import StudentDetails from "../Student_Details/StudentDetails";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import DataService from "../service";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import TextField from "@mui/material/TextField";
@@ -28,6 +28,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { fet } from "../modules/fet";
+import { prepareDataForValidation } from "formik";
 
 function Copyright(props) {
   return (
@@ -55,12 +56,14 @@ function Copyright(props) {
 //   .then((data) => data.json())
 //   .then((data) => console.log(data));
 console.log("working");
-/*
-fet("http://localhost:3000/status")
-  .then((data) => console.log(data))
-  .catch((err) => console.error(err));
-*/
-const initialValues = {
+
+// fet("/status")
+//   .then((data) => {
+//     document.querySelector('.fnm').value= data.profile.first_name;
+//   })
+//   .catch((err) => console.error(err));
+
+let initialValues = {
   father_name: null,
   mother_name: null,
   cgpa_10th: null,
@@ -112,6 +115,17 @@ const initialValues = {
   awards: null,
 };
 
+let pValues = {
+  first_name: 'FName',
+  last_name: 'LName',
+  usn: 'USN',
+  gender: 'F/M',
+  branch: 'Branch',
+  dob: 'DOB',
+  phone: 'Phone',
+  email: 'E-Mail'
+}
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -159,15 +173,62 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const mdTheme = createTheme();
+let call = 0;
 
 //   ------------------------------------------------------------------------------------------------
 
 function DashboardContentProfile() {
   const [formData, setFormData] = useState(initialValues);
+  const [pData, setPData] = useState(pValues);
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const stor = (dta) => {
+    setPData(p => ({
+      ...p,
+      ...dta
+    }));
+    console.log(pData);
+  }
+
+  // fet("/status")
+  // .then((data) => {
+  //   console.log(data.profile);
+  //   let updatedP = {};
+  //   updatedP = {first_name: data.profile.first_name,};
+    // setPData(pData => ({
+    //   ...pData,
+    //   ...updatedP
+    // }));
+  //   stor(updatedP);
+  // })
+  // .catch((err) => console.error(err));
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+        try {
+          fet("/status")
+          .then((data) => {
+            // let updatedP = {};
+            // updatedP = {first_name: data.profile.first_name,};
+            // stor(updatedP);
+            console.log(pData);
+            setPData(prev=>({
+              ...prev,
+              ...data.profile
+            }));
+            console.log(pData);
+          })
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
+    fetchData();
+}, {});
 
   const [Gender, setAge] = React.useState("");
 
@@ -285,7 +346,8 @@ function DashboardContentProfile() {
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
-                        defaultValue="Tushar"
+                        value={pData.first_name}
+                        class='fnm'
                         color="primary"
                         focused
                         disabled
@@ -307,7 +369,7 @@ function DashboardContentProfile() {
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
-                        defaultValue="DMR"
+                        value={pData.last_name}
                         color="primary"
                         focused
                         disabled
@@ -330,7 +392,7 @@ function DashboardContentProfile() {
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
-                        defaultValue="1RN20IS113"
+                        value={pData.usn}
                         color="primary"
                         focused
                         disabled
@@ -346,14 +408,14 @@ function DashboardContentProfile() {
                         color="text.primary"
                         sx={{ ml: 3 }}
                       >
-                        <br></br>
+                        Branch: <br></br>
                         <br></br>
                      </Typography>
                     </Grid>
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
-                        defaultValue="ISE"
+                        value={pData.branch}
                         color="primary"
                         focused
                         disabled
@@ -372,7 +434,7 @@ function DashboardContentProfile() {
                         Gender :<br></br>
                       </Typography>
                     </Grid>
-                    <Grid item xs={8}>
+                    {/* <Grid item xs={8}>
                       <FormControl focused sx={{ width: 200 }}>
                         <InputLabel id="demo-simple-select-label">
                           Gender
@@ -380,7 +442,7 @@ function DashboardContentProfile() {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          value={Gender}
+                          value={pData.gender}
                           label="Gender"
                           onChange={handleChange}
                         >
@@ -390,7 +452,7 @@ function DashboardContentProfile() {
                       </FormControl>
                       <TextField
                         id="outlined-read-only-input"
-                        defaultValue="Male"
+                        value={pData.gender}
                         color="primary"
                         disabled
                         InputProps={{
@@ -399,6 +461,19 @@ function DashboardContentProfile() {
                         }}
                       />
 
+                    </Grid> */}
+                    <Grid item xs={8}>
+                      <TextField
+                        id="outlined-read-only-input"
+                        value={pData.gender}
+                        color="primary"
+                        focused
+                        disabled
+                        InputProps={{
+                          readOnly: true,
+                          style: { fontSize: 20, textAlign: "center" },
+                        }}
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -412,7 +487,7 @@ function DashboardContentProfile() {
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
-                        defaultValue="01/09/2002"
+                        value={pData.dob}
                         color="primary"
                         focused
                         disabled
@@ -435,7 +510,7 @@ function DashboardContentProfile() {
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
-                        defaultValue="7023678992"
+                        value={pData.phone}
                         color="primary"
                         focused
                         disabled
@@ -457,7 +532,7 @@ function DashboardContentProfile() {
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
-                        defaultValue="dmrtushar@gmail.com"
+                        value={pData.email}
                         color="primary"
                         focused
                         disabled
@@ -470,7 +545,7 @@ function DashboardContentProfile() {
                     </Grid>
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
-                      <Button variant="contained">Submit</Button>
+                      {/* <Button variant="contained">Submit</Button> */}
                       <Button variant="contained">Ok</Button>
                     </Grid>
                   </Grid>

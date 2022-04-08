@@ -25,8 +25,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
+import { fet } from "../../modules/fet";
 
 import { mainListItems, secondaryListItems } from "../listItems";
+import { string } from "yup/lib/locale";
 
 function Copyright(props) {
   return (
@@ -97,15 +99,40 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentClass10Record() {
+  const usnData = window.sessionStorage.getItem('uid');
+
+  const x_records = {
+    usn: usnData,
+    board_10th: '',
+    school_10th: 'Birla Shishu Vihar',
+    g_state_10th: 'Haryana',
+    cgpa_10th: '',
+    year_10th: '2017'
+  }
+
   const [open, setOpen] = React.useState(false);
+  const [xData, setxData] = React.useState(x_records);
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const [Board, set] = React.useState("");
 
-  const handleChange = (event) => {
-    set(event.target.value);
-  };
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setxData(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
+
+  const onSubmit = async() => {
+    console.log("Form submitted");
+    fet("/update", "POST", xData)
+    .then((response) => {
+        console.log(response);
+      });
+    console.log(xData);
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -231,14 +258,15 @@ function StudentClass10Record() {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          value={Board}
+                          name="board_10th"
+                          value={xData.board_10th}
                           label="Board"
                           onChange={handleChange}
                         >
-                          <MenuItem value={10}>CBSE</MenuItem>
-                          <MenuItem value={20}>ICSE</MenuItem>
-                          <MenuItem value={30}>International</MenuItem>
-                          <MenuItem value={40}>State</MenuItem>
+                          <MenuItem value={'CBSE'}>CBSE</MenuItem>
+                          <MenuItem value={'ICSE'}>ICSE</MenuItem>
+                          <MenuItem value={'International'}>International</MenuItem>
+                          <MenuItem value={'State'}>State</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -253,7 +281,7 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField sx={{ mt: 2}} defaultValue="CGPA" id="standard-basic" variant="standard" />
+                    <TextField sx={{ mt: 2}} defaultValue="CGPA" id="standard-basic" variant="standard" disabled />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -266,7 +294,7 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                    <TextField id="standard-basic" name="cgpa_10th" value={xData.cgpa_10th} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -299,7 +327,7 @@ function StudentClass10Record() {
                     </Grid>
                     <Grid item xs={8}>
                         <br></br>
-                        <Button variant="contained">Submit</Button>
+                        <Button onClick={onSubmit} variant="contained">Submit</Button>
                     </Grid>
                     </Grid>
                 </Paper>

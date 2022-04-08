@@ -42,7 +42,7 @@ var usnData;
 const initialValues = {
   usn: "",
   password: "",
-  rememberMe: true
+  rememberMe: true,
 };
 
 const usnRegex = /^1[rR][nN]\d\d[a-zA-Z][a-zA-Z]\d\d\d$/;
@@ -51,30 +51,30 @@ const passwordRegex =
 var validationSchema = Yup.object().shape({
   usn: Yup.string().matches(usnRegex, "Invalid USN").required("Required"),
   password: Yup.string()
-  .matches(
-    passwordRegex,
-    "Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    .matches(
+      passwordRegex,
+      "Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     )
     .required("Required"),
-    rememberMe: Yup.boolean(),
-  });
+  rememberMe: Yup.boolean(),
+});
 
 function SignIn() {
   const onSubmit = async (values) => {
-    usnData = values['usn']
-    hash(values["password"]).then(h => {
+    usnData = values["usn"];
+    hash(values["password"]).then((h) => {
       console.log(values);
       fet("http://localhost:6969/signin", "POST", {
         usn: values["usn"],
         password: h,
         accountType: "student",
-      })
-        .then((response) => {
-          //console.log(response);
-          if (response.status !== "error")
-              window.location = "./signed_in/student_dashboard";
-        });
-    })
+      }).then((response) => {
+        console.log(response);
+        if (response.status !== "error")
+          window.sessionStorage.setItem('uid', values["usn"]);
+          window.location = "./signed_in/student_dashboard";
+      });
+    });
   };
 
   return (

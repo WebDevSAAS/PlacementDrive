@@ -21,6 +21,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link as RouterLink } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { fet } from "../../modules/fet";
 
 import { mainListItems, secondaryListItems } from "../listItems";
 
@@ -93,10 +94,36 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentBacklogsRecord() {
+  const usnData = window.sessionStorage.getItem('uid');
+
+  const x_records = {
+    usn: usnData,
+    current_backlog: 0,
+    cleared_backlog: 0
+  }
+
   const [open, setOpen] = React.useState(false);
+  const [xData, setxData] = React.useState(x_records);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setxData(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
+
+  const onSubmit = async() => {
+    console.log("Form submitted");
+    fet("/update", "POST", xData)
+    .then((response) => {
+        console.log(response);
+      });
+    console.log(xData);
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -217,7 +244,10 @@ function StudentBacklogsRecord() {
                     <Grid item xs={8}>
                       <TextField
                         id="standard-basic"
-                        label="School Name"
+                        label="Current Backlogs"
+                        name="current_backlog"
+                        value={xData.current_backlog}
+                        onChange={handleChange}
                         variant="standard"
                       />
                     </Grid>
@@ -234,14 +264,17 @@ function StudentBacklogsRecord() {
                     <Grid item xs={8}>
                       <TextField
                         id="standard-basic"
-                        label="Select Type"
+                        label="Cleared Backlogs"
+                        name="cleared_backlog"
+                        value={xData.cleared_backlog}
+                        onChange={handleChange}
                         variant="standard"
                       />
                     </Grid>
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
                       <br></br>
-                      <Button variant="contained">Submit</Button>
+                      <Button onClick={onSubmit} variant="contained">Submit</Button>
                     </Grid>
                   </Grid>
                 </Paper>
