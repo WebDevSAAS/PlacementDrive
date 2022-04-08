@@ -2,11 +2,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser")
 const sessions = require('express-session')
-const db = require("./src/config/database.config.js")
+const mongo = require("./src/config/database.config.js")
 
 // creating of express app
 const app = express()
-const email = require("./src/mailer") // wait few seconds before using email to make transporter ready...
+//const email = require("./src/mailer") // wait few seconds before using email to make transporter ready...
 // creating 24 hours from milliseconds
 const oneDay = 1000 * 60 * 60 * 24
 
@@ -21,15 +21,14 @@ app.use(
         resave: false,
     })
 )
-
 // enabling CROS
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*") // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", "http://localhost:3069") // update to match the domain you will make the request from
+    res.header('Access-Control-Allow-Methods', 'GET,POST');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     res.header("Access-Control-Allow-Credentials", "true")
     next()
 })
-
 // use body parser to decode query params and json body.
 app.use(
     bodyParser.urlencoded({
@@ -37,18 +36,23 @@ app.use(
     })
 )
 app.use(express.json())
-// cookie parser middleware
-app.use(cookieParser())
+app.use(cookieParser())     // cookie parser middleware
 
 // port set-up
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 6969   // Unique port not to conflict...
 
-// Require routes
-require("./src/router/signin")(app, db)
-require("./src/router/routes")(app, db)
-require("./src/router/routesAdmin")(app, db)
-require("./src/router/actions")(app, db)
+// Init database connection
+mongo.connect((err, db) => {
+    if (err) throw err
+    console.log(db)
+    // Require routes
+    require("./src/router/signin")(app, db)
+    require("./src/router/routes")(app, db)
+    require("./src/router/routesAdmin")(app, db)
+    require("./src/router/actions")(app, db)
+})
 
+/*
 //##################################### Test codes Starts ############################################
 // test database connection
 db.query("SELECT * FROM student;", (error, results, fields) => {
@@ -58,7 +62,7 @@ db.query("SELECT * FROM student;", (error, results, fields) => {
 
 // Require routes NOT FOR PRODUCTION !!!!!!!!!
 require("./src/Routers/student_getall")(app, db)
-
+*/
 /*
 // test email connection after waiting 2 seconds for first time after server starts
 setTimeout(() => {
