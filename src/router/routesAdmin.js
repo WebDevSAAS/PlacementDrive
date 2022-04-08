@@ -91,10 +91,12 @@ module.exports = function (app, db) {
                     phone: "valid number"
                 } */
             // Check if session already exists ?
-            if (req.session && req.session.userid && (req.session.accountType === "admin" || req.session.accountType === "mentor")) {
+            console.log(k, req.session.userid);
+            if (req.session && req.session.userid && (req.session.accountType === "admin" || req.session.accountType === "mentor" || req.session.userid===k.params.id.usn)) {
                 const q = getStudentsQuery(k.params)
                 if (q.status === "success") {
-                    db.collection("students").find(q, {projection : {_id: 1, profile: 1}}, (error, results) => {
+                    // db.collection("students").find() 
+                    db.collection("students").find(q, (error, results) => {
                         if (error) {
                             res.json({
                                 status: 'error',
