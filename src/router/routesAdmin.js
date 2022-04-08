@@ -82,7 +82,7 @@ module.exports = function (app, db) {
                     gender: "gender",
                 },
                 id: {
-                    usn: "valid usn",
+                    usn: "valid usn" || true if range,
                     range: {
                         from: "startUSN",
                         to: "endUSN"
@@ -92,11 +92,11 @@ module.exports = function (app, db) {
                 } */
             // Check if session already exists ?
             console.log(k, req.session.userid);
-            if (req.session && req.session.userid && (req.session.accountType === "admin" || req.session.accountType === "mentor" || req.session.userid===k.params.id.usn)) {
+            if (req.session && req.session.userid && (req.session.accountType === "admin" || req.session.accountType === "mentor" || req.session.userid === k.params.id.usn)) {
                 const q = getStudentsQuery(k.params)
                 if (q.status === "success") {
                     // db.collection("students").find() 
-                    db.collection("students").find(q, (error, results) => {
+                    db.collection("students").find(q).toArray((error, results) => {
                         if (error) {
                             res.json({
                                 status: 'error',
