@@ -89,14 +89,15 @@ module.exports = function (app, db) {
                     },
                     email: "valid email",
                     phone: "valid number"
-                } */
+                } */    
             // Check if session already exists ?
             console.log(k, req.session.userid);
             if (req.session && req.session.userid && (req.session.accountType === "admin" || req.session.accountType === "mentor" || req.session.userid === k.params.id.usn)) {
                 const q = getStudentsQuery(k.params)
+                console.log(q)
                 if (q.status === "success") {
                     // db.collection("students").find() 
-                    db.collection("students").find(q).toArray((error, results) => {
+                    db.collection("students").find(q.param).toArray((error, results) => {
                         if (error) {
                             res.json({
                                 status: 'error',
@@ -105,7 +106,8 @@ module.exports = function (app, db) {
                             })
                             throw error
                         }
-                        console.log(results)
+                        for (let i = 0;  i < results.length; i ++) 
+                            if (results[i].password) delete results[i].password
                         res.json(results)
                     })
                 } else {
