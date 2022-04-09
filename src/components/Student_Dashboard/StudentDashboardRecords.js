@@ -29,6 +29,7 @@ import { mainListItems, secondaryListItems } from "./listItems";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
+import { fet } from "../modules/fet";
 
 function Copyright(props) {
   return (
@@ -99,7 +100,95 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function DashboardContentRecords() {
+  const usn = window.sessionStorage.getItem('uid');
+  let main_records;
+  main_records = {
+    usn: '',
+    dob: '',
+    cgpa_10th: '',
+    cgpa_12th: '',
+    sem1_per: '',
+    sem2_per: '',
+    sem3_per: '',
+    sem4_per: '',
+    sem5_per: '',
+    sem6_per: '',
+    sem1: '',
+    sem2: '',
+    sem3: '',
+    sem4: '',
+    sem5: '',
+    sem6: '',
+    sem7: '',
+    sem8: '',
+    current_backlog: 0,
+    cleared_backlog: 0,
+    school_10th: '',
+    school_12th: '',
+    year_10th: '',
+    year_12th: '',
+    year_diploma: '',
+    year_graduation: '',
+    grad_project_title: '',
+    grad_project_type: '',
+    grad_project_company: '',
+    grad_project_duration: '',
+    grad_project_desc: '',
+    grad_intern_title: '',
+    grad_intern_company: '',
+    grad_intern_role: '',
+    grad_intern_duration: '',
+    grad_intern_desc: '',
+    post_grad_year: '',
+    post_grad_project_title: '',
+    post_grad_project_type: '',
+    post_grad_company: '',
+    post_grad_project_duration: '',
+    post_grad_project_description: '',
+    parent_mobile_number: '',
+    permanent_address: '',
+    current_address: '',
+    pan_number: '',
+    passport_number: '',
+    dl_number: '',
+    achievements: '',
+    blood_group: ''
+  }  
+  let [xData, setxData] = React.useState(main_records);
+  React.useEffect(() => {
+    fet("/getStudents", 'POST', {params:{id: {usn}}})
+    .then(response => {console.log(response)
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    // .then(data => setDogImage(data.message))
+    setxData(prevState => ({
+      ...prevState,
+      ...response[0].profile,
+      ...response[0].profileFull
+  }));
+    
+  })},{})
   const [open, setOpen] = React.useState(false);
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setxData(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
+
+  const onSubmit = async() => {
+    console.log("Form submitted");
+    xData.dob = dateOfBirth
+    .toISOString()
+    .split("T")[0]
+    fet("/update", "POST", xData)
+    .then((response) => {
+        console.log(response);
+      });
+    console.log(xData);
+  }
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -251,7 +340,7 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        86.5%
+                        {xData.cgpa_10th} CGPA
                       </Typography>
                       <br></br>
                       <Typography
@@ -302,7 +391,7 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        86.5%
+                        {xData.cgpa_12th} CGPA
                       </Typography>
                       <br></br>
                       <Typography
@@ -353,21 +442,21 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Sem 1: --
+                        Sem 1: {xData.sem1_per} 
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 2: --
+                        sem 2: {xData.sem2_per} 
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 3: --
+                        sem 3: {xData.sem3_per} 
                       </Typography>
                       <br></br>
                       <br></br>
@@ -376,21 +465,21 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Sem 4: --
+                        Sem 4: {xData.sem4_per} 
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 5: --
+                        sem 5: {xData.sem5_per} 
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 6: --
+                        sem 6: {xData.sem6_per} 
                       </Typography>
                       <br></br>
                       <br></br>
@@ -479,21 +568,21 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Sem 1: --
+                        Sem 1: {xData.sem1} CGPA
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 2: --
+                        sem 2: {xData.sem2} CGPA
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 3: --
+                        sem 3: {xData.sem3} CGPA
                       </Typography>
                       <br></br>
                       <br></br>
@@ -502,21 +591,21 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Sem 4: --
+                        Sem 4: {xData.sem4} CGPA
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 5: --
+                        sem 5: {xData.sem5} CGPA
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 6: --
+                        sem 6: {xData.sem6} CGPA
                       </Typography>
                       <br></br>
                       <br></br>
@@ -525,14 +614,14 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 10, mt: 1 }}
                       >
-                        Sem 7: --
+                        Sem 7: {xData.sem7} CGPA
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 16, mt: 1 }}
                       >
-                        Sem 8: --
+                        Sem 8: {xData.sem8} CGPA
                       </Typography>
                       <br></br>
                       <br></br>
@@ -637,14 +726,14 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Current Backlogs: 0
+                        Current Backlogs: {xData.current_backlog}
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Cleared Backlogs: 0
+                        Cleared Backlogs: {xData.cleared_backlog}
                       </Typography>
                     </Grid>
                     <Grid item xs={1}>
@@ -732,7 +821,9 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
-                          label="School Name"
+                          name="school_10th"
+                          value={xData.school_10th}
+                          onChange={handleChange}
                           variant="standard"
                         />
                       </Grid>
@@ -755,23 +846,24 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={Year1}
-                            onChange={handleChange1}
+                            name="year_10th"
+                            value={xData.year_10th}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={10}>2010</MenuItem>
-                            <MenuItem value={20}>2011</MenuItem>
-                            <MenuItem value={30}>2012</MenuItem>
-                            <MenuItem value={40}>2013</MenuItem>
-                            <MenuItem value={50}>2014</MenuItem>
-                            <MenuItem value={60}>2015</MenuItem>
-                            <MenuItem value={70}>2016</MenuItem>
-                            <MenuItem value={80}>2017</MenuItem>
-                            <MenuItem value={90}>2018</MenuItem>
-                            <MenuItem value={110}>2019</MenuItem>
-                            <MenuItem value={120}>2020</MenuItem>
-                            <MenuItem value={130}>2021</MenuItem>
-                            <MenuItem value={140}>2022</MenuItem>
-                            <MenuItem value={150}>2023</MenuItem>
+                            <MenuItem value={2010}>2010</MenuItem>
+                            <MenuItem value={2011}>2011</MenuItem>
+                            <MenuItem value={2012}>2012</MenuItem>
+                            <MenuItem value={2013}>2013</MenuItem>
+                            <MenuItem value={2014}>2014</MenuItem>
+                            <MenuItem value={2015}>2015</MenuItem>
+                            <MenuItem value={2016}>2016</MenuItem>
+                            <MenuItem value={2017}>2017</MenuItem>
+                            <MenuItem value={2018}>2018</MenuItem>
+                            <MenuItem value={2019}>2019</MenuItem>
+                            <MenuItem value={2020}>2020</MenuItem>
+                            <MenuItem value={2021}>2021</MenuItem>
+                            <MenuItem value={2022}>2022</MenuItem>
+                            <MenuItem value={2023}>2023</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -806,6 +898,9 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
+                          name="school_12th"
+                          value={xData.school_12th}
+                          onChange={handleChange}
                           variant="standard"
                         />
                       </Grid>
@@ -828,23 +923,24 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={Year2}
-                            onChange={handleChange2}
+                            name="year_12th"
+                            value={xData.year_12th}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={10}>2010</MenuItem>
-                            <MenuItem value={20}>2011</MenuItem>
-                            <MenuItem value={30}>2012</MenuItem>
-                            <MenuItem value={40}>2013</MenuItem>
-                            <MenuItem value={50}>2014</MenuItem>
-                            <MenuItem value={60}>2015</MenuItem>
-                            <MenuItem value={70}>2016</MenuItem>
-                            <MenuItem value={80}>2017</MenuItem>
-                            <MenuItem value={90}>2018</MenuItem>
-                            <MenuItem value={110}>2019</MenuItem>
-                            <MenuItem value={120}>2020</MenuItem>
-                            <MenuItem value={130}>2021</MenuItem>
-                            <MenuItem value={140}>2022</MenuItem>
-                            <MenuItem value={150}>2023</MenuItem>
+                            <MenuItem value={2010}>2010</MenuItem>
+                            <MenuItem value={2011}>2011</MenuItem>
+                            <MenuItem value={2012}>2012</MenuItem>
+                            <MenuItem value={2013}>2013</MenuItem>
+                            <MenuItem value={2014}>2014</MenuItem>
+                            <MenuItem value={2015}>2015</MenuItem>
+                            <MenuItem value={2016}>2016</MenuItem>
+                            <MenuItem value={2017}>2017</MenuItem>
+                            <MenuItem value={2018}>2018</MenuItem>
+                            <MenuItem value={2019}>2019</MenuItem>
+                            <MenuItem value={2020}>2020</MenuItem>
+                            <MenuItem value={2021}>2021</MenuItem>
+                            <MenuItem value={2022}>2022</MenuItem>
+                            <MenuItem value={2023}>2023</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -884,23 +980,24 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={Year3}
-                            onChange={handleChange3}
+                            name="year_diploma"
+                            value={xData.year_diploma}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={10}>2010</MenuItem>
-                            <MenuItem value={20}>2011</MenuItem>
-                            <MenuItem value={30}>2012</MenuItem>
-                            <MenuItem value={40}>2013</MenuItem>
-                            <MenuItem value={50}>2014</MenuItem>
-                            <MenuItem value={60}>2015</MenuItem>
-                            <MenuItem value={70}>2016</MenuItem>
-                            <MenuItem value={80}>2017</MenuItem>
-                            <MenuItem value={90}>2018</MenuItem>
-                            <MenuItem value={110}>2019</MenuItem>
-                            <MenuItem value={120}>2020</MenuItem>
-                            <MenuItem value={130}>2021</MenuItem>
-                            <MenuItem value={140}>2022</MenuItem>
-                            <MenuItem value={150}>2023</MenuItem>
+                            <MenuItem value={2010}>2010</MenuItem>
+                            <MenuItem value={2011}>2011</MenuItem>
+                            <MenuItem value={2012}>2012</MenuItem>
+                            <MenuItem value={2013}>2013</MenuItem>
+                            <MenuItem value={2014}>2014</MenuItem>
+                            <MenuItem value={2015}>2015</MenuItem>
+                            <MenuItem value={2016}>2016</MenuItem>
+                            <MenuItem value={2017}>2017</MenuItem>
+                            <MenuItem value={2018}>2018</MenuItem>
+                            <MenuItem value={2019}>2019</MenuItem>
+                            <MenuItem value={2020}>2020</MenuItem>
+                            <MenuItem value={2021}>2021</MenuItem>
+                            <MenuItem value={2022}>2022</MenuItem>
+                            <MenuItem value={2023}>2023</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -940,23 +1037,24 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={Year4}
-                            onChange={handleChange4}
+                            name="year_graduation"
+                            value={xData.year_graduation}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={10}>2010</MenuItem>
-                            <MenuItem value={20}>2011</MenuItem>
-                            <MenuItem value={30}>2012</MenuItem>
-                            <MenuItem value={40}>2013</MenuItem>
-                            <MenuItem value={50}>2014</MenuItem>
-                            <MenuItem value={60}>2015</MenuItem>
-                            <MenuItem value={70}>2016</MenuItem>
-                            <MenuItem value={80}>2017</MenuItem>
-                            <MenuItem value={90}>2018</MenuItem>
-                            <MenuItem value={110}>2019</MenuItem>
-                            <MenuItem value={120}>2020</MenuItem>
-                            <MenuItem value={130}>2021</MenuItem>
-                            <MenuItem value={140}>2022</MenuItem>
-                            <MenuItem value={150}>2023</MenuItem>
+                            <MenuItem value={2010}>2010</MenuItem>
+                            <MenuItem value={2011}>2011</MenuItem>
+                            <MenuItem value={2012}>2012</MenuItem>
+                            <MenuItem value={2013}>2013</MenuItem>
+                            <MenuItem value={2014}>2014</MenuItem>
+                            <MenuItem value={2015}>2015</MenuItem>
+                            <MenuItem value={2016}>2016</MenuItem>
+                            <MenuItem value={2017}>2017</MenuItem>
+                            <MenuItem value={2018}>2018</MenuItem>
+                            <MenuItem value={2019}>2019</MenuItem>
+                            <MenuItem value={2020}>2020</MenuItem>
+                            <MenuItem value={2021}>2021</MenuItem>
+                            <MenuItem value={2022}>2022</MenuItem>
+                            <MenuItem value={2023}>2023</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -991,6 +1089,9 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
+                          name="grad_project_title"
+                          value={xData.grad_project_title}
+                          onChange={handleChange}
                           variant="standard"
                         />
                       </Grid>
@@ -1012,11 +1113,12 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={ProjectType1}
-                            onChange={handleChange6}
+                            name="grad_project_type"
+                            value={xData.grad_project_type}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={20}>Individual</MenuItem>
-                            <MenuItem value={30}>Group</MenuItem>
+                            <MenuItem value={'Individual'}>Individual</MenuItem>
+                            <MenuItem value={'Group'}>Group</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -1031,7 +1133,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="grad_project_company"
+                            value={xData.grad_project_company}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1051,21 +1156,22 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={Duration1}
-                            onChange={handleChange8}
+                            name="grad_project_duration"
+                            value={xData.grad_project_duration}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={10}>1</MenuItem>
-                            <MenuItem value={20}>2</MenuItem>
-                            <MenuItem value={30}>3</MenuItem>
-                            <MenuItem value={40}>4</MenuItem>
-                            <MenuItem value={50}>5</MenuItem>
-                            <MenuItem value={60}>6</MenuItem>
-                            <MenuItem value={70}>7</MenuItem>
-                            <MenuItem value={80}>8</MenuItem>
-                            <MenuItem value={90}>9</MenuItem>
-                            <MenuItem value={100}>10</MenuItem>
-                            <MenuItem value={110}>12</MenuItem>
-                            <MenuItem value={120}>12</MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                            <MenuItem value={5}>5</MenuItem>
+                            <MenuItem value={6}>6</MenuItem>
+                            <MenuItem value={7}>7</MenuItem>
+                            <MenuItem value={8}>8</MenuItem>
+                            <MenuItem value={9}>9</MenuItem>
+                            <MenuItem value={10}>10</MenuItem>
+                            <MenuItem value={11}>11</MenuItem>
+                            <MenuItem value={12}>12</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -1080,7 +1186,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="grad_project_desc"
+                            value={xData.grad_project_desc}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                     </Grid>
                     <br></br>
@@ -1113,6 +1222,9 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
+                          name="grad_intern_title"
+                          value={xData.grad_intern_title}
+                          onChange={handleChange}
                           variant="standard"
                         />
                       </Grid>
@@ -1129,6 +1241,9 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
+                          name="grad_intern_company"
+                          value={xData.grad_intern_company}
+                          onChange={handleChange}
                           variant="standard"
                         />
                       </Grid>
@@ -1143,7 +1258,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                          name="grad_intern_role"
+                          value={xData.grad_intern_role}
+                          onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1163,21 +1281,22 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={Duration2}
-                            onChange={handleChange9}
+                            name="grad_intern_duration"
+                            value={xData.grad_intern_duration}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={10}>1</MenuItem>
-                            <MenuItem value={20}>2</MenuItem>
-                            <MenuItem value={30}>3</MenuItem>
-                            <MenuItem value={40}>4</MenuItem>
-                            <MenuItem value={50}>5</MenuItem>
-                            <MenuItem value={60}>6</MenuItem>
-                            <MenuItem value={70}>7</MenuItem>
-                            <MenuItem value={80}>8</MenuItem>
-                            <MenuItem value={90}>9</MenuItem>
-                            <MenuItem value={100}>10</MenuItem>
-                            <MenuItem value={110}>12</MenuItem>
-                            <MenuItem value={120}>12</MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                            <MenuItem value={5}>5</MenuItem>
+                            <MenuItem value={6}>6</MenuItem>
+                            <MenuItem value={7}>7</MenuItem>
+                            <MenuItem value={8}>8</MenuItem>
+                            <MenuItem value={9}>9</MenuItem>
+                            <MenuItem value={10}>10</MenuItem>
+                            <MenuItem value={11}>11</MenuItem>
+                            <MenuItem value={12}>12</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -1192,7 +1311,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="grad_intern_desc"
+                            value={xData.grad_intern_desc}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                     </Grid>
                     <br></br>
@@ -1230,23 +1352,24 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={Year5}
-                            onChange={handleChange5}
+                            name="post_grad_year"
+                            value={xData.post_grad_year}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={10}>2010</MenuItem>
-                            <MenuItem value={20}>2011</MenuItem>
-                            <MenuItem value={30}>2012</MenuItem>
-                            <MenuItem value={40}>2013</MenuItem>
-                            <MenuItem value={50}>2014</MenuItem>
-                            <MenuItem value={60}>2015</MenuItem>
-                            <MenuItem value={70}>2016</MenuItem>
-                            <MenuItem value={80}>2017</MenuItem>
-                            <MenuItem value={90}>2018</MenuItem>
-                            <MenuItem value={110}>2019</MenuItem>
-                            <MenuItem value={120}>2020</MenuItem>
-                            <MenuItem value={130}>2021</MenuItem>
-                            <MenuItem value={140}>2022</MenuItem>
-                            <MenuItem value={150}>2023</MenuItem>
+                            <MenuItem value={2010}>2010</MenuItem>
+                            <MenuItem value={2011}>2011</MenuItem>
+                            <MenuItem value={2012}>2012</MenuItem>
+                            <MenuItem value={2013}>2013</MenuItem>
+                            <MenuItem value={2014}>2014</MenuItem>
+                            <MenuItem value={2015}>2015</MenuItem>
+                            <MenuItem value={2016}>2016</MenuItem>
+                            <MenuItem value={2017}>2017</MenuItem>
+                            <MenuItem value={2018}>2018</MenuItem>
+                            <MenuItem value={2019}>2019</MenuItem>
+                            <MenuItem value={2020}>2020</MenuItem>
+                            <MenuItem value={2021}>2021</MenuItem>
+                            <MenuItem value={2022}>2022</MenuItem>
+                            <MenuItem value={2023}>2023</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -1281,6 +1404,9 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
+                          name="post_grad_project_title"
+                          value={xData.post_grad_project_title}
+                          onChange={handleChange}
                           variant="standard"
                         />
                       </Grid>
@@ -1302,11 +1428,12 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={ProjectType2}
-                            onChange={handleChange7}
+                            name="post_grad_project_type"
+                            value={xData.post_grad_project_type}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={20}>Individual</MenuItem>
-                            <MenuItem value={30}>Group</MenuItem>
+                            <MenuItem value={'Individual'}>Individual</MenuItem>
+                            <MenuItem value={'Group'}>Group</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -1321,7 +1448,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="post_grad_company"
+                            value={xData.post_grad_company}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1341,21 +1471,22 @@ function DashboardContentRecords() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={Duration3}
-                            onChange={handleChange10}
+                            name="post_grad_project_duration"
+                            value={xData.post_grad_project_duration}
+                            onChange={handleChange}
                           >
-                            <MenuItem value={10}>1</MenuItem>
-                            <MenuItem value={20}>2</MenuItem>
-                            <MenuItem value={30}>3</MenuItem>
-                            <MenuItem value={40}>4</MenuItem>
-                            <MenuItem value={50}>5</MenuItem>
-                            <MenuItem value={60}>6</MenuItem>
-                            <MenuItem value={70}>7</MenuItem>
-                            <MenuItem value={80}>8</MenuItem>
-                            <MenuItem value={90}>9</MenuItem>
-                            <MenuItem value={100}>10</MenuItem>
-                            <MenuItem value={110}>12</MenuItem>
-                            <MenuItem value={120}>12</MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                            <MenuItem value={5}>5</MenuItem>
+                            <MenuItem value={6}>6</MenuItem>
+                            <MenuItem value={7}>7</MenuItem>
+                            <MenuItem value={8}>8</MenuItem>
+                            <MenuItem value={9}>9</MenuItem>
+                            <MenuItem value={10}>10</MenuItem>
+                            <MenuItem value={11}>11</MenuItem>
+                            <MenuItem value={12}>12</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -1370,7 +1501,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="post_grad_project_description"
+                            value={xData.post_grad_project_description}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                     </Grid>
                     <br></br>
@@ -1409,7 +1543,8 @@ function DashboardContentRecords() {
                           <DatePicker
                             views={["day"]}
                             label="Date of Birth"
-                            value={dateOfBirth}
+                            name="dob"
+                            value={xData.dob}
                             onChange={(newValue) => {
                               setDateOfBirth(newValue);
                             }}
@@ -1431,7 +1566,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="parent_mobile_number"
+                            value={xData.parent_mobile_number}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1446,6 +1584,9 @@ function DashboardContentRecords() {
                       <Grid item xs={8}>
                         <TextField
                           id="standard-basic"
+                          name="permanent_address"
+                          value={xData.permanent_address}
+                          onChange={handleChange}
                           variant="standard"
                         />
                       </Grid>
@@ -1460,7 +1601,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="current_address"
+                            value={xData.current_address}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1473,7 +1617,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="pan_number"
+                            value={xData.pan_number}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1486,7 +1633,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="passport_number"
+                            value={xData.passport_number}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1499,7 +1649,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="dl_number"
+                            value={xData.dl_number}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1512,7 +1665,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="achievements"
+                            value={xData.achievements}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1525,7 +1681,10 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic" variant="standard" />
+                        <TextField id="standard-basic"
+                            name="blood_group"
+                            value={xData.blood_group}
+                            onChange={handleChange} variant="standard" />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1544,7 +1703,7 @@ function DashboardContentRecords() {
                       <Grid item xs={4}></Grid>
                       <Grid item xs={8}>
                         <br></br>
-                        <Button variant="contained">Submit</Button>
+                        <Button onClick={onSubmit} variant="contained">Submit</Button>
                       </Grid>
                     </Grid>
                   </Paper>

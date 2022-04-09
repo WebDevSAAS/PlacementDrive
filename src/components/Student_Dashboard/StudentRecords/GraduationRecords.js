@@ -98,28 +98,40 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentGraduationRecord() {
-  const usnData = window.sessionStorage.getItem('uid');
-
-  const xii_records = {
-    usn: usnData,
+  
+  const usn = window.sessionStorage.getItem('uid');
+  let xii_records;
+  xii_records = {
+    usn: '',
     course: '',
     specialization: '',
     score_type: '',
     score_frequency: '',
-    sem1: '',
-    sem2: '',
-    sem3: '',
-    sem4: '',
-    sem5: '',
-    sem6: '',
-    sem7: '',
-    sem8: '',
-    sgpa_scale: '',
-    aggregate_percentage: ''
-  }
+    sem1: '0',
+    sem2: '0',
+    sem3: '0',
+    sem4: '0',
+    sem5: '0',
+    sem6: '0',
+    sem7: '0',
+    sem8: '0',
+    sgpa_scale: '0',
+    aggregate_percentage: '0'
+  } 
+  let [xData, setxData] = React.useState(xii_records);
+  React.useEffect(() => {
+    fet("/getStudents", 'POST', {params:{id: {usn}}})
+    .then(response => {console.log(response)
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    // .then(data => setDogImage(data.message))
+    setxData(prevState => ({
+      ...prevState,
+      ...response[0].profileFull
+  }));
+    
+  })},{})
 
   const [open, setOpen] = React.useState(false);
-  const [xData, setxData] = React.useState(xii_records);
   const toggleDrawer = () => {
     setOpen(!open);
   };

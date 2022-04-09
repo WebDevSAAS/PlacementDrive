@@ -94,16 +94,27 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentBacklogsRecord() {
-  const usnData = window.sessionStorage.getItem('uid');
-
-  const x_records = {
-    usn: usnData,
+  const usn = window.sessionStorage.getItem('uid');
+  let x_records;
+  x_records = {
+    usn: '',
     current_backlog: 0,
     cleared_backlog: 0
-  }
+  }  
+  let [xData, setxData] = React.useState(x_records);
+  React.useEffect(() => {
+    fet("/getStudents", 'POST', {params:{id: {usn}}})
+    .then(response => {console.log(response)
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    // .then(data => setDogImage(data.message))
+    setxData(prevState => ({
+      ...prevState,
+      ...response[0].profileFull
+  }));
+    
+  })},{})
 
   const [open, setOpen] = React.useState(false);
-  const [xData, setxData] = React.useState(x_records);
   const toggleDrawer = () => {
     setOpen(!open);
   };

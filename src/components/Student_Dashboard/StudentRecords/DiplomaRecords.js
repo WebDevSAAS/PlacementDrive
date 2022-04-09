@@ -98,10 +98,10 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentDiplomaRecord() {
-  const usnData = window.sessionStorage.getItem('uid');
-
-  const xii_records = {
-    usn: usnData,
+  const usn = window.sessionStorage.getItem('uid');
+  let xii_records;
+  xii_records = {
+    usn: '',
     diploma_course: '',
     board: '',
     sem1_marks: '',
@@ -118,10 +118,21 @@ function StudentDiplomaRecord() {
     sem6_marks: '',
     sem6_per: '',
     aggregate_percentage: ''
-  }
+  } 
+  let [xData, setxData] = React.useState(xii_records);
+  React.useEffect(() => {
+    fet("/getStudents", 'POST', {params:{id: {usn}}})
+    .then(response => {console.log(response)
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    // .then(data => setDogImage(data.message))
+    setxData(prevState => ({
+      ...prevState,
+      ...response[0].profileFull
+  }));
+    
+  })},{})
 
   const [open, setOpen] = React.useState(false);
-  const [xData, setxData] = React.useState(xii_records);
   const toggleDrawer = () => {
     setOpen(!open);
   };
