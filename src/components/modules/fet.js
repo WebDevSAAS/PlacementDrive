@@ -21,8 +21,9 @@ let fet = async (url, method, body) => {
         .then((data) => data.json())
         .then((data) => {
           //console.log(data);
+          if(data && data.profile && data.profile.usn)
+            window.sessionStorage.setItem('uid', data.profile.usn);
           resolve(data);
-          return data;
         })
         .catch((err) => {
           reject(err);

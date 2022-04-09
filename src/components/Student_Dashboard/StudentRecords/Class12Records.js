@@ -98,20 +98,29 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentClass12Record() {
-
-  const usnData = window.sessionStorage.getItem('uid');
-
-  const xii_records = {
-    usn: usnData,
+  const usn = window.sessionStorage.getItem('uid');
+  let xii_records;
+  xii_records = {
+    usn: '',
     board_12th: '',
-    school_12th: 'Birla Shishu Vihar',
     g_state_12th: 'Haryana',
     cgpa_12th: '',
-    year_12th: '2019'
-  }
+    cgpa12_scale: ''
+  } 
+  let [xData, setxData] = React.useState(xii_records);
+  React.useEffect(() => {
+    fet("/getStudents", 'POST', {params:{id: {usn}}})
+    .then(response => {console.log(response)
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    // .then(data => setDogImage(data.message))
+    setxData(prevState => ({
+      ...prevState,
+      ...response[0].profileFull
+  }));
+    
+  })},{})
 
   const [open, setOpen] = React.useState(false);
-  const [xData, setxData] = React.useState(xii_records);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -307,7 +316,7 @@ function StudentClass12Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" variant="standard" />
+                    <TextField id="standard-basic" name="cgpa12_scale" value={xData.cgpa12_scale} onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
