@@ -248,15 +248,16 @@ function StudentGraduationRecord() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 2600,
+                    height: 2800,
                   }}
                 >
                   <Paper
+                    elevation={2}
                     sx={{
                       p: 2,
                       display: "flex",
                       flexDirection: "column",
-                      height: 90,
+                      backgroundColor: "#AFD3FC",
                     }}
                   >
                     <Typography variant="h4" color="text.primary">
@@ -267,6 +268,7 @@ function StudentGraduationRecord() {
                       file size – 200 KB
                     </Typography>
                   </Paper>
+                  <br></br>
                   <br></br>
                   <Grid
                     container
@@ -707,6 +709,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
+                      
                       <TextField id="standard-basic"
                           name="sem6"
                           value={xData.sem6} onChange={handleChange} variant="standard" />
@@ -744,6 +747,7 @@ function StudentGraduationRecord() {
                   <br></br>
                   <br></br>
                   <Divider light={true} />
+                  <br></br>
                   <Grid
                     container
                     rowSpacing={1}
@@ -760,6 +764,7 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
+                    
                       <TextField id="standard-basic"
                           name="sem7"
                           value={xData.sem7} onChange={handleChange} variant="standard" />
@@ -797,6 +802,7 @@ function StudentGraduationRecord() {
                   <br></br>
                   <br></br>
                   <Divider light={true} />
+                  <br></br>
                   <Grid
                     container
                     rowSpacing={1}
@@ -850,6 +856,7 @@ function StudentGraduationRecord() {
                   <br></br>
                   <br></br>
                   <Divider light={true} />
+                  <br></br> 
                   <Grid
                     container
                     rowSpacing={1}
@@ -896,12 +903,12 @@ function StudentGraduationRecord() {
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
                       <br></br>
-                      <Button onClick={onSubmit} variant="contained">Submit</Button>
+                      <Button onClick={onSubmit} variant="contained" style={{ width: "200px" }}>Submit</Button>
                     </Grid>
-                    <Grid item xs={9}></Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={10}></Grid>
+                    <Grid item xs={2}>
                       <br></br>
-                      <Button variant="contained">Reset Record</Button>
+                      <Button variant="contained" style={{ width: "160px" }} color="error">&#8635; Reset Record</Button>
                     </Grid>
                   </Grid>
                 </Paper>

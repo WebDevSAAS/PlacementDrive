@@ -217,15 +217,16 @@ function StudentBacklogsRecord() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 360,
+                    height: 400,
                   }}
                 >
-                  <Paper
+                <Paper
+                    elevation={2}
                     sx={{
                       p: 2,
                       display: "flex",
                       flexDirection: "column",
-                      height: 90,
+                      backgroundColor: "#AFD3FC",
                     }}
                   >
                     <Typography variant="h4" color="text.primary">
@@ -235,6 +236,7 @@ function StudentBacklogsRecord() {
                       Your backlogs
                     </Typography>
                   </Paper>
+                  <br></br>
                   <br></br>
                   <Grid
                     container
@@ -262,6 +264,7 @@ function StudentBacklogsRecord() {
                         variant="standard"
                       />
                     </Grid>
+                    <br></br>
                     <Grid item xs={4}>
                       <Typography
                         variant="h9"
@@ -285,7 +288,7 @@ function StudentBacklogsRecord() {
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
                       <br></br>
-                      <Button onClick={onSubmit} variant="contained">Submit</Button>
+                      <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
                     </Grid>
                   </Grid>
                 </Paper>

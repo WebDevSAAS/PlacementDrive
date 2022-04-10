@@ -312,6 +312,11 @@ function DashboardContentRecords() {
         >
           <Toolbar />
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+            <Box textAlign="center">
+              <Button onClick={onSubmit} variant="contained" style={{ width: "450px", marginBottom: "20px" }} color="secondary">
+                Request For Validation
+              </Button>
+            </Box>
             <Grid container spacing={3}>
               <Grid item xs={12} md={12} lg={12}>
                 <Paper
@@ -547,7 +552,7 @@ function DashboardContentRecords() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 350,
+                    height: 380,
                   }}
                 >
                   <Grid
@@ -575,14 +580,14 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 2: {xData.sem2} CGPA
+                        Sem 2: {xData.sem2} CGPA
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 3: {xData.sem3} CGPA
+                        Sem 3: {xData.sem3} CGPA
                       </Typography>
                       <br></br>
                       <br></br>
@@ -598,28 +603,28 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 5: {xData.sem5} CGPA
+                        Sem 5: {xData.sem5} CGPA
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 6: {xData.sem6} CGPA
+                        Sem 6: {xData.sem6} CGPA
                       </Typography>
                       <br></br>
                       <br></br>
                       <Typography
                         variant="h8"
                         color="text.primary"
-                        sx={{ ml: 10, mt: 1 }}
+                        sx={{ ml: 3, mt: 1 }}
                       >
                         Sem 7: {xData.sem7} CGPA
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
-                        sx={{ ml: 16, mt: 1 }}
+                        sx={{ ml: 12, mt: 1 }}
                       >
                         Sem 8: {xData.sem8} CGPA
                       </Typography>
@@ -630,21 +635,21 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Sem 1 : --
+                        Pending Proof
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        Sem 2 : --
+                        Pending Proof
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        Sem 3 : --
+                        Pending Proof
                       </Typography>
                       <br></br>
                       <br></br>
@@ -653,7 +658,7 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Sem 4 : --
+                        Pending Proof
                       </Typography>
                       <Typography
                         variant="h8"
@@ -674,14 +679,14 @@ function DashboardContentRecords() {
                       <Typography
                         variant="h8"
                         color="text.primary"
-                        sx={{ ml: 10, mt: 1 }}
+                        sx={{ ml: 3, mt: 1 }}
                       >
                         Pending Proof
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
-                        sx={{ ml: 16, mt: 1 }}
+                        sx={{ ml: 12, mt: 1 }}
                       >
                         Pending Proof
                       </Typography>
@@ -755,15 +760,16 @@ function DashboardContentRecords() {
                       p: 2,
                       display: "flex",
                       flexDirection: "column",
-                      height: 3150,
+                      height: 3250,
                     }}
                   >
                     <Paper
+                      elevation={2}
                       sx={{
                         p: 2,
                         display: "flex",
                         flexDirection: "column",
-                        height: 90,
+                        backgroundColor: "#AFD3FC",
                       }}
                     >
                       <Typography variant="h4" color="text.primary">
@@ -1703,7 +1709,7 @@ function DashboardContentRecords() {
                       <Grid item xs={4}></Grid>
                       <Grid item xs={8}>
                         <br></br>
-                        <Button onClick={onSubmit} variant="contained">Submit</Button>
+                        <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
                       </Grid>
                     </Grid>
                   </Paper>

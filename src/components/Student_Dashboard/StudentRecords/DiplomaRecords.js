@@ -235,15 +235,16 @@ function StudentDiplomaRecord() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 2000,
+                    height: 2400,
                   }}
                 >
                 <Paper
+                      elevation={2}
                       sx={{
                         p: 2,
                         display: "flex",
                         flexDirection: "column",
-                        height: 90,
+                        backgroundColor: "#AFD3FC",
                       }}
                     >
                       <Typography variant="h4" color="text.primary">
@@ -726,13 +727,13 @@ function StudentDiplomaRecord() {
                     </Grid>
                     <Grid item xs={8}>
                         <br></br>
-                        <Button onClick={onSubmit} variant="contained">Submit</Button>
+                        <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={10}>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <br></br>
-                        <Button variant="contained">Reset Record</Button>
+                        <Button variant="contained" style={{width: "160px"}} color="error">&#8635; Reset Record</Button>
                     </Grid>
                     </Grid>
                 </Paper>
