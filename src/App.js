@@ -10,6 +10,7 @@ import StudentGraduationRecords from "./components/Student_Dashboard/StudentReco
 // import Footer from "./components/Footer";
 import Home from "./components/Home";
 import { AdminSignIn } from "./components/Admin/AdminSignIn"
+import { AdminSignUp } from "./components/Admin/AdminSignUp"
 import StudentDashboard from "./components/Student_Dashboard/StudentDashboard";
 import StudentDashboardRecords from "./components/Student_Dashboard/StudentDashboardRecords";
 import StudentDashboardProfile from "./components/Student_Dashboard/StudentDashboardProfile"
@@ -58,8 +59,7 @@ function App() {
 
           <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} />
           
-          {/* <Route path="/signed_in/student_dashboard/events" exact element={<StudentDashboardEvents />} /> */}
-          {/* <Route path="/signed_in/student_dashboard/analytics" exact element={<StudentDashboardAnalytics />} /> */}
+
           <Route path="/signed_in/student_dashboard/records" exact element={<StudentDashboardRecords />} />
 
 
@@ -68,6 +68,7 @@ function App() {
           
           {/* Admin Dashboard */}
           <Route path="/admin/signin" exact element={<AdminSignIn />} />
+          <Route path="/admin/register" exact element={ <AdminSignUp/> }/>
           <Route path="/admin/signed_in/dashboard" exact element={<AdminDashboard />} /> 
           <Route path="/admin/signed_in/dashboard/notifications" exact element={<AdminDashboardNotifications />} />
           <Route path="/admin/signed_in/dashboard/records" exact element={<AdminDashboardRecords />} />

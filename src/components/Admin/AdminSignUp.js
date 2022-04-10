@@ -3,42 +3,43 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom"; 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-mui";
 import { CheckboxWithLabel } from "formik-mui";
 
+
 function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.rnsit.ac.in/">
-        RNSIT
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
+    return (
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        align="center"
+        {...props}
+      >
+        {"Copyright © "}
+        <Link color="inherit" href="https://www.rnsit.ac.in/">
+          RNSIT
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    );
 }
+  
 
 const initialValues = {
   email: "",
   password: "",
-  rememberMe: false,
 };
+
 
 const emailRegex = /^[a-z]+@rnsit\.ac\.in$/;
 const passwordRegex =
@@ -51,17 +52,20 @@ var validationSchema = Yup.object().shape({
       "Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     )
     .required("Required"),
-  rememberMe: Yup.boolean(),
 });
 
-function AdminSignIn() {
-  const onSubmit = (values) => {
-    console.log(values);
-  };
 
-  return (
+
+
+function AdminSignUp() {
+    
+    const onSubmit = (values) => {
+        console.log(values);
+    };
+
+    return (
     <>
-      <Container component="main" maxWidth="xs" sx={{ minHeight: "90vh" }}>
+        <Container component="main" maxWidth="xs" sx={{ minHeight: "90vh" }}>
         <CssBaseline />
         <Box
           sx={{
@@ -75,7 +79,7 @@ function AdminSignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Admin Login
+            Admin Registration
           </Typography>
           <Box sx={{ mt: 1 }}>
             <Formik
@@ -90,7 +94,7 @@ function AdminSignIn() {
                       <Grid item xs={12}>
                         <Field
                           margin="normal"
-                          label="Admin E-Mail"
+                          label="Enter your E-Mail"
                           variant="outlined"
                           fullWidth
                           name="email"
@@ -101,22 +105,12 @@ function AdminSignIn() {
                       <Grid item xs={12}>
                         <Field
                           margin="normal"
-                          label="Password"
+                          label="Enter your Password"
                           variant="outlined"
                           fullWidth
                           name="password"
                           value={values.password}
                           component={TextField}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Field
-                          margin="normal"
-                          Label={{ label: "Remember Me" }}
-                          fullWidth
-                          type="checkbox"
-                          name="rememberMe"
-                          component={CheckboxWithLabel}
                         />
                       </Grid>
                     </Grid>
@@ -126,33 +120,21 @@ function AdminSignIn() {
                       variant="contained"
                       color="primary"
                       type="Submit"
-                      sx={{ marginY: "1rem" }}
+                      sx={{ marginY: "1rem", marginTop: "3rem" }}
                     >
-                       Login
+                       Register
                     </Button>
                   </Form>
                 );
               }}
             </Formik>
-
-            <Grid container sx={{ marginTop: "2rem" }}>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/admin/register" variant="body2">
-                  {"Register as Admin?"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+        </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
+        </Container>
     </>
-  );
+    );
+    
 }
 
-export { AdminSignIn };
+export { AdminSignUp } ;
