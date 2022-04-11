@@ -269,16 +269,28 @@ function DashboardContentProfile() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: "80vh",
+                    minHeight: 800,
                   }}
                 >
-                  <Typography variant="h4" color="text.primary" align="center">
-                    Profile
-                  </Typography>
-                  <br></br>
+                  <Paper
+                      elevation={2}
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                        backgroundColor: "#AFD3FC",
+                        paddingLeft: "30px",
+                      }}
+                    >
+                      <Typography variant="h4" color="text.primary">
+                        Profile
+                      </Typography>
+                    </Paper>
+                  <br />
+                  <br />
                   <Grid
                     container
-                    rowSpacing={1}
+                    rowSpacing={2}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                   >
                     <Grid item xs={4}>
@@ -381,34 +393,7 @@ function DashboardContentProfile() {
                         Gender :<br></br>
                       </Typography>
                     </Grid>
-                    {/* <Grid item xs={8}>
-                      <FormControl focused sx={{ width: 200 }}>
-                        <InputLabel id="demo-simple-select-label">
-                          Gender
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={pData.gender}
-                          label="Gender"
-                          onChange={handleChange}
-                        >
-                          <MenuItem value={10}>Male</MenuItem>
-                          <MenuItem value={20}>Female</MenuItem>
-                        </Select>
-                      </FormControl>
-                      <TextField
-                        id="outlined-read-only-input"
-                        value={pData.gender}
-                        color="primary"
-                        disabled
-                        InputProps={{
-                          readOnly: true,
-                          style: { fontSize: 20, textAlign: "center" },
-                        }}
-                      />
-
-                    </Grid> */}
+                    
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-read-only-input"
@@ -490,11 +475,8 @@ function DashboardContentProfile() {
                         }}
                       />
                     </Grid>
-                    <Grid item xs={4}></Grid>
-                    <Grid item xs={8}>
-                      {/* <Button variant="contained">Submit</Button> */}
-                      <Button variant="contained">Ok</Button>
-                    </Grid>
+                    <br />
+                    <br />
                   </Grid>
                 </Paper>
               </Grid>

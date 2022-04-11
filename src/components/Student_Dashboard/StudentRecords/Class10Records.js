@@ -226,15 +226,16 @@ function StudentClass10Record() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 540,
+                    height: 580,
                   }}
                 >
                 <Paper
+                      elevation={2}
                       sx={{
                         p: 2,
                         display: "flex",
                         flexDirection: "column",
-                        height: 90,
+                        backgroundColor: "#AFD3FC",
                       }}
                     >
                       <Typography variant="h4" color="text.primary">
@@ -337,8 +338,8 @@ function StudentClass10Record() {
                     <Grid item xs={4}>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                        <Button onClick={onSubmit} variant="contained">Submit</Button>
+                        <br/>
+                        <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
                     </Grid>
                     </Grid>
                 </Paper>
