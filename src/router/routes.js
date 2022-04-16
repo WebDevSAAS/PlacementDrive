@@ -67,6 +67,7 @@ module.exports = function (app, db) {
             let obj = {
               email: k.email,
               password: k.password,
+              accountType:'admin'
             };
             db.collection("admin").insertOne(obj, (error, results) => {
               if (error) {
