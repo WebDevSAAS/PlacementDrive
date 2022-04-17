@@ -14,6 +14,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-mui";
 import { CheckboxWithLabel } from "formik-mui";
+import { fet, hash } from "../modules/fet"
 
 
 function Copyright(props) {
@@ -61,6 +62,15 @@ function AdminSignUp() {
     
     const onSubmit = (values) => {
         console.log(values);
+        hash(values.password).then(h => {
+          values.password = h
+          console.log(values);
+          fet("/register_admin", "POST", values).then(res => {
+            //console.log("Signup response : ", res)
+            if (res.status !== "error")
+                  window.location = "./admin/signed_in/dashboard";
+          })
+        })
     };
 
     return (
