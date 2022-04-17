@@ -128,21 +128,20 @@ module.exports = function (app, db) {
     // check if any value is not null
     else if (
       k.c_id &&
+      k.event_date &&
       k.c_name &&
-      k.eg_marks_10th &&
-      k.eg_marks_12th &&
-      k.year_gap &&
-      k.backlog_active &&
-      k.backlog_history &&
-      k.job_desc &&
-      k.pay_package &&
-      k.internship &&
-      k.duration &&
-      k.work_location &&
-      k.drive_date &&
-      k.app_end_date &&
+      k.job_title &&
       k.sector &&
-      k.category
+      k.event_type &&
+      k.year_eligible &&
+      k.ctc_package &&
+      k.internship &&
+      k.app_end_date &&
+      k.logo &&
+      k.desc &&
+      k.contact_name &&
+      k.contact_no &&
+      k.contact_email
     ) {
       // check if company already exists...
       db.collection("company").findOne(
@@ -161,22 +160,21 @@ module.exports = function (app, db) {
             let obj = {
               c_id: k.c_id,
               profile: {
-              c_id: k.c_id ,
-      		    c_name: k.c_name ,
-      		    eg_marks_10th: k.eg_marks_10th ,
-      		    eg_marks_10th: k.eg_marks_12th ,
-      		    year_gap: k.year_gap ,
-      		    backlog_active: k.backlog_active ,
-      		    backlog_history: k.backlog_history ,
-      		    job_desc: k.job_desc ,
-      		    pay_package: k.pay_package ,
-			        internship: k.internship ,
-			        duration: k.duration ,
-			        work_location: k.work_location ,
-			        drive_date: k.drive_date ,
-			        app_end_date: k.app_end_date ,
-			        sector: k.sector ,
-			        category: k.category,
+                c_id: k.c_id,
+                event_date: k.event_date,
+                c_name: k.c_name,
+                job_title: k.job_title,
+                sector: k.sector,
+                event_type: k.event_type,
+                year_eligible: k.year_eligible,
+                ctc_package: k.ctc_package,
+                internship: k.internship,
+                app_end_date: k.app_end_date,
+                logo: k.logo,
+                desc: k.desc,
+                contact_name: k.contact_name,
+                contact_no: k.contact_no,
+                contact_email: k.contact_email,
               },
             };
             db.collection("company").insertOne(obj, (error, results) => {
@@ -217,6 +215,83 @@ module.exports = function (app, db) {
     }
   });
   // -----------------end Company API-----------------
+  // -----------------apply to API-------------------
+  app.post("/apply_to", (req, res) => {
+    let k = req.body;
+    console.log(req.body);
+    if (req.session && req.session.usertable_id) {
+      res.json({
+        status: "warn",
+        message: "Session already exists !",
+        isLogged: true,
+        lastUpdated: req.session.lastUpdated,
+        isLatest: false,
+        // profile: req.session.profile,
+      });
+    }
+    else if (
+      k.table_id &&
+      k.company_id &&
+      k.usn &&
+      k.desc
+    ) {
+      db.collection("applyTo").findOne(
+        { table_id: k.table_id },
+        { projection: { _id: 1, table_id: 1 } },
+        (error, result) => {
+          if (result && result._id) {
+            res.json({
+              status: "error",
+              message: "User already exists !",
+              isLogged: false,
+            });
+          }
+          // usn doesn't exists, create one
+          else {
+            let obj = {
+                table_id: k.table_id,
+                company_id:k.company_id,
+                usn: k.usn,
+                desc: k.desc
+            };
+            db.collection("applyTo").insertOne(obj, (error, results) => {
+              if (error) {
+                res.json({
+                  status: "error",
+                  message: error,
+                  isLogged: false,
+                });
+                throw error;
+              }
+              // Records inserted, auto log in
+              else {
+                // log it in
+                req.session.usertable_id = k.table_id;
+                // req.session.profile = obj.profile;
+                req.session.lastUpdated = new Date();
+                res.json({
+                  status: "success",
+                  message: "Account created !",
+                  lastUpdated: req.session.lastUpdated,
+                  isLatest: true,
+                  isLogged: true,
+                  // profile: obj.profile,
+                });
+              }
+            });
+          }
+        }
+      );
+    } else {
+      // some fields are null
+      res.json({
+        status: "error",
+        message: "Empty or invalid data",
+        isLogged: false,
+      });
+    }
+  });
+  // -----------------apply to API end---------------
   
   app.get("/student_al", (req, res) => {
     let k = req.query;
