@@ -121,7 +121,6 @@ export default function SignUp() {
         if (res.status !== "error")
               window.location = "./signed_in/student_dashboard";
       })
-
     })
   };
 

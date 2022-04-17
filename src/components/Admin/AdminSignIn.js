@@ -15,6 +15,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-mui";
 import { CheckboxWithLabel } from "formik-mui";
+import {fet, hash} from "../modules/fet"
 
 function Copyright(props) {
   return (
@@ -57,7 +58,18 @@ var validationSchema = Yup.object().shape({
 function AdminSignIn() {
   const onSubmit = (values) => {
     console.log(values);
-  };
+    hash(values["password"]).then((h) => {
+      console.log(values);
+      fet("http://localhost:6969/signin_admin", "POST", {
+        email: values["email"],
+        password: h,
+        accountType: "admin",
+      }).then((response) => {
+        console.log(response);
+        if (response.status !== "error")
+          window.location = "./admin/signed_in/dashboard";
+      });
+  })};
 
   return (
     <>

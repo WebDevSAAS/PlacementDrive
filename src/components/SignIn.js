@@ -70,9 +70,12 @@ function SignIn() {
         accountType: "student",
       }).then((response) => {
         console.log(response);
-        if (response.status !== "error")
+        if (response.status !== "error"){
           window.sessionStorage.setItem('uid', values["usn"]);
           window.location = "./signed_in/student_dashboard";
+        } else {
+          alert("Invalid username or password!");
+        }
       });
     });
   };
