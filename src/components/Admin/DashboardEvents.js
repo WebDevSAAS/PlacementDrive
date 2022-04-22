@@ -105,17 +105,7 @@ function AdminDashboardContentEvents() {
     setOpen(!open);
   };
 
-  const userCategory = "admin"; //    INSERT userCategory VALUE FROM BACKEND !!
-  var badge;
-  if (userCategory == "admin") {
-    badge = <AdminBadge />;
-  } else if (userCategory == "dfpc") {
-    badge = <DfpcBadge />;
-  } else if (userCategory == "tpc") {
-    badge = <TpcBadge />;
-  }
-
-  const rows = [
+  let rows = [
     {
       id: 1,
       logo: "{image}",
@@ -134,6 +124,48 @@ function AdminDashboardContentEvents() {
       band: 3,
     },
   ];
+
+  let events = [];
+  let [xData, setxData] = React.useState(events);
+
+  React.useEffect(() => {
+    fet("/company_all", 'GET')
+    .then(response => {console.log(response)
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    // .then(data => setDogImage(data.message))
+    setxData(response);
+  })},{})
+
+  
+  for(var i=0;i<xData.length;i++){
+    const temp={};
+      temp.id = xData[i].c_id;
+      temp.logo = '{image}';
+      temp.driveName= xData[i].profile.c_name;
+      temp.jobTitle= xData[i].profile.job_title;
+      temp.sector= xData[i].profile.sector;
+      temp.branchesAllowed= ["CSE", "ISE", "ECE"];
+      temp.ctc= xData[i].profile.ctc_package;
+      temp.eventType= "On Campus";
+      temp.applEndDate= xData[i].profile.app_end_date;
+      temp.eventDate= xData[i].profile.event_date;
+      temp.status= "Ongoing";
+      temp.eligibility= "LINK";
+      temp.manageEvent= "LINK";
+      temp.closeEvent= "LINK";
+      temp.band= xData[i].profile.event_type;
+      rows.push(temp);
+  }
+
+  const userCategory = "admin"; //    INSERT userCategory VALUE FROM BACKEND !!
+  var badge;
+  if (userCategory == "admin") {
+    badge = <AdminBadge />;
+  } else if (userCategory == "dfpc") {
+    badge = <DfpcBadge />;
+  } else if (userCategory == "tpc") {
+    badge = <TpcBadge />;
+  }
 
   const columns = [
     {
