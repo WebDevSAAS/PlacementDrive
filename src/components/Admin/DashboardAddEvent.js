@@ -311,6 +311,8 @@ function AdminDashboardContentAddEvent() {
                           value={xData.event_date}
                           onChange={(newValue) => {
                             setEventDate(newValue);
+                            xData.event_date= newValue.toISOString()
+                            .split("T")[0]
                           }}
                           renderInput={(params) => (
                             <TextField {...params} helperText={null} />
@@ -466,6 +468,8 @@ function AdminDashboardContentAddEvent() {
                           value={xData.app_end_date}
                           onChange={(newValue) => {
                             setEndDate(newValue);
+                            xData.app_end_date= newValue.toISOString()
+                            .split("T")[0]
                           }}
                           renderInput={(params) => (
                             <TextField {...params} helperText={null} />
