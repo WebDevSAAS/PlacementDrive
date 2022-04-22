@@ -28,6 +28,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
+import {fet, hash} from "../modules/fet"
 
 function Copyright(props) {
   return (
@@ -106,16 +107,66 @@ const mdTheme = createTheme();
 
 // --------------------------------------------------------------------------------------------
 function AdminDashboardContentAddEvent() {
+  let x_records;
+  x_records = {
+    c_id: "",
+    event_date: Date.now(),
+    c_name: "",
+    job_title: "",
+    sector: "",
+    event_type: "",
+    year_eligible: "",
+    ctc_package: "",
+    internship: "",
+    app_end_date: Date.now(),
+    logo: "",
+    desc: "",
+    contact_name: "",
+    contact_no: "",
+    contact_email: ""
+  }  
+  let [xData, setxData] = React.useState(x_records);
+  // React.useEffect(() => {
+  //   fet("/company", 'POST', xData)
+  //   .then(response => {console.log(response)
+  //       // 4. Setting *dogImage* to the image url that we received from the response above
+  //   // .then(data => setDogImage(data.message))
+  //   setxData(prevState => ({
+  //     ...prevState,
+  //     ...response[0].profileFull
+  // }));
+    
+  // })},{})
+
+  const [eventDate, setEventDate] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState(new Date());
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setxData(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
+
+  const onSubmit = async() => {
+    console.log("Form submitted");
+    xData.event_date = eventDate
+    .toISOString()
+    .split("T")[0]
+    xData.app_end_date = endDate
+    .toISOString()
+    .split("T")[0]
+    fet("/company", "POST", xData)
+    .then((response) => {
+        console.log(response);
+      });
+    console.log(xData);
+  }
+
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
-  };
-  const [eventDate, setEventDate] = React.useState(new Date());
-  const [applicationDate, setApplicationDate] = React.useState(new Date());
-  const [year, setYear] = React.useState("");
-
-  const handleChange = (event) => {
-    setYear(event.target.value);
   };
 
   const userCategory = "admin"; //    INSERT userCategory VALUE FROM BACKEND !!
@@ -229,6 +280,22 @@ function AdminDashboardContentAddEvent() {
                         sx={{ ml: 8 }}
                       >
                         <br></br>
+                        Company Id
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <TextField id="standard-basic"
+                          name="c_id"
+                          value={xData.c_id}
+                          onChange={handleChange} variant="standard" />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
                         Event Date
                       </Typography>
                     </Grid>
@@ -239,8 +306,9 @@ function AdminDashboardContentAddEvent() {
                       >
                         <DatePicker
                           views={["day"]}
-                          label="Date of Birth"
-                          value={eventDate}
+                          label="Event date"
+                          name="event_date"
+                          value={xData.event_date}
                           onChange={(newValue) => {
                             setEventDate(newValue);
                           }}
@@ -262,7 +330,10 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="c_name"
+                          value={xData.c_name}
+                          onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -275,7 +346,10 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="job_title"
+                          value={xData.job_title}
+                          onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -288,7 +362,10 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="sector"
+                          value={xData.sector}
+                          onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -301,7 +378,10 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="event_type"
+                          value={xData.event_type}
+                          onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -321,13 +401,14 @@ function AdminDashboardContentAddEvent() {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={year}
+                            name="year_eligible"
+                            value={xData.year_eligible}
                             onChange={handleChange}
                           >
-                            <MenuItem value={10}>1st</MenuItem>
-                            <MenuItem value={20}>2nd</MenuItem>
-                            <MenuItem value={30}>3rd</MenuItem>
-                            <MenuItem value={40}>4th</MenuItem>
+                            <MenuItem value={"1st"}>1st</MenuItem>
+                            <MenuItem value={"2nd"}>2nd</MenuItem>
+                            <MenuItem value={"3rd"}>3rd</MenuItem>
+                            <MenuItem value={"4th"}>4th</MenuItem>
                           </Select>
                         </FormControl>
                     </Grid>
@@ -342,7 +423,10 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="ctc_package"
+                          value={xData.ctc_package}
+                          onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -355,7 +439,10 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                          name="internship"
+                          value={xData.internship}
+                          onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -374,10 +461,11 @@ function AdminDashboardContentAddEvent() {
                       >
                         <DatePicker
                           views={["day"]}
-                          label="Date of Birth"
-                          value={applicationDate}
+                          label="End Date"
+                          name="app_end_date"
+                          value={xData.app_end_date}
                           onChange={(newValue) => {
-                            setApplicationDate(newValue);
+                            setEndDate(newValue);
                           }}
                           renderInput={(params) => (
                             <TextField {...params} helperText={null} />
@@ -407,12 +495,15 @@ function AdminDashboardContentAddEvent() {
                         sx={{ ml: 8 }}
                       >
                         <br></br>
-                        Discription
+                        Description
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
                       <TextField
                         id="outlined-textarea"
+                        name="desc"
+                        value={xData.desc}
+                        onChange={handleChange}
                         multiline
                       />
                     </Grid>
@@ -427,7 +518,10 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                        name="contact_name"
+                        value={xData.contact_name}
+                        onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -440,7 +534,10 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                        name="contact_no"
+                        value={xData.contact_no}
+                        onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -453,12 +550,15 @@ function AdminDashboardContentAddEvent() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" variant="standard" />
+                      <TextField id="standard-basic"
+                        name="contact_email"
+                        value={xData.contact_email}
+                        onChange={handleChange} variant="standard" />
                     </Grid>
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
                       <br></br>
-                      <Button variant="contained">Submit</Button>
+                      <Button onClick={onSubmit} variant="contained">Submit</Button>
                     </Grid>
                   </Grid>
                 </Paper>

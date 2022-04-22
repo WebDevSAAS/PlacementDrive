@@ -9,8 +9,13 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import EventIcon from "@mui/icons-material/Event";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { fet } from "../modules/fet"
 
 import { Link } from "react-router-dom";
+
+const logoutFun = async() => {
+  fet("/logout","GET").then(response=> console.log(response));
+};
 
 export const mainListItems = (
   <div>
@@ -84,7 +89,7 @@ export const secondaryListItems = (
       to="/signin"
       style={{ textDecoration: "none", color: "inherit" }}
     >
-    <ListItem button>
+    <ListItem button onClick={logoutFun}>
       <ListItemIcon>
         <LogoutIcon fontSize="large" />
       </ListItemIcon>
