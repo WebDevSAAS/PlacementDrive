@@ -74,15 +74,98 @@ module.exports = function (app, db) {
         }
     })
 
+
+
+    // --------------------admin login-------------------------------
+    app.post("/signin_admin", (req, res) => {
+        let k = req.body
+        // Check if session already exists ?
+        if (req.session && req.session.useremail) {
+            res.json({
+                status: "warn",
+                message: "Session already exists !",
+                lastUpdated: req.session.lastUpdated,
+                isLatest: false,
+                isLogged: true,
+                // keys: req.session.keys,
+                profile: req.session.profile,
+            })
+        }
+        // check if values aren't null
+        else if (k.email && k.password && k.accountType) {
+            // Fetch fields matching Usn and pass
+            let q = (k.accountType === "admin") ? "admin" : "students"
+            /*if (req.session.accountType === "admin" ||  req.session.accountType === "mentor") let q = `SELECT * FROM admins WHERE usn = ?;`
+            else  let q = `SELECT * FROM students WHERE usn = ?;`*/
+            db.collection(q).findOne({ email: k.email, password: k.password }, {
+                projection: {
+                    _id: 1,
+                    // profile: 1
+                }
+            }, (error, result) => {
+                console.log(result);
+                if (error) {
+                    res.json({
+                        status: "error",
+                        message: error,
+                        isLogged: false,
+                    })
+                    console.log(error)
+                }
+                // if user exists...
+                else if (result) {
+                    // log in by saving to session
+                    req.session.useremial = k.email
+                    // req.session.profile = result.profile
+                    req.session.accountType = result.accountType
+                    req.session.lastUpdated = new Date()
+                    // return details
+                    res.json({
+                        status: "success",
+                        message: "Log in success !",
+                        lastUpdated: req.session.lastUpdated,
+                        isLatest: true,
+                        isLogged: true,
+                        isAdmin: result.accountType === "admin",
+                        // keys: fields,
+                        profile: req.session.profile,
+                    })
+                }
+                // No rows matched ...
+                else {
+                    try {
+                        res.json({
+                            status: "error",
+                            message: "Invalid userid or password",
+                            isLogged: false,
+                        })
+                    } catch (e) { console.log(e) }
+                }
+            })
+        }
+        // either of usn or password is null
+        else {
+            res.json({
+                status: "error",
+                message: "Empty userid or password",
+                isLogged: false,
+            })
+        }
+    })
+
+    // ------------------admin login end-----------------------------
+
     // logout session (required as session isn'n maintained on client side only)
     app.get("/logout", (req, res) => {
         // log it out
-        console.log("logging out : ", req.session.userid)
-        if (req.session) req.session.destroy()
-        res.json({
-            status: "success",
-            message: "Logout success !",
-        })
+        console.log("logging out : ", req.session.cookie)
+        if (req.session) { 
+            req.session.destroy()
+            res.json({
+                status: "success",
+                message: "Logout success !",
+            })
+        }
     })
 
     // status, check if already logged in or not
