@@ -123,7 +123,8 @@ function AdminDashboardContentAddEvent() {
     desc: "",
     contact_name: "",
     contact_no: "",
-    contact_email: ""
+    contact_email: "",
+    band: ""
   }  
   let [xData, setxData] = React.useState(x_records);
   // React.useEffect(() => {
@@ -376,6 +377,36 @@ function AdminDashboardContentAddEvent() {
                         sx={{ ml: 8 }}
                       >
                         <br></br>
+                        Band
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                    <FormControl sx={{ width: 200 }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Band
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            name="band"
+                            value={xData.band}
+                            onChange={handleChange}
+                          >
+                            <MenuItem value={"1"}>1</MenuItem>
+                            <MenuItem value={"2"}>2</MenuItem>
+                            <MenuItem value={"3"}>3</MenuItem>
+                            <MenuItem value={"4"}>4</MenuItem>
+                            <MenuItem value={"5"}>5</MenuItem>
+                          </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography
+                        variant="h9"
+                        color="text.primary"
+                        sx={{ ml: 8 }}
+                      >
+                        <br></br>
                         Event Type
                       </Typography>
                     </Grid>
@@ -398,7 +429,7 @@ function AdminDashboardContentAddEvent() {
                     <Grid item xs={8}>
                     <FormControl sx={{ width: 200 }}>
                           <InputLabel id="demo-simple-select-label">
-                            Select
+                            Eligiblity year
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-label"
