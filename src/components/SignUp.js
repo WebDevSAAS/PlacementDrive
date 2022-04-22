@@ -56,36 +56,36 @@ const genderList = [
 // Used in select dropdown for Branch
 const branchList = [
   {
-    value: "CSE",
+    value: "CS",
     label: "CSE - Computer Science and Engineering",
   },
   {
-    value: "ISE",
+    value: "IS",
     label: "ISE - Information Science and Engineering",
   },
 
   {
-    value: "ECE",
+    value: "EC",
     label: "ECE - Electronics and Communication Engineering",
   },
   {
-    value: "EEE",
+    value: "EE",
     label: "EEE - Electrical and Electronics Engineering",
   },
   {
-    value: "EIE",
+    value: "EI",
     label: "EIE - Electronics & Instrumentation Engineering",
   },
   {
-    value: "MECH",
+    value: "ME",
     label: "MECH - Mechanical Engineering",
   },
   {
-    value: "CIV",
+    value: "CV",
     label: "CIV - Civil Engineering",
   },
   {
-    value: "AI&ML",
+    value: "AI",
     label: "AI&ML - Artificial intelligence & Machine Learning",
   },
 ];
@@ -142,6 +142,32 @@ export default function SignUp() {
     }
   };
 
+  //  --------------------------------------------
+  const [branchKey, setBranchKey] = React.useState("");
+
+  const handleUsnChange = (e) => {
+    const { name, value } = e.target;
+    if (value !== "" && value.length===10) {
+      const newBranch = String(value.trim().toUpperCase().slice(5, 7));
+      if (newBranch.match("CS|IS|EC|EE|EI|ME|CV|AI"))
+      {
+        setValues({
+          ...values,
+          ["usn"]: value,
+          ["branch"]: newBranch,
+        });
+      }
+    }
+    else {
+      setValues({
+        ...values,
+        [name]: null,
+      });
+    }
+  };
+  //  --------------------------------------------
+
+
   // -----Opening and Closing snackbar-----
   const [open, setOpen] = React.useState(false);
 
@@ -191,7 +217,7 @@ export default function SignUp() {
                   id="usn"
                   name="usn"
                   value={values.usn}
-                  onChange={handleInputChange}
+                  onChange={handleUsnChange}
                   label="University Serial Number (USN)"
                 />
               </Grid>
@@ -223,12 +249,13 @@ export default function SignUp() {
                 <TextField
                   id="branch"
                   select
-                  label="Select"
+                  label=""
                   name="branch"
                   value={values.branch}
                   onChange={handleInputChange}
-                  helperText="Please select your Branch"
+                  helperText=""
                   fullWidth
+                  inputProps={{ readOnly: true, }}
                 >
                   {branchList.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
