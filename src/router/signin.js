@@ -158,12 +158,14 @@ module.exports = function (app, db) {
     // logout session (required as session isn'n maintained on client side only)
     app.get("/logout", (req, res) => {
         // log it out
-        console.log("logging out : ", req.session.userid)
-        if (req.session) req.session.destroy()
-        res.json({
-            status: "success",
-            message: "Logout success !",
-        })
+        console.log("logging out : ", req.session.cookie)
+        if (req.session) { 
+            req.session.destroy()
+            res.json({
+                status: "success",
+                message: "Logout success !",
+            })
+        }
     })
 
     // status, check if already logged in or not

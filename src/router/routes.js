@@ -137,7 +137,7 @@ module.exports = function (app, db) {
       k.ctc_package &&
       k.internship &&
       k.app_end_date &&
-      k.logo &&
+      // k.logo &&
       k.desc &&
       k.contact_name &&
       k.contact_no &&
@@ -170,7 +170,7 @@ module.exports = function (app, db) {
                 ctc_package: k.ctc_package,
                 internship: k.internship,
                 app_end_date: k.app_end_date,
-                logo: k.logo,
+                // logo: k.logo,
                 desc: k.desc,
                 contact_name: k.contact_name,
                 contact_no: k.contact_no,
