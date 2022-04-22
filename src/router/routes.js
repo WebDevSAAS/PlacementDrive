@@ -137,7 +137,7 @@ module.exports = function (app, db) {
       k.ctc_package &&
       k.internship &&
       k.app_end_date &&
-      k.logo &&
+      // k.logo &&
       k.desc &&
       k.contact_name &&
       k.contact_no &&
@@ -170,7 +170,7 @@ module.exports = function (app, db) {
                 ctc_package: k.ctc_package,
                 internship: k.internship,
                 app_end_date: k.app_end_date,
-                logo: k.logo,
+                // logo: k.logo,
                 desc: k.desc,
                 contact_name: k.contact_name,
                 contact_no: k.contact_no,
@@ -292,29 +292,51 @@ module.exports = function (app, db) {
     }
   });
   // -----------------apply to API end---------------
-  
-  app.get("/student_al", (req, res) => {
-    let k = req.query;
-    console.log(k);
-
-    db.collection("students").findOne(
-      { usn: k.usn },
-      { projection: { _id: 1, usn: 1 } },
-      (error, result) => {
-        if (result && result._id) {
+  //-----------------get company start---------------
+  app.get("/company_all", (req, res) => {
+    try {
+      let k = req.body
+      console.log(k);
+      db.collection("company").find().toArray((error, results) => {
+        if (error) {
           res.json({
-            status: "all data",
-            message: "data return !",
-            profileFull: result,
-          });
+            status: 'error',
+            message: 'unable to fetch data with requested params',
+            isLogged: true
+          })
+          throw error
         }
-        let keys = {};
-        for (const property in k) {
-          keys[`profileFull.${property}`] = k[property];
-        }
-      }
-    );
-  });
+        res.json(results)
+      })
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
+  })
+  //---------------get company all end------------------
+  
+  //---------------get student start--------------------
+  app.get("/student_all", (req, res) => {
+    try {
+      let k = req.body
+      console.log(k);
+          db.collection("students").find().toArray((error, results) => {
+            if (error) {
+              res.json({
+                status: 'error',
+                message: 'unable to fetch data with requested params',
+                isLogged: true
+              })
+              throw error
+            }
+            res.json(results)
+          })
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
+  })
+  // ----------------------get student end----------------
   // post route for register (expects json data)
   app.post("/register", (req, res) => {
     let k = req.body;
