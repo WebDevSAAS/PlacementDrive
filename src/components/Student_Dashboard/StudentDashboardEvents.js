@@ -189,7 +189,6 @@ function DashboardContentEvents() {
       Sector: "1",
       Venue: "Banglore",
       Stages: "2",
-      Apply: "{link}",
       CTC: "4.5",
     },
     {
@@ -202,7 +201,6 @@ function DashboardContentEvents() {
       Sector: "1",
       Venue: "Banglore",
       Stages: "3",
-      Apply: "{link}",
       CTC: "5.5",
     },
     {
@@ -215,7 +213,6 @@ function DashboardContentEvents() {
       Sector: "2",
       Venue: "Mumbai",
       Stages: "2",
-      Apply: "{link}",
       CTC: "7.5",
     },
   ];
