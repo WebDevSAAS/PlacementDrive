@@ -1553,6 +1553,8 @@ function DashboardContentRecords() {
                             value={xData.dob}
                             onChange={(newValue) => {
                               setDateOfBirth(newValue);
+                              xData.dob= newValue.toISOString()
+                            .split("T")[0]
                             }}
                             renderInput={(params) => (
                               <TextField {...params} helperText={null} />
