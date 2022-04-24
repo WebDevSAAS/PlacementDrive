@@ -26,23 +26,6 @@ import { DataGrid, GridToolbar, GridActionsCellItem  } from "@mui/x-data-grid";
 import { fet, hash } from "../modules/fet";
 
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.rnsit.ac.in/">
-        RNSIT
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 function AdminBadge() {
   return <Badge badgeContent={"Admin"} color="success" sx={{ px: 3 }}></Badge>;
@@ -401,7 +384,7 @@ function AdminDashboardContentEvents() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: "75vh",
+                    minHeight: "80vh",
                   }}
                 >
                   <DataGrid
@@ -416,19 +399,6 @@ function AdminDashboardContentEvents() {
                 </Paper>
               </Grid>
             </Grid>
-
-            {/* <Grid item xs={12}>
-              <Paper
-                sx={{
-                  mt: 5,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  minHeight: 280,
-                }}
-              ></Paper>
-            </Grid> */}
-
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
