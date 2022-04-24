@@ -254,6 +254,7 @@ export default function SignUp() {
                   value={values.branch}
                   onChange={handleInputChange}
                   helperText=""
+                  disabled
                   fullWidth
                   inputProps={{ readOnly: true, }}
                 >
