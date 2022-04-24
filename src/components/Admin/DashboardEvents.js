@@ -33,6 +33,7 @@ import TextField from "@mui/material/TextField"
 
 
 
+
 function AdminBadge() {
   return <Badge badgeContent={"Admin"} color="success" sx={{ px: 3 }}></Badge>;
 }
@@ -108,6 +109,9 @@ function AdminDashboardContentEvents() {
   const handleDialogOpen = () => {
     setOpenDialog(true);
   };
+  const handleClickAway = () => {
+    setOpenDialog(false);
+  };
   const handleDialogClose = () => {
     console.log(values);
     setOpenDialog(false);
@@ -127,6 +131,22 @@ function AdminDashboardContentEvents() {
     }
   };
   //-----------------------------------------------------------
+
+
+  //        ---- Close Event Dialog Box ---
+  const [closeEvent, setCloseEvent] = React.useState(false);
+  const closeEventDialogOpen = () => {
+    setCloseEvent(true);
+  };
+  const closeEventClickaway = () => {
+    setCloseEvent(false);
+  };
+  const handleCloseEvent = () => {
+    console.log("Close This Event !")
+    setCloseEvent(false);  
+  };
+  //  ----------------------------------------------------------
+
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -255,7 +275,7 @@ function AdminDashboardContentEvents() {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            <IconButton align="center" style={{ marginLeft: 16 }}>
+            <IconButton align="center" style={{ marginLeft: 16 }} onClick={closeEventDialogOpen}>
               <CloseRoundedIcon color="error" size="small" />
             </IconButton>
           </Box>
@@ -434,7 +454,7 @@ function AdminDashboardContentEvents() {
           </Container>
           <Dialog
             open={openDialog}
-            onClose={handleDialogClose}
+            onClose={handleClickAway}
             maxWidth="sm"
           >
             <DialogTitle>
@@ -455,7 +475,7 @@ function AdminDashboardContentEvents() {
                       variant="standard"
                       fullWidth
                       name="class10_cutoff"
-                      value={values.class10_cutoff}
+                      // value={values.class10_cutoff}
                       onChange={handleInputChange}
                     />
                   </Grid>
@@ -468,7 +488,7 @@ function AdminDashboardContentEvents() {
                       variant="standard"
                       fullWidth
                       name="class12_cutoff"
-                      value={values.class12_cutoff}
+                      // value={values.class12_cutoff}
                       onChange={handleInputChange}
                     />
                   </Grid>
@@ -481,7 +501,7 @@ function AdminDashboardContentEvents() {
                       variant="standard"
                       fullWidth
                       name="diploma_cutoff"
-                      value={values.diploma_cutoff}
+                      // value={values.diploma_cutoff}
                       onChange={handleInputChange}
                     />
                   </Grid>
@@ -494,7 +514,7 @@ function AdminDashboardContentEvents() {
                       variant="standard"
                       fullWidth
                       name="graduation_cutoff"
-                      value={values.graduation_cutoff}
+                      // value={values.graduation_cutoff}
                       onChange={handleInputChange}
                     />
                   </Grid>
@@ -507,7 +527,6 @@ function AdminDashboardContentEvents() {
                       variant="standard"
                       fullWidth
                       name="active_backlog"
-                      value={values.active_backlog}
                       onChange={handleInputChange}
                     />
                   </Grid>
@@ -515,8 +534,30 @@ function AdminDashboardContentEvents() {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleDialogClose}>Cancel</Button>
+              <Button onClick={handleClickAway}>Cancel</Button>
               <Button onClick={handleDialogClose}>
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          {/* Close Event Dialog */}
+          <Dialog
+            open={closeEvent}
+            onClose={closeEventClickaway}
+            maxWidth="sm"
+          >
+            <DialogTitle>
+              {"Close Event"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <Typography variant="h9" >Are you sure?</Typography>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={closeEventClickaway}>Cancel</Button>
+              <Button onClick={handleCloseEvent} color="error">
                 Confirm
               </Button>
             </DialogActions>

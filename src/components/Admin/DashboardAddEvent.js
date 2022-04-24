@@ -28,7 +28,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
-import {fet, hash} from "../modules/fet"
+import { fet, hash } from "../modules/fet";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -105,6 +107,13 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme();
 
+
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+
 // --------------------------------------------------------------------------------------------
 function AdminDashboardContentAddEvent() {
   let x_records;
@@ -163,6 +172,7 @@ function AdminDashboardContentAddEvent() {
         console.log(response);
       });
     console.log(xData);
+    handleClickSnackbar();
   }
 
   const [open, setOpen] = React.useState(false);
@@ -179,6 +189,21 @@ function AdminDashboardContentAddEvent() {
   } else if (userCategory == "tpc") {
     badge = <TpcBadge />;
   }
+
+  // -----Opening and Closing snackbar-----
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+  // --------------------------------------------
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -593,28 +618,20 @@ function AdminDashboardContentAddEvent() {
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
                       <br></br>
-                      <Button onClick={onSubmit} variant="contained">Submit</Button>
+                      <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
                     </Grid>
                   </Grid>
                 </Paper>
               </Grid>
             </Grid>
-
-            {/* <Grid item xs={12}>
-              <Paper
-                sx={{
-                  mt: 5,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  minHeight: 280,
-                }}
-              ></Paper>
-            </Grid> */}
-
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
+        <Snackbar open={openSnackbar} autoHideDuration={2000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: "100%" }}>
+          Event added successfully
+        </Alert>
+      </Snackbar>
       </Box>
     </ThemeProvider>
   );
