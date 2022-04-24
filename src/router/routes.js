@@ -135,6 +135,7 @@ module.exports = function (app, db) {
       k.event_type &&
       k.year_eligible &&
       k.ctc_package &&
+      k.band &&
       k.internship &&
       k.app_end_date &&
       // k.logo &&
@@ -168,6 +169,7 @@ module.exports = function (app, db) {
                 event_type: k.event_type,
                 year_eligible: k.year_eligible,
                 ctc_package: k.ctc_package,
+                band:k.band,
                 internship: k.internship,
                 app_end_date: k.app_end_date,
                 // logo: k.logo,
