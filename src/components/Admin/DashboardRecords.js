@@ -15,11 +15,15 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
+import Button from "@mui/material/Button";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
+import CheckIcon from '@mui/icons-material/Check';
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 
 
@@ -159,31 +163,31 @@ function AdminDashboardContentRecords() {
       field: "usn",
       headerName: "USN",
       flex: 1,
-      minWidth: 120,
+      minWidth: 50,
     },
     {
       field: "name",
       headerName: "Name",
       flex: 1,
-      minWidth: 250,
+      minWidth: 150,
     },
     {
       field: "branch",
       headerName: "Branch",
       flex: 1,
-      minWidth: 40,
+      minWidth: 25,
     },
     {
       field: "email",
       headerName: "E-Mail",
       flex: 1,
-      minWidth: 250,
+      minWidth: 200,
     },
     {
       field: "mobile",
       headerName: "Mobile",
       flex: 1,
-      minWidth: 120,
+      minWidth: 80,
     },
     {
       field: "class10",
@@ -203,15 +207,40 @@ function AdminDashboardContentRecords() {
       field: "diploma",
       headerName: "Diploma",
       flex: 1,
-      minWidth: 40,
+      minWidth: 25,
       align: "center",
     },
     {
       field: "backlog",
       headerName: "Backlogs",
       flex: 1,
-      minWidth: 45,
+      minWidth: 25,
       align: "center",
+    },
+    {
+      field: "isValidated",
+      headerName: "Validate",
+      sortable: false,
+      flex: 1,
+      minWidth: 20,
+      align: "center",
+      renderCell: (params) => {
+        return (
+          <Box textAlign="center">
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              onClick={() => {
+                
+              }}
+              disabled={false}
+            >
+              &#10003;
+            </Button>
+          </Box>
+        );
+      },
     },
   ];
 
