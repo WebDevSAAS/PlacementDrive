@@ -19,6 +19,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Button from "@mui/material/Button";
 import { mainListItems, secondaryListItems } from "./listItems";
+import { fet } from "../modules/fet";
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
@@ -89,10 +90,23 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function DashboardContentEvents() {
+  const usn = window.sessionStorage.getItem('uid');
+
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  let events = [];
+  let [xData, setxData] = React.useState(events);
+
+  React.useEffect(() => {
+    fet("/company_all", 'GET')
+    .then(response => {console.log(response)
+        // 4. Setting *dogImage* to the image url that we received from the response above
+    // .then(data => setDogImage(data.message))
+    setxData(response);
+  })},{})
 
   const columns = [
     { field: "id", headerName: "No.", flex: 1, minWidth: 50 },
@@ -167,7 +181,11 @@ function DashboardContentEvents() {
               size="small"
               style={{ marginLeft: 16 }}
               onClick={() => {
-                console.log(params.row.Apply);
+                console.log(params);
+                fet('/apply_to','POST',{table_id: 102, usn, company_id: params.id})
+                .then((response) => {
+                  console.log(response);
+                });
               }}
             >
               APPLY
@@ -190,32 +208,25 @@ function DashboardContentEvents() {
       Venue: "Banglore",
       Stages: "2",
       CTC: "4.5",
-    },
-    {
-      id: 2,
-      Logo: "{image}",
-      Company: "Cognizant",
-      DriveDate: "25-05-2022",
-      ApplicationEndDate: "15-04-2022",
-      Description: "890",
-      Sector: "1",
-      Venue: "Banglore",
-      Stages: "3",
-      CTC: "5.5",
-    },
-    {
-      id: 3,
-      Logo: "{image}",
-      Company: "TCS",
-      DriveDate: "29-05-2022",
-      ApplicationEndDate: "10-04-2022",
-      Description: "890",
-      Sector: "2",
-      Venue: "Mumbai",
-      Stages: "2",
-      CTC: "7.5",
-    },
+    }
   ];
+
+  
+  for(var i=0;i<xData.length;i++){
+    const temp={};
+      temp.id = xData[i].c_id;
+      temp.Logo = '{image}';
+      temp.Company= xData[i].profile.c_name;
+      temp.Sector= xData[i].profile.sector;
+      temp.CTC= xData[i].profile.ctc_package;
+      temp.ApplicationEndDate= xData[i].profile.app_end_date;
+      temp.DriveDate= xData[i].profile.event_date;
+      temp.Description= xData[i].profile.desc;
+      temp.Venue= "Bangalore";
+      temp.Stages= 2;
+      rows.push(temp);
+  }
+
 
   return (
     <ThemeProvider theme={mdTheme}>
