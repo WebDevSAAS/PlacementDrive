@@ -17,6 +17,7 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import Button from "@mui/material/Button";
 import { mainListItems, secondaryListItems } from "./listItems";
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -147,16 +148,33 @@ function DashboardContentEvents() {
       minWidth: 100,
     },
     {
-      field: "Apply",
-      headerName: "Apply",
-      flex: 1,
-      minWidth: 100,
-    },
-    {
       field: "CTC",
       headerName: "C.T.C.",
       flex: 1,
       minWidth: 100,
+    },
+    {
+      field: "Apply",
+      headerName: "Apply",
+      flex: 1,
+      minWidth: 100,
+      renderCell: (params) => {
+        return (
+          <Box textAlign="center">
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              style={{ marginLeft: 16 }}
+              onClick={() => {
+                console.log(params.row.Apply);
+              }}
+            >
+              APPLY
+            </Button>
+          </Box>
+        );
+      },
     },
   ];
 

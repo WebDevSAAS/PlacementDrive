@@ -19,8 +19,12 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { fet, hash } from "../modules/fet"
+import Button from "@mui/material/Button";
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import { DataGrid, GridToolbar, GridActionsCellItem  } from "@mui/x-data-grid";
+import { fet, hash } from "../modules/fet";
+
 
 function Copyright(props) {
   return (
@@ -109,7 +113,7 @@ function AdminDashboardContentEvents() {
     {
       id: 1,
       logo: "{image}",
-      driveName: "Cognizant - GenC Nxt",
+      driveName: "Cognizant - GenC Nxt 1",
       jobTitle: "Software Developer",
       sector: "Information Technology" ,
       branchesAllowed: ["CSE", "ISE", "ECE"],
@@ -118,12 +122,39 @@ function AdminDashboardContentEvents() {
       applEndDate: "31-03-2022",
       eventDate: "25-04-2022",
       status: "Ongoing",
-      eligibility: "LINK",
-      manageEvent: "LINK",
-      closeEvent: "LINK",
+      band: 3,
+    },
+    {
+      id: 2,
+      logo: "{image}",
+      driveName: "Cognizant - GenC Nxt 2",
+      jobTitle: "Software Developer",
+      sector: "Information Technology" ,
+      branchesAllowed: ["CSE", "ISE", "ECE"],
+      ctc: 8,
+      eventType: "On Campus",
+      applEndDate: "31-03-2022",
+      eventDate: "25-04-2022",
+      status: "Ongoing",
+      band: 3,
+    },
+    {
+      id: 3,
+      logo: "{image}",
+      driveName: "Cognizant - GenC Nxt 3",
+      jobTitle: "Software Developer",
+      sector: "Information Technology" ,
+      branchesAllowed: ["CSE", "ISE", "ECE"],
+      ctc: 8,
+      eventType: "On Campus",
+      applEndDate: "31-03-2022",
+      eventDate: "25-04-2022",
+      status: "Ongoing",
       band: 3,
     },
   ];
+
+  //const [rows, setRows] = React.useState(initialRows);
 
   let events = [];
   let [xData, setxData] = React.useState(events);
@@ -167,12 +198,46 @@ function AdminDashboardContentEvents() {
     badge = <TpcBadge />;
   }
 
+
+
   const columns = [
     {
       field: "id",
       headerName: "No.",
       flex: 1,
       minWidth: 50,
+    },
+    {
+      field: "manageEvent",
+      headerName: "Manage",
+      sortable: false,
+      flex: 1,
+      minWidth: 90,
+      renderCell: (params) => {
+        return (
+          <Box textAlign='center'>
+            <IconButton align="center" style={{ marginLeft: 16 }}>  
+              <EditRoundedIcon color="primary" size="small"  />
+            </IconButton>
+          </Box>
+        )
+      },
+    },
+    {
+      field: "closeEvent",
+      headerName: "Close Event",
+      sortable: false,
+      flex: 1,
+      minWidth: 110,
+      renderCell: (params) => {
+        return (
+          <Box textAlign='center'>
+            <IconButton align="center" style={{ marginLeft: 16 }}>
+              <CloseRoundedIcon color="error" size="small"  />
+            </IconButton>
+          </Box>
+        )
+      },
     },
     {
       field: "logo",
@@ -185,8 +250,9 @@ function AdminDashboardContentEvents() {
       field: "driveName",
       headerName: "Drive Name",
       flex: 1,
-      minWidth: 300,
+      minWidth: 250,
     },
+    
     {
       field: "jobTitle",
       headerName: "Job Title",
@@ -239,27 +305,13 @@ function AdminDashboardContentEvents() {
       flex: 1,
       minWidth: 100,
     },
-    {
-      field: "eligibility",
-      headerName: "Eligibility",
-      sortable: false,
-      flex: 1,
-      minWidth: 100,
-    },
-    {
-      field: "manageEvent",
-      headerName: "Manage Event",
-      sortable: false,
-      flex: 1,
-      minWidth: 130,
-    },
-    {
-      field: "closeEvent",
-      headerName: "Close Event",
-      sortable: false,
-      flex: 1,
-      minWidth: 120,
-    },
+    // {
+    //   field: "eligibility",
+    //   headerName: "Eligibility",
+    //   sortable: false,
+    //   flex: 1,
+    //   minWidth: 100,
+    // },
     {
       field: "band",
       headerName: "Band",
@@ -349,7 +401,7 @@ function AdminDashboardContentEvents() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: 280,
+                    minHeight: "75vh",
                   }}
                 >
                   <DataGrid
@@ -358,6 +410,8 @@ function AdminDashboardContentEvents() {
                     components={{
                       Toolbar: GridToolbar,
                     }}
+                    
+                    
                   />
                 </Paper>
               </Grid>
@@ -375,7 +429,7 @@ function AdminDashboardContentEvents() {
               ></Paper>
             </Grid> */}
 
-            <Copyright sx={{ pt: 4 }} />
+            {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
       </Box>
