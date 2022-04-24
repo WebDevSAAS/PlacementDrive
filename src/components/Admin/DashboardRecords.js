@@ -19,24 +19,10 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.rnsit.ac.in/">
-        RNSIT
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+
+
 function AdminBadge() {
   return (
     <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} >
@@ -123,6 +109,111 @@ function AdminDashboardContentRecords() {
     badge =  <TpcBadge />
   }
 
+  const rows = [
+    {
+      id: 1,
+      usn: "1RN19CS001" ,
+      name: "Anson Seabra",
+      branch: "CS",
+      email: "1rn19cs001.anson@gmail.com",
+      mobile: 9165893265,
+      class10: 93,
+      class12: 86,
+      diploma: null,
+      backlog: null,
+    },
+    {
+      id: 2,
+      usn: "1RN19EE001" ,
+      name: "Noah Kahan",
+      branch: "EE",
+      email: "1rn19ee001.noah@gmail.com",
+      mobile: 9164444265,
+      class10: 96,
+      class12: null,
+      diploma: 85,
+      backlog: null,
+    },
+    {
+      id: 3,
+      usn: "1RN19ME001" ,
+      name: "Jeremy Zucker",
+      branch: "EE",
+      email: "1rn19me001.jeremy@gmail.com",
+      mobile: 9188884265,
+      class10: 66,
+      class12: null,
+      diploma: 85,
+      backlog: 3,
+    },
+  ]
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "No.",
+      flex: 1,
+      minWidth: 10,
+    },
+    {
+      field: "usn",
+      headerName: "USN",
+      flex: 1,
+      minWidth: 120,
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      minWidth: 250,
+    },
+    {
+      field: "branch",
+      headerName: "Branch",
+      flex: 1,
+      minWidth: 40,
+    },
+    {
+      field: "email",
+      headerName: "E-Mail",
+      flex: 1,
+      minWidth: 250,
+    },
+    {
+      field: "mobile",
+      headerName: "Mobile",
+      flex: 1,
+      minWidth: 120,
+    },
+    {
+      field: "class10",
+      headerName: "10th %",
+      flex: 1,
+      minWidth: 30,
+      align: "center",
+    },
+    {
+      field: "class12",
+      headerName: "12th %",
+      flex: 1,
+      minWidth: 30,
+      align: "center",
+    },
+    {
+      field: "diploma",
+      headerName: "Diploma",
+      flex: 1,
+      minWidth: 40,
+      align: "center",
+    },
+    {
+      field: "backlog",
+      headerName: "Backlogs",
+      flex: 1,
+      minWidth: 45,
+      align: "center",
+    },
+  ];
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -196,7 +287,7 @@ function AdminDashboardContentRecords() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper
@@ -204,25 +295,20 @@ function AdminDashboardContentRecords() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: 280,
+                    minHeight: "80vh",
                   }}
-                ></Paper>
+                >
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    components={{
+                      Toolbar: GridToolbar,
+                    }}
+                    />
+                </Paper>
               </Grid>
             </Grid>
-
-            {/* <Grid item xs={12}>
-              <Paper
-                sx={{
-                  mt: 5,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  minHeight: 280,
-                }}
-              ></Paper>
-            </Grid> */}
-
-            <Copyright sx={{ pt: 4 }} />
+            {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
       </Box>
