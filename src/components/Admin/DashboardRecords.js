@@ -15,45 +15,25 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
+import Button from "@mui/material/Button";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
+import CheckIcon from "@mui/icons-material/Check";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { fet } from "../modules/fet";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.rnsit.ac.in/">
-        RNSIT
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+
 function AdminBadge() {
-  return (
-    <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} >
-    </Badge>
-  );
+  return <Badge badgeContent={"Admin"} color="success" sx={{ px: 3 }}></Badge>;
 }
 function DfpcBadge() {
-  return (
-    <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3, }}>
-    </Badge>
-  );
+  return <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3 }}></Badge>;
 }
 function TpcBadge() {
-  return (
-    <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3, }}>
-    </Badge>
-  );
+  return <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3 }}></Badge>;
 }
 
 const drawerWidth = 240;
@@ -111,18 +91,177 @@ function AdminDashboardContentRecords() {
     setOpen(!open);
   };
 
-  const userCategory = "admin";       //    INSERT userCategory VALUE FROM BACKEND !!
+  const userCategory = "admin"; //    INSERT userCategory VALUE FROM BACKEND !!
   var badge;
   if (userCategory == "admin") {
-    badge = <AdminBadge />
-  } 
-  else if (userCategory == "dfpc") {
-    badge = <DfpcBadge />
-  }
-  else if (userCategory == "tpc") {
-    badge =  <TpcBadge />
+    badge = <AdminBadge />;
+  } else if (userCategory == "dfpc") {
+    badge = <DfpcBadge />;
+  } else if (userCategory == "tpc") {
+    badge = <TpcBadge />;
   }
 
+  const rows = [
+    {
+      id: 1,
+      usn: "1RN19CS001",
+      name: "Anson Seabra",
+      branch: "CS",
+      email: "1rn19cs001.anson@gmail.com",
+      mobile: 9165893265,
+      class10: 93,
+      class12: 86,
+      diploma: null,
+      backlog: null,
+    },
+    {
+      id: 2,
+      usn: "1RN19EE001",
+      name: "Noah Kahan",
+      branch: "EE",
+      email: "1rn19ee001.noah@gmail.com",
+      mobile: 9164444265,
+      class10: 96,
+      class12: null,
+      diploma: 85,
+      backlog: null,
+    },
+    {
+      id: 3,
+      usn: "1RN19ME001",
+      name: "Jeremy Zucker",
+      branch: "EE",
+      email: "1rn19me001.jeremy@gmail.com",
+      mobile: 9188884265,
+      class10: 66,
+      class12: null,
+      diploma: 85,
+      backlog: 3,
+    },
+  ];
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "No.",
+      flex: 1,
+      minWidth: 10,
+    },
+    {
+      field: "usn",
+      headerName: "USN",
+      flex: 1,
+      minWidth: 50,
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      minWidth: 150,
+    },
+    {
+      field: "branch",
+      headerName: "Branch",
+      flex: 1,
+      minWidth: 25,
+    },
+    {
+      field: "email",
+      headerName: "E-Mail",
+      flex: 1,
+      minWidth: 200,
+    },
+    {
+      field: "mobile",
+      headerName: "Mobile",
+      flex: 1,
+      minWidth: 80,
+    },
+    {
+      field: "class10",
+      headerName: "10th %",
+      flex: 1,
+      minWidth: 30,
+      align: "center",
+    },
+    {
+      field: "class12",
+      headerName: "12th %",
+      flex: 1,
+      minWidth: 30,
+      align: "center",
+    },
+    {
+      field: "diploma",
+      headerName: "Diploma",
+      flex: 1,
+      minWidth: 25,
+      align: "center",
+    },
+    {
+      field: "backlog",
+      headerName: "Backlogs",
+      flex: 1,
+      minWidth: 25,
+      align: "center",
+    },
+    {
+      field: "isValidated",
+      headerName: "Validate",
+      sortable: false,
+      flex: 1,
+      minWidth: 20,
+      align: "center",
+      renderCell: (params) => {
+        return (
+          <Box textAlign="center">
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              onClick={async() => {
+                fet('/update','POST',{accountType: "admin", validated: true})
+                .then((response)=>console.log(response));
+              }}
+              disabled={false}
+            >
+              &#10003;
+            </Button>
+          </Box>
+        );
+      },
+    },
+  ];
+
+  let events = [];
+  let [xData, setxData] = React.useState(events);
+
+  React.useEffect(() => {
+    fet("/student_all", "GET").then((response) => {
+      console.log(response);
+      // 4. Setting *dogImage* to the image url that we received from the response above
+      // .then(data => setDogImage(data.message))
+      setxData(response);
+    });
+  }, {});
+
+  for (var i = 0; i < xData.length; i++) {
+    const temp = {};
+    const data = xData[i];
+    if(data.profileFull && data.profileFull.validation){
+      temp.id = i + 4;
+      temp.usn = xData[i].profile.usn;
+      temp.name = xData[i].profile.first_name;
+      temp.branch = xData[i].profile.branch;
+      temp.email = xData[i].profile.email;
+      temp.mobile = xData[i].profile.phone;
+      temp.class10 = xData[i].profileFull.cgpa_10th;
+      temp.class12 = xData[i].profileFull.cgpa_12th;
+      temp.diploma = xData[i].profileFull.aggregate_percentage;
+      temp.backlog = xData[i].profileFull.current_backlog;
+      rows.push(temp);
+    }
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -148,7 +287,7 @@ function AdminDashboardContentRecords() {
             >
               <MenuIcon />
             </IconButton>
-            
+
             <Typography
               component="h1"
               variant="h6"
@@ -156,7 +295,8 @@ function AdminDashboardContentRecords() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-                Dashboard <Typography variant="p" color="#ffeb3b">
+              Dashboard{" "}
+              <Typography variant="p" color="#ffeb3b">
                 Records
               </Typography>
               {badge}
@@ -196,7 +336,7 @@ function AdminDashboardContentRecords() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper
@@ -204,25 +344,20 @@ function AdminDashboardContentRecords() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: 280,
+                    minHeight: "80vh",
                   }}
-                ></Paper>
+                >
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    components={{
+                      Toolbar: GridToolbar,
+                    }}
+                  />
+                </Paper>
               </Grid>
             </Grid>
-
-            {/* <Grid item xs={12}>
-              <Paper
-                sx={{
-                  mt: 5,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  minHeight: 280,
-                }}
-              ></Paper>
-            </Grid> */}
-
-            <Copyright sx={{ pt: 4 }} />
+            {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
       </Box>

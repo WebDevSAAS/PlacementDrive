@@ -152,7 +152,9 @@ function DashboardContentRecords() {
     passport_number: '',
     dl_number: '',
     achievements: '',
-    blood_group: ''
+    blood_group: '',
+    validation: false,
+    validated: '',
   }  
   let [xData, setxData] = React.useState(main_records);
   React.useEffect(() => {
@@ -179,14 +181,27 @@ function DashboardContentRecords() {
 
   const onSubmit = async() => {
     console.log("Form submitted");
+    setReqText("Request For Validation");
     xData.dob = dateOfBirth
     .toISOString()
     .split("T")[0]
+    xData.validation = false
     fet("/update", "POST", xData)
     .then((response) => {
         console.log(response);
       });
     console.log(xData);
+  }
+
+  const [reqText, setReqText] = React.useState("Request For Validation");
+
+  const RequestValidation = async() => {
+    setReqText("Requested");
+    xData.validation=true;
+    fet("/update", "POST", xData)
+    .then((response) => {
+        console.log(response);
+      });
   }
 
   const toggleDrawer = () => {
@@ -313,8 +328,8 @@ function DashboardContentRecords() {
           <Toolbar />
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Box textAlign="center">
-              <Button onClick={onSubmit} variant="contained" style={{ width: "450px", marginBottom: "20px" }} color="secondary">
-                Request For Validation
+              <Button onClick={RequestValidation} variant="contained" style={{ width: "450px", marginBottom: "20px" }} color="secondary">
+                {reqText}
               </Button>
             </Box>
             <Grid container spacing={3}>
@@ -1553,6 +1568,8 @@ function DashboardContentRecords() {
                             value={xData.dob}
                             onChange={(newValue) => {
                               setDateOfBirth(newValue);
+                              xData.dob= newValue.toISOString()
+                            .split("T")[0]
                             }}
                             renderInput={(params) => (
                               <TextField {...params} helperText={null} />

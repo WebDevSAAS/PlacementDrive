@@ -20,29 +20,19 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import Button from "@mui/material/Button";
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import { DataGrid, GridToolbar, GridActionsCellItem  } from "@mui/x-data-grid";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import { fet, hash } from "../modules/fet";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField"
 
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://www.rnsit.ac.in/">
-        RNSIT
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+
 
 function AdminBadge() {
   return <Badge badgeContent={"Admin"} color="success" sx={{ px: 3 }}></Badge>;
@@ -102,9 +92,62 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme();
 
-// --------------------------------------------------------------------------------------------
+const initialValues = {
+  class10_cutoff: "",
+  class12_cutoff: "",
+  diploma_cutoff: "",
+  graduation_cutoff: "",
+  active_backlog: "",
+};
+
 function AdminDashboardContentEvents() {
   const [open, setOpen] = React.useState(false);
+
+  //       ----     Manage Event Dialog Box     ----
+  const [values, setValues] = React.useState(initialValues);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
+  };
+  const handleClickAway = () => {
+    setOpenDialog(false);
+  };
+  const handleDialogClose = () => {
+    console.log(values);
+    setOpenDialog(false);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (value !== "") {
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    } else {
+      setValues({
+        ...values,
+        [name]: null,
+      });
+    }
+  };
+  //-----------------------------------------------------------
+
+
+  //        ---- Close Event Dialog Box ---
+  const [closeEvent, setCloseEvent] = React.useState(false);
+  const closeEventDialogOpen = () => {
+    setCloseEvent(true);
+  };
+  const closeEventClickaway = () => {
+    setCloseEvent(false);
+  };
+  const handleCloseEvent = () => {
+    console.log("Close This Event !")
+    setCloseEvent(false);  
+  };
+  //  ----------------------------------------------------------
+
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -115,7 +158,7 @@ function AdminDashboardContentEvents() {
       logo: "{image}",
       driveName: "Cognizant - GenC Nxt 1",
       jobTitle: "Software Developer",
-      sector: "Information Technology" ,
+      sector: "Information Technology",
       branchesAllowed: ["CSE", "ISE", "ECE"],
       ctc: 8,
       eventType: "On Campus",
@@ -154,18 +197,18 @@ function AdminDashboardContentEvents() {
     // },
   ];
 
-  //const [rows, setRows] = React.useState(initialRows);
-
   let events = [];
   let [xData, setxData] = React.useState(events);
 
   React.useEffect(() => {
-    fet("/company_all", 'GET')
-    .then(response => {console.log(response)
-        // 4. Setting *dogImage* to the image url that we received from the response above
-    // .then(data => setDogImage(data.message))
-    setxData(response);
-  })},{})
+    fet("/company_all", "GET").then((response) => {
+      console.log(response);
+      // 4. Setting *dogImage* to the image url that we received from the response above
+      // .then(data => setDogImage(data.message))
+      setxData(response);
+    });
+  }, {});
+
 
   
   for(var i=0;i<xData.length;i++){
@@ -198,8 +241,6 @@ function AdminDashboardContentEvents() {
     badge = <TpcBadge />;
   }
 
-
-
   const columns = [
     {
       field: "id",
@@ -215,12 +256,16 @@ function AdminDashboardContentEvents() {
       minWidth: 90,
       renderCell: (params) => {
         return (
-          <Box textAlign='center'>
-            <IconButton align="center" style={{ marginLeft: 16 }}>  
-              <EditRoundedIcon color="primary" size="small"  />
+          <Box textAlign="center">
+            <IconButton
+              align="center"
+              style={{ marginLeft: 16 }}
+              onClick={handleDialogOpen}
+            >
+              <EditRoundedIcon color="primary" size="small" />
             </IconButton>
           </Box>
-        )
+        );
       },
     },
     {
@@ -231,12 +276,12 @@ function AdminDashboardContentEvents() {
       minWidth: 110,
       renderCell: (params) => {
         return (
-          <Box textAlign='center'>
-            <IconButton align="center" style={{ marginLeft: 16 }}>
-              <CloseRoundedIcon color="error" size="small"  />
+          <Box textAlign="center">
+            <IconButton align="center" style={{ marginLeft: 16 }} onClick={closeEventDialogOpen}>
+              <CloseRoundedIcon color="error" size="small" />
             </IconButton>
           </Box>
-        )
+        );
       },
     },
     {
@@ -252,7 +297,7 @@ function AdminDashboardContentEvents() {
       flex: 1,
       minWidth: 250,
     },
-    
+
     {
       field: "jobTitle",
       headerName: "Job Title",
@@ -305,13 +350,6 @@ function AdminDashboardContentEvents() {
       flex: 1,
       minWidth: 100,
     },
-    // {
-    //   field: "eligibility",
-    //   headerName: "Eligibility",
-    //   sortable: false,
-    //   flex: 1,
-    //   minWidth: 100,
-    // },
     {
       field: "band",
       headerName: "Band",
@@ -401,7 +439,7 @@ function AdminDashboardContentEvents() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: "75vh",
+                    minHeight: "80vh",
                   }}
                 >
                   <DataGrid
@@ -410,27 +448,122 @@ function AdminDashboardContentEvents() {
                     components={{
                       Toolbar: GridToolbar,
                     }}
-                    
-                    
                   />
                 </Paper>
               </Grid>
             </Grid>
-
-            {/* <Grid item xs={12}>
-              <Paper
-                sx={{
-                  mt: 5,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  minHeight: 280,
-                }}
-              ></Paper>
-            </Grid> */}
-
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
+          <Dialog
+            open={openDialog}
+            onClose={handleClickAway}
+            maxWidth="sm"
+          >
+            <DialogTitle>
+              {"Manage Event"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Typography variant="h7" color="secondary">Set Eligibility Cutoff</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h9" color="text.primary">10<sup>th</sup> Percentage:</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      type="number"
+                      variant="standard"
+                      fullWidth
+                      name="class10_cutoff"
+                      // value={values.class10_cutoff}
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h9" color="text.primary">12<sup>th</sup> / P.U. Percentage:</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      type="number"
+                      variant="standard"
+                      fullWidth
+                      name="class12_cutoff"
+                      // value={values.class12_cutoff}
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h9" color="text.primary">Diploma Percentage:</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      type="number"
+                      variant="standard"
+                      fullWidth
+                      name="diploma_cutoff"
+                      // value={values.diploma_cutoff}
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h9" color="text.primary">Graduation CGPA:</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      type="number"
+                      variant="standard"
+                      fullWidth
+                      name="graduation_cutoff"
+                      // value={values.graduation_cutoff}
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="h9" color="text.primary">Active Backlogs:</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      type="number"
+                      variant="standard"
+                      fullWidth
+                      name="active_backlog"
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                </Grid>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClickAway}>Cancel</Button>
+              <Button onClick={handleDialogClose}>
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          {/* Close Event Dialog */}
+          <Dialog
+            open={closeEvent}
+            onClose={closeEventClickaway}
+            maxWidth="sm"
+          >
+            <DialogTitle>
+              {"Close Event"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <Typography variant="h9" >Are you sure?</Typography>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={closeEventClickaway}>Cancel</Button>
+              <Button onClick={handleCloseEvent} color="error">
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Box>
     </ThemeProvider>
