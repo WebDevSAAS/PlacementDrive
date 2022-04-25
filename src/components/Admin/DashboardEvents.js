@@ -167,34 +167,34 @@ function AdminDashboardContentEvents() {
       status: "Ongoing",
       band: 3,
     },
-    {
-      id: 2,
-      logo: "{image}",
-      driveName: "Cognizant - GenC Nxt 2",
-      jobTitle: "Software Developer",
-      sector: "Information Technology",
-      branchesAllowed: ["CSE", "ISE", "ECE"],
-      ctc: 8,
-      eventType: "On Campus",
-      applEndDate: "31-03-2022",
-      eventDate: "25-04-2022",
-      status: "Ongoing",
-      band: 3,
-    },
-    {
-      id: 3,
-      logo: "{image}",
-      driveName: "Cognizant - GenC Nxt 3",
-      jobTitle: "Software Developer",
-      sector: "Information Technology",
-      branchesAllowed: ["CSE", "ISE", "ECE"],
-      ctc: 8,
-      eventType: "On Campus",
-      applEndDate: "31-03-2022",
-      eventDate: "25-04-2022",
-      status: "Ongoing",
-      band: 3,
-    },
+    // {
+    //   id: 2,
+    //   logo: "{image}",
+    //   driveName: "Cognizant - GenC Nxt 2",
+    //   jobTitle: "Software Developer",
+    //   sector: "Information Technology" ,
+    //   branchesAllowed: ["CSE", "ISE", "ECE"],
+    //   ctc: 8,
+    //   eventType: "On Campus",
+    //   applEndDate: "31-03-2022",
+    //   eventDate: "25-04-2022",
+    //   status: "Ongoing",
+    //   band: 3,
+    // },
+    // {
+    //   id: 3,
+    //   logo: "{image}",
+    //   driveName: "Cognizant - GenC Nxt 3",
+    //   jobTitle: "Software Developer",
+    //   sector: "Information Technology" ,
+    //   branchesAllowed: ["CSE", "ISE", "ECE"],
+    //   ctc: 8,
+    //   eventType: "On Campus",
+    //   applEndDate: "31-03-2022",
+    //   eventDate: "25-04-2022",
+    //   status: "Ongoing",
+    //   band: 3,
+    // },
   ];
 
   let events = [];
@@ -209,24 +209,26 @@ function AdminDashboardContentEvents() {
     });
   }, {});
 
-  for (var i = 0; i < xData.length; i++) {
-    const temp = {};
-    temp.id = xData[i].c_id;
-    temp.logo = "{image}";
-    temp.driveName = xData[i].profile.c_name;
-    temp.jobTitle = xData[i].profile.job_title;
-    temp.sector = xData[i].profile.sector;
-    temp.branchesAllowed = ["CSE", "ISE", "ECE"];
-    temp.ctc = xData[i].profile.ctc_package;
-    temp.eventType = "On Campus";
-    temp.applEndDate = xData[i].profile.app_end_date;
-    temp.eventDate = xData[i].profile.event_date;
-    temp.status = "Ongoing";
-    temp.eligibility = "LINK";
-    temp.manageEvent = "LINK";
-    temp.closeEvent = "LINK";
-    temp.band = xData[i].profile.event_type;
-    rows.push(temp);
+
+  
+  for(var i=0;i<xData.length;i++){
+    const temp={};
+      temp.id = xData[i].c_id;
+      temp.logo = '{image}';
+      temp.driveName= xData[i].profile.c_name;
+      temp.jobTitle= xData[i].profile.job_title;
+      temp.sector= xData[i].profile.sector;
+      temp.branchesAllowed= ["CSE", "ISE", "ECE"];
+      temp.ctc= xData[i].profile.ctc_package;
+      temp.eventType= "On Campus";
+      temp.applEndDate= xData[i].profile.app_end_date;
+      temp.eventDate= xData[i].profile.event_date;
+      temp.status= "Ongoing";
+      temp.eligibility= "LINK";
+      temp.manageEvent= "LINK";
+      temp.closeEvent= "LINK";
+      temp.band= xData[i].profile.band;
+      rows.push(temp);
   }
 
   const userCategory = "admin"; //    INSERT userCategory VALUE FROM BACKEND !!
