@@ -4,8 +4,8 @@ module.exports = function (app, db) {
   app.get("/", (req, res) => {
     try {
       db.collection("admins")
-      .find({})
-      .toArray((err, res) => console.log(res, err));
+        .find({})
+        .toArray((err, res) => console.log(res, err));
       res.send("All Set !");
     } catch (error) {
       console.log(error);
@@ -13,17 +13,17 @@ module.exports = function (app, db) {
     }
   });
 
-// =================admin Api===================
-  app.get("/admin",(req,res)=>{
-    try{
+  // =================admin Api===================
+  app.get("/admin", (req, res) => {
+    try {
       db.collection("admin")
-      .find({})
-      .toArray((err,res)=>console.log(res,err));
+        .find({})
+        .toArray((err, res) => console.log(res, err));
       res.send("Admin part");
-    }catch(error){
+    } catch (error) {
       console.log(error);
       res.send(error);
-  
+
     }
   });
 
@@ -67,7 +67,7 @@ module.exports = function (app, db) {
             let obj = {
               email: k.email,
               password: k.password,
-              accountType:'admin'
+              accountType: 'admin'
             };
             db.collection("admin").insertOne(obj, (error, results) => {
               if (error) {
@@ -90,7 +90,7 @@ module.exports = function (app, db) {
                   lastUpdated: req.session.lastUpdated,
                   isLatest: true,
                   isLogged: true,
-                  resultId:results.insertedId
+                  resultId: results.insertedId
                   // profile: obj.profile,
                 });
               }
@@ -135,6 +135,7 @@ module.exports = function (app, db) {
       k.event_type &&
       k.year_eligible &&
       k.ctc_package &&
+      k.band &&
       k.internship &&
       k.app_end_date &&
       // k.logo &&
@@ -168,6 +169,7 @@ module.exports = function (app, db) {
                 event_type: k.event_type,
                 year_eligible: k.year_eligible,
                 ctc_package: k.ctc_package,
+                band: k.band,
                 internship: k.internship,
                 app_end_date: k.app_end_date,
                 // logo: k.logo,
@@ -232,8 +234,7 @@ module.exports = function (app, db) {
     else if (
       k.table_id &&
       k.company_id &&
-      k.usn &&
-      k.desc
+      k.usn
     ) {
       db.collection("applyTo").findOne(
         { table_id: k.table_id },
@@ -249,10 +250,9 @@ module.exports = function (app, db) {
           // usn doesn't exists, create one
           else {
             let obj = {
-                table_id: k.table_id,
-                company_id:k.company_id,
-                usn: k.usn,
-                desc: k.desc
+              table_id: k.table_id,
+              company_id: k.company_id,
+              usn: k.usn
             };
             db.collection("applyTo").insertOne(obj, (error, results) => {
               if (error) {
@@ -295,7 +295,7 @@ module.exports = function (app, db) {
   //-----------------get company start---------------
   app.get("/company_all", (req, res) => {
     try {
-      let k = req.body
+      let k = req
       console.log(k);
       db.collection("company").find().toArray((error, results) => {
         if (error) {
@@ -314,29 +314,54 @@ module.exports = function (app, db) {
     }
   })
   //---------------get company all end------------------
-  
+
   //---------------get student start--------------------
   app.get("/student_all", (req, res) => {
     try {
       let k = req.body
       console.log(k);
-          db.collection("students").find().toArray((error, results) => {
-            if (error) {
-              res.json({
-                status: 'error',
-                message: 'unable to fetch data with requested params',
-                isLogged: true
-              })
-              throw error
-            }
-            res.json(results)
+      db.collection("students").find().toArray((error, results) => {
+        if (error) {
+          res.json({
+            status: 'error',
+            message: 'unable to fetch data with requested params',
+            isLogged: true
           })
+          throw error
+        }
+        res.json(results)
+      })
     } catch (error) {
       console.log(error)
       res.send(error)
     }
   })
-  // ----------------------get student end----------------
+  // ----------------------get student end-----------------------------
+  // ----------------------combine student and company start----------------
+  app.get("/student_reports", (req, res) => {
+    db.collection('merge').aggregate([{
+      $lookup: {
+        from: "company",
+        localField: "company_id",
+        foreignField: "c_id",
+        as: "comp"
+      }
+    }, {
+      $lookup: {
+        from: "students",
+        localField: "usn",
+        foreignField: "usn",
+        as: "stud"
+      }
+    }]).toArray((error, results) => {
+      if (error) {
+        res.json({ error });
+      }
+      res.json(results);
+    })
+  });
+  // ----------------------combine student and company end------------------
+
   // post route for register (expects json data)
   app.post("/register", (req, res) => {
     let k = req.body;
@@ -435,10 +460,11 @@ module.exports = function (app, db) {
   app.post("/update", (req, res) => {
     let k = req.body;
     // check if user logged in...
+    // console.log("inside update " + req.body.accountType);
     if (req.session && req.session.userid) {
       if (
         req.session.userid === k.usn ||
-        req.session.profile.accountType === "admin" // If user is editing his own Accounts or admin then supreme access...
+        req.body.accountType === "admin" // If user is editing his own Accounts or admin then supreme access...
       ) {
         // All OKAY, update
         db.collection("students").findOne(
@@ -490,17 +516,17 @@ module.exports = function (app, db) {
           }
         );
       } else
-        res.jsom({
+        res.json({
           // User is trying to modify someone else's data...
           status: "error",
           message: "Unauthorised access !",
           isLogged: true,
         });
     } else
-      res.jsom({
+      res.json({
         status: "error",
         message: "Not logged in !",
         isLogged: false,
       });
-    });
-  };
+  });
+};
