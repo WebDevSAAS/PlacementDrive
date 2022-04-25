@@ -182,9 +182,13 @@ function DashboardContentEvents() {
               style={{ marginLeft: 16 }}
               onClick={() => {
                 console.log(params);
-                fet('/apply_to','POST',{table_id: 102, usn, company_id: params.id})
-                .then((response) => {
-                  console.log(response);
+                fet("/getStudents", 'POST', {params:{id: {usn}}})
+                .then(response => {console.log(response)
+                if(response[0].profileFull.validated===true)
+                  fet('/apply_to','POST',{table_id: 105, usn, company_id: params.id})
+                  .then((responses) => {
+                    console.log(responses);
+                  });
                 });
               }}
             >

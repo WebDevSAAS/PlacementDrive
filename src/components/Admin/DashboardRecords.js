@@ -220,8 +220,8 @@ function AdminDashboardContentRecords() {
               color="success"
               size="small"
               onClick={async() => {
-                fet('/update','POST',{accountType: "admin", validated: true})
-                .then((response)=>console.log(response));
+                fet('/update','POST',{usn: params.row.usn, accountType: "admin", validated: true})
+                .then((response)=>console.log(response))
               }}
               disabled={false}
             >
