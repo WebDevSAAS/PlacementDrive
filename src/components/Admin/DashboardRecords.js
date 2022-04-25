@@ -219,7 +219,10 @@ function AdminDashboardContentRecords() {
               variant="contained"
               color="success"
               size="small"
-              onClick={() => {}}
+              onClick={async() => {
+                fet('/update','POST',{accountType: "admin", validated: true})
+                .then((response)=>console.log(response));
+              }}
               disabled={false}
             >
               &#10003;
@@ -245,7 +248,7 @@ function AdminDashboardContentRecords() {
   for (var i = 0; i < xData.length; i++) {
     const temp = {};
     const data = xData[i];
-    if(data.profileFull){
+    if(data.profileFull && data.profileFull.validation){
       temp.id = i + 4;
       temp.usn = xData[i].profile.usn;
       temp.name = xData[i].profile.first_name;
