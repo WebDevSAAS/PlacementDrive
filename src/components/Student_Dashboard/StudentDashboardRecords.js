@@ -186,6 +186,7 @@ function DashboardContentRecords() {
     .toISOString()
     .split("T")[0]
     xData.validation = false
+    xData.validated = false
     fet("/update", "POST", xData)
     .then((response) => {
         console.log(response);
