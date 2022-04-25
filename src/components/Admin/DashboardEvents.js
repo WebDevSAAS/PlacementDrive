@@ -124,34 +124,34 @@ function AdminDashboardContentEvents() {
       status: "Ongoing",
       band: 3,
     },
-    {
-      id: 2,
-      logo: "{image}",
-      driveName: "Cognizant - GenC Nxt 2",
-      jobTitle: "Software Developer",
-      sector: "Information Technology" ,
-      branchesAllowed: ["CSE", "ISE", "ECE"],
-      ctc: 8,
-      eventType: "On Campus",
-      applEndDate: "31-03-2022",
-      eventDate: "25-04-2022",
-      status: "Ongoing",
-      band: 3,
-    },
-    {
-      id: 3,
-      logo: "{image}",
-      driveName: "Cognizant - GenC Nxt 3",
-      jobTitle: "Software Developer",
-      sector: "Information Technology" ,
-      branchesAllowed: ["CSE", "ISE", "ECE"],
-      ctc: 8,
-      eventType: "On Campus",
-      applEndDate: "31-03-2022",
-      eventDate: "25-04-2022",
-      status: "Ongoing",
-      band: 3,
-    },
+    // {
+    //   id: 2,
+    //   logo: "{image}",
+    //   driveName: "Cognizant - GenC Nxt 2",
+    //   jobTitle: "Software Developer",
+    //   sector: "Information Technology" ,
+    //   branchesAllowed: ["CSE", "ISE", "ECE"],
+    //   ctc: 8,
+    //   eventType: "On Campus",
+    //   applEndDate: "31-03-2022",
+    //   eventDate: "25-04-2022",
+    //   status: "Ongoing",
+    //   band: 3,
+    // },
+    // {
+    //   id: 3,
+    //   logo: "{image}",
+    //   driveName: "Cognizant - GenC Nxt 3",
+    //   jobTitle: "Software Developer",
+    //   sector: "Information Technology" ,
+    //   branchesAllowed: ["CSE", "ISE", "ECE"],
+    //   ctc: 8,
+    //   eventType: "On Campus",
+    //   applEndDate: "31-03-2022",
+    //   eventDate: "25-04-2022",
+    //   status: "Ongoing",
+    //   band: 3,
+    // },
   ];
 
   //const [rows, setRows] = React.useState(initialRows);
@@ -184,7 +184,7 @@ function AdminDashboardContentEvents() {
       temp.eligibility= "LINK";
       temp.manageEvent= "LINK";
       temp.closeEvent= "LINK";
-      temp.band= xData[i].profile.event_type;
+      temp.band= xData[i].profile.band;
       rows.push(temp);
   }
 
