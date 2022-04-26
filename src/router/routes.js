@@ -336,10 +336,10 @@ module.exports = function (app, db) {
       res.send(error)
     }
   })
-  // ----------------------get student end-----------------------------
+  // ----------------------get student end----------------------------------
   // ----------------------combine student and company start----------------
   app.get("/student_reports", (req, res) => {
-    db.collection('merge').aggregate([{
+    db.collection('applyTo').aggregate([{
       $lookup: {
         from: "company",
         localField: "company_id",
@@ -472,7 +472,7 @@ module.exports = function (app, db) {
           { projection: { _id: 1, usn: 1 } },
           (error, result) => {
             if (error || !result) {
-              res.jsom({
+              res.json({
                 status: "error",
                 message: error,
                 isLogged: true,
