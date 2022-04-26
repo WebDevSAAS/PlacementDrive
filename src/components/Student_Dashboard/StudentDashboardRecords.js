@@ -154,7 +154,7 @@ function DashboardContentRecords() {
     achievements: '',
     blood_group: '',
     validation: false,
-    validated: '',
+    validated: false,
   }  
   let [xData, setxData] = React.useState(main_records);
   React.useEffect(() => {
@@ -329,9 +329,13 @@ function DashboardContentRecords() {
           <Toolbar />
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Box textAlign="center">
+              {!xData.validated?(
               <Button onClick={RequestValidation} variant="contained" style={{ width: "450px", marginBottom: "20px" }} color="secondary">
                 {reqText}
-              </Button>
+              </Button>):(<Button variant="contained" style={{ width: "450px", marginBottom: "20px", cursor: "not-allowed" }} color="secondary">
+                Validated
+              </Button>)
+}
             </Box>
             <Grid container spacing={3}>
               <Grid item xs={12} md={12} lg={12}>

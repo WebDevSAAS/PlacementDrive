@@ -149,6 +149,7 @@ function AdminSignIn() {
                           fullWidth
                           name="password"
                           value={values.password}
+                          type="password"
                           component={TextField}
                         />
                       </Grid>
