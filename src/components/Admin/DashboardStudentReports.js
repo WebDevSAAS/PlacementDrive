@@ -20,6 +20,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { fet } from "../modules/fet";
 
 function Copyright(props) {
   return (
@@ -182,6 +183,33 @@ function AdminContentStudentReports() {
       minWidth: 200,
     },
   ];
+
+  let events = [];
+  let [xData, setxData] = React.useState(events);
+
+  React.useEffect(() => {
+    fet("/student_reports", "GET").then((response) => {
+      console.log(response);
+      // 4. Setting *dogImage* to the image url that we received from the response above
+      // .then(data => setDogImage(data.message))
+      setxData(response);
+    });
+  }, {});
+
+  for (var i = 0; i < xData.length; i++) {
+    const temp = {};
+    console.log(xData[i]);
+    temp.id = xData[i].company_id;
+    temp.drivename = xData[i].comp[0].profile.c_name;
+    temp.email = xData[i].stud[0].profile.email;
+    temp.sector = xData[i].comp[0].profile.sector;
+    temp.phone = xData[i].stud[0].profile.phone;
+    temp.branch = "All";
+    temp.usn = xData[i].stud[0].profile.usn;
+    temp.studentname = xData[i].stud[0].profile.first_name;
+    temp.ctc = xData[i].comp[0].profile.ctc_package;
+    rows.push(temp);
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>
