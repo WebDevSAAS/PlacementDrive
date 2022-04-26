@@ -114,30 +114,30 @@ function AdminDashboardContentRecords() {
       diploma: null,
       backlog: null,
     },
-    {
-      id: 2,
-      usn: "1RN19EE001",
-      name: "Noah Kahan",
-      branch: "EE",
-      email: "1rn19ee001.noah@gmail.com",
-      mobile: 9164444265,
-      class10: 96,
-      class12: null,
-      diploma: 85,
-      backlog: null,
-    },
-    {
-      id: 3,
-      usn: "1RN19ME001",
-      name: "Jeremy Zucker",
-      branch: "EE",
-      email: "1rn19me001.jeremy@gmail.com",
-      mobile: 9188884265,
-      class10: 66,
-      class12: null,
-      diploma: 85,
-      backlog: 3,
-    },
+    // {
+    //   id: 2,
+    //   usn: "1RN19EE001",
+    //   name: "Noah Kahan",
+    //   branch: "EE",
+    //   email: "1rn19ee001.noah@gmail.com",
+    //   mobile: 9164444265,
+    //   class10: 96,
+    //   class12: null,
+    //   diploma: 85,
+    //   backlog: null,
+    // },
+    // {
+    //   id: 3,
+    //   usn: "1RN19ME001",
+    //   name: "Jeremy Zucker",
+    //   branch: "EE",
+    //   email: "1rn19me001.jeremy@gmail.com",
+    //   mobile: 9188884265,
+    //   class10: 66,
+    //   class12: null,
+    //   diploma: 85,
+    //   backlog: 3,
+    // },
   ];
 
   const columns = [
@@ -249,7 +249,7 @@ function AdminDashboardContentRecords() {
     const temp = {};
     const data = xData[i];
     if(data.profileFull && data.profileFull.validation){
-      temp.id = i + 4;
+      temp.id = i-1 ;
       temp.usn = xData[i].profile.usn;
       temp.name = xData[i].profile.first_name;
       temp.branch = xData[i].profile.branch;

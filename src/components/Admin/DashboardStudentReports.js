@@ -264,7 +264,7 @@ function AdminContentStudentReports() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: 280,
+                    minHeight: "80vh",
                   }}
                 >
                   <DataGrid
