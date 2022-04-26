@@ -18,9 +18,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-
 
 function Copyright(props) {
   return (
@@ -40,22 +39,13 @@ function Copyright(props) {
   );
 }
 function AdminBadge() {
-  return (
-    <Badge badgeContent={"Admin"} color="success" sx={{ px: 3, }} >
-    </Badge>
-  );
+  return <Badge badgeContent={"Admin"} color="success" sx={{ px: 3 }}></Badge>;
 }
 function DfpcBadge() {
-  return (
-    <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3, }}>
-    </Badge>
-  );
+  return <Badge badgeContent={"DFPC"} color="error" sx={{ px: 3 }}></Badge>;
 }
 function TpcBadge() {
-  return (
-    <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3, }}>
-    </Badge>
-  );
+  return <Badge badgeContent={"TPC"} color="secondary" sx={{ px: 3 }}></Badge>;
 }
 
 const drawerWidth = 240;
@@ -113,22 +103,20 @@ function AdminDashboardContentCompanyReports() {
     setOpen(!open);
   };
 
-  const userCategory = "admin";       //    INSERT userCategory VALUE FROM BACKEND !!
+  const userCategory = "admin"; //    INSERT userCategory VALUE FROM BACKEND !!
   var badge;
   if (userCategory == "admin") {
-    badge = <AdminBadge />
-  } 
-  else if (userCategory == "dfpc") {
-    badge = <DfpcBadge />
-  }
-  else if (userCategory == "tpc") {
-    badge =  <TpcBadge />
+    badge = <AdminBadge />;
+  } else if (userCategory == "dfpc") {
+    badge = <DfpcBadge />;
+  } else if (userCategory == "tpc") {
+    badge = <TpcBadge />;
   }
 
   const rows = [
     {
       id: 1,
-      drivename: "Cognizant - GenC Nxt" ,
+      drivename: "Cognizant - GenC Nxt",
       band: 2,
       eligible: 450,
       applied: 120,
@@ -136,8 +124,8 @@ function AdminDashboardContentCompanyReports() {
       offer: 25,
       conversionrate: 60,
       rejected: 15,
-    }
-  ]
+    },
+  ];
 
   const columns = [
     {
@@ -196,7 +184,6 @@ function AdminDashboardContentCompanyReports() {
     },
   ];
 
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -221,7 +208,7 @@ function AdminDashboardContentCompanyReports() {
             >
               <MenuIcon />
             </IconButton>
-            
+
             <Typography
               component="h1"
               variant="h6"
@@ -229,7 +216,8 @@ function AdminDashboardContentCompanyReports() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-                Dashboard <Typography variant="p" color="#ffeb3b">
+              Dashboard{" "}
+              <Typography variant="p" color="#ffeb3b">
                 Company Reports
               </Typography>
               {badge}
@@ -277,7 +265,7 @@ function AdminDashboardContentCompanyReports() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    minHeight: 280,
+                    minHeight: "80vh",
                   }}
                 >
                   <DataGrid
@@ -285,7 +273,8 @@ function AdminDashboardContentCompanyReports() {
                     columns={columns}
                     components={{
                       Toolbar: GridToolbar,
-                    }}/>
+                    }}
+                  />
                 </Paper>
               </Grid>
             </Grid>
