@@ -22,9 +22,17 @@ import { mainListItems, secondaryListItems } from "./listItems";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import CheckIcon from "@mui/icons-material/Check";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import EditIcon from "@mui/icons-material/Edit";
 import { fet } from "../modules/fet";
-
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+
+
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function AdminBadge() {
   return <Badge badgeContent={"Admin"} color="success" sx={{ px: 3 }}></Badge>;
@@ -101,6 +109,21 @@ function AdminDashboardContentRecords() {
     badge = <TpcBadge />;
   }
 
+    // -----Opening and Closing snackbar-----
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+    const handleClickSnackbar = () => {
+      setOpenSnackbar(true);
+    };
+  
+    const handleCloseSnackbar = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setOpenSnackbar(false);
+    };
+    // --------------------------------------------
+
   const rows = [
     {
       id: 1,
@@ -114,18 +137,18 @@ function AdminDashboardContentRecords() {
       diploma: null,
       backlog: null,
     },
-    // {
-    //   id: 2,
-    //   usn: "1RN19EE001",
-    //   name: "Noah Kahan",
-    //   branch: "EE",
-    //   email: "1rn19ee001.noah@gmail.com",
-    //   mobile: 9164444265,
-    //   class10: 96,
-    //   class12: null,
-    //   diploma: 85,
-    //   backlog: null,
-    // },
+    {
+      id: 2,
+      usn: "1RN19EE001",
+      name: "Noah Kahan",
+      branch: "EE",
+      email: "1rn19ee001.noah@gmail.com",
+      mobile: 9164444265,
+      class10: 96,
+      class12: null,
+      diploma: 85,
+      backlog: null,
+    },
     // {
     //   id: 3,
     //   usn: "1RN19ME001",
@@ -157,7 +180,7 @@ function AdminDashboardContentRecords() {
       field: "name",
       headerName: "Name",
       flex: 1,
-      minWidth: 150,
+      minWidth: 130,
     },
     {
       field: "branch",
@@ -169,13 +192,13 @@ function AdminDashboardContentRecords() {
       field: "email",
       headerName: "E-Mail",
       flex: 1,
-      minWidth: 200,
+      minWidth: 190,
     },
     {
       field: "mobile",
       headerName: "Mobile",
       flex: 1,
-      minWidth: 80,
+      minWidth: 50,
     },
     {
       field: "class10",
@@ -219,13 +242,39 @@ function AdminDashboardContentRecords() {
               variant="contained"
               color="success"
               size="small"
-              onClick={async() => {
-                fet('/update','POST',{usn: params.row.usn, accountType: "admin", validated: true})
-                .then((response)=>console.log(response))
+              onClick={async () => {
+                fet("/update", "POST", {
+                  usn: params.row.usn,
+                  accountType: "admin",
+                  validated: true,
+                }).then((response) => console.log(response));
+                handleClickSnackbar();
               }}
+              disabled={hasValidated(params.id)}
+            >
+              <CheckIcon fontSize="medium" />
+            </Button>
+          </Box>
+        );
+      },
+    },
+    {
+      field: "editRecords",
+      headerName: "Edit",
+      sortable: false,
+      flex: 1,
+      minWidth: 20,
+      align: "center",
+      renderCell: (params) => {
+        return (
+          <Box textAlign="center">
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
               disabled={false}
             >
-              &#10003;
+              <EditIcon fontSize="medium" />
             </Button>
           </Box>
         );
@@ -245,11 +294,17 @@ function AdminDashboardContentRecords() {
     });
   }, {});
 
+  let hasValidated = (val) => {
+    console.log(val + " has Validated.");
+    if (val == 2) return false;
+    if (val == 1) return true;
+  };
+
   for (var i = 0; i < xData.length; i++) {
     const temp = {};
     const data = xData[i];
-    if(data.profileFull && data.profileFull.validation){
-      temp.id = i-1 ;
+    if (data.profileFull && data.profileFull.validation) {
+      temp.id = i - 1;
       temp.usn = xData[i].profile.usn;
       temp.name = xData[i].profile.first_name;
       temp.branch = xData[i].profile.branch;
@@ -358,6 +413,19 @@ function AdminDashboardContentRecords() {
               </Grid>
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={2000}
+              onClose={handleCloseSnackbar}
+            >
+              <Alert
+                onClose={handleCloseSnackbar}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Validated successfully.
+              </Alert>
+            </Snackbar>
           </Container>
         </Box>
       </Box>

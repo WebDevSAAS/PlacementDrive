@@ -107,6 +107,14 @@ function DashboardContentEvents() {
     // .then(data => setDogImage(data.message))
     setxData(response);
   })},{})
+  
+  let hasApplied = (val) => {
+    console.log(val + " has applied.")
+    if (val == 2)
+      return false;
+    if (val == 1)
+      return true;
+  }
 
   const columns = [
     { field: "id", headerName: "No.", flex: 1, minWidth: 50 },
@@ -191,6 +199,7 @@ function DashboardContentEvents() {
                   });
                 });
               }}
+              disabled={hasApplied(params.id)}
             >
               APPLY
             </Button>
@@ -205,6 +214,18 @@ function DashboardContentEvents() {
       id: 1,
       Logo: "{image}",
       Company: "Heptagon",
+      DriveDate: "22-05-2022",
+      ApplicationEndDate: "10-04-2022",
+      Description: "890",
+      Sector: "1",
+      Venue: "Banglore",
+      Stages: "2",
+      CTC: "4.5",
+    },
+    {
+      id: 2,
+      Logo: "{image}",
+      Company: "Company 2",
       DriveDate: "22-05-2022",
       ApplicationEndDate: "10-04-2022",
       Description: "890",
