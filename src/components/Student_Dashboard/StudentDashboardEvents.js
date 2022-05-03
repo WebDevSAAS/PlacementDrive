@@ -20,8 +20,14 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Button from "@mui/material/Button";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { fet } from "../modules/fet";
-
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Copyright(props) {
   return (
@@ -90,7 +96,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function DashboardContentEvents() {
-  const usn = window.sessionStorage.getItem('uid');
+  const usn = window.sessionStorage.getItem("uid");
 
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
@@ -101,20 +107,34 @@ function DashboardContentEvents() {
   let [xData, setxData] = React.useState(events);
 
   React.useEffect(() => {
-    fet("/company_all", 'GET')
-    .then(response => {console.log(response)
-        // 4. Setting *dogImage* to the image url that we received from the response above
-    // .then(data => setDogImage(data.message))
-    setxData(response);
-  })},{})
-  
+    fet("/company_all", "GET").then((response) => {
+      console.log(response);
+      // 4. Setting *dogImage* to the image url that we received from the response above
+      // .then(data => setDogImage(data.message))
+      setxData(response);
+    });
+  }, {});
+
+  // -----Opening and Closing snackbar-----
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+  // --------------------------------------------
+
   let hasApplied = (val) => {
-    console.log(val + " has applied.")
-    if (val == 2)
-      return false;
-    if (val == 1)
-      return true;
-  }
+    console.log(val + " has applied.");
+    if (val == 2) return false;
+    if (val == 1) return true;
+  };
 
   const columns = [
     { field: "id", headerName: "No.", flex: 1, minWidth: 50 },
@@ -190,14 +210,20 @@ function DashboardContentEvents() {
               style={{ marginLeft: 16 }}
               onClick={() => {
                 console.log(params);
-                fet("/getStudents", 'POST', {params:{id: {usn}}})
-                .then(response => {console.log(response)
-                if(response[0].profileFull.validated===true)
-                  fet('/apply_to','POST',{table_id: 105, usn, company_id: params.id})
-                  .then((responses) => {
-                    console.log(responses);
-                  });
-                });
+                fet("/getStudents", "POST", { params: { id: { usn } } }).then(
+                  (response) => {
+                    console.log(response);
+                    if (response[0].profileFull.validated === true)
+                      fet("/apply_to", "POST", {
+                        table_id: 105,
+                        usn,
+                        company_id: params.id,
+                      }).then((responses) => {
+                        console.log(responses);
+                      });
+                  }
+                );
+                handleClickSnackbar();
               }}
               disabled={hasApplied(params.id)}
             >
@@ -233,25 +259,23 @@ function DashboardContentEvents() {
       Venue: "Banglore",
       Stages: "2",
       CTC: "4.5",
-    }
+    },
   ];
 
-  
-  for(var i=0;i<xData.length;i++){
-    const temp={};
-      temp.id = xData[i].c_id;
-      temp.Logo = '{image}';
-      temp.Company= xData[i].profile.c_name;
-      temp.Sector= xData[i].profile.sector;
-      temp.CTC= xData[i].profile.ctc_package;
-      temp.ApplicationEndDate= xData[i].profile.app_end_date;
-      temp.DriveDate= xData[i].profile.event_date;
-      temp.Description= xData[i].profile.desc;
-      temp.Venue= "Bangalore";
-      temp.Stages= 2;
-      rows.push(temp);
+  for (var i = 0; i < xData.length; i++) {
+    const temp = {};
+    temp.id = xData[i].c_id;
+    temp.Logo = "{image}";
+    temp.Company = xData[i].profile.c_name;
+    temp.Sector = xData[i].profile.sector;
+    temp.CTC = xData[i].profile.ctc_package;
+    temp.ApplicationEndDate = xData[i].profile.app_end_date;
+    temp.DriveDate = xData[i].profile.event_date;
+    temp.Description = xData[i].profile.desc;
+    temp.Venue = "Bangalore";
+    temp.Stages = 2;
+    rows.push(temp);
   }
-
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -354,6 +378,19 @@ function DashboardContentEvents() {
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={2000}
+              onClose={handleCloseSnackbar}
+            >
+              <Alert
+                onClose={handleCloseSnackbar}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Event added successfully
+              </Alert>
+            </Snackbar>
           </Container>
         </Box>
       </Box>
