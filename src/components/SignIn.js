@@ -80,7 +80,7 @@ function SignIn() {
         console.log(response);
         if (response.status !== "error"){
           window.sessionStorage.setItem('uid', values["usn"]);
-          window.location = "./signed_in/student_dashboard";
+          window.location = "./signed_in/student_dashboard/profile";
         } else {
           setOpen(true);    //  Invalid username or password
         }

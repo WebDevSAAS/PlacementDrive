@@ -26,8 +26,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { fet } from "../../modules/fet";
-
 import { mainListItems, secondaryListItems } from "../listItems";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Copyright(props) {
   return (
@@ -98,60 +104,76 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentGraduationRecord() {
-  
-  const usn = window.sessionStorage.getItem('uid');
+  const usn = window.sessionStorage.getItem("uid");
   let xii_records;
   xii_records = {
-    usn: '',
-    course: '',
-    specialization: '',
-    score_type: '',
-    score_frequency: '',
-    sem1: '0',
-    sem2: '0',
-    sem3: '0',
-    sem4: '0',
-    sem5: '0',
-    sem6: '0',
-    sem7: '0',
-    sem8: '0',
-    sgpa_scale: '0',
-    aggregate_percentage: '0'
-  } 
+    usn: "",
+    course: "",
+    specialization: "",
+    score_type: "",
+    score_frequency: "",
+    sem1: "0",
+    sem2: "0",
+    sem3: "0",
+    sem4: "0",
+    sem5: "0",
+    sem6: "0",
+    sem7: "0",
+    sem8: "0",
+    sgpa_scale: "0",
+    aggregate_percentage: "0",
+  };
   let [xData, setxData] = React.useState(xii_records);
   React.useEffect(() => {
-    fet("/getStudents", 'POST', {params:{id: {usn}}})
-    .then(response => {console.log(response)
+    fet("/getStudents", "POST", { params: { id: { usn } } }).then(
+      (response) => {
+        console.log(response);
         // 4. Setting *dogImage* to the image url that we received from the response above
-    // .then(data => setDogImage(data.message))
-    setxData(prevState => ({
-      ...prevState,
-      ...response[0].profileFull
-  }));
-    
-  })},{})
+        // .then(data => setDogImage(data.message))
+        setxData((prevState) => ({
+          ...prevState,
+          ...response[0].profileFull,
+        }));
+      }
+    );
+  }, {});
+
+  // -----Opening and Closing snackbar-----
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+  // --------------------------------------------
 
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setxData(prevState => ({
-        ...prevState,
-        [name]: value
+    setxData((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
-};
+  };
 
-  const onSubmit = async() => {
+  const onSubmit = async () => {
     console.log("Form submitted");
-    fet("/update", "POST", xData)
-    .then((response) => {
-        console.log(response);
-      });
+    fet("/update", "POST", xData).then((response) => {
+      console.log(response);
+    });
+    handleClickSnackbar();
     console.log(xData);
-  }
+  };
 
   // const [Specialization, Sset] = React.useState("");
   // const [Course, Cset] = React.useState("");
@@ -298,15 +320,17 @@ function StudentGraduationRecord() {
                           value={xData.course}
                           onChange={handleChange}
                         >
-                          <MenuItem value={'B.E/B.Tech'}>B.E/B.Tech</MenuItem>
-                          <MenuItem value={'B.A'}>B.A</MenuItem>
-                          <MenuItem value={'B.Arch'}>B.Arch</MenuItem>
-                          <MenuItem value={'BBA/BBM/BMS'}>BBA/BBM/BMS</MenuItem>
-                          <MenuItem value={'B.Com'}>B.Com</MenuItem>
-                          <MenuItem value={'BHM'}>BHM</MenuItem>
-                          <MenuItem value={'B.Sc'}>B.Sc</MenuItem>
-                          <MenuItem value={'B.Sc Agriculture'}>B.Sc Agriculture</MenuItem>
-                          <MenuItem value={'Others'}>Others</MenuItem>
+                          <MenuItem value={"B.E/B.Tech"}>B.E/B.Tech</MenuItem>
+                          <MenuItem value={"B.A"}>B.A</MenuItem>
+                          <MenuItem value={"B.Arch"}>B.Arch</MenuItem>
+                          <MenuItem value={"BBA/BBM/BMS"}>BBA/BBM/BMS</MenuItem>
+                          <MenuItem value={"B.Com"}>B.Com</MenuItem>
+                          <MenuItem value={"BHM"}>BHM</MenuItem>
+                          <MenuItem value={"B.Sc"}>B.Sc</MenuItem>
+                          <MenuItem value={"B.Sc Agriculture"}>
+                            B.Sc Agriculture
+                          </MenuItem>
+                          <MenuItem value={"Others"}>Others</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -322,7 +346,7 @@ function StudentGraduationRecord() {
                     </Grid>
                     <Grid item xs={8}>
                       <FormControl sx={{ width: 200 }}>
-                      <InputLabel id="demo-simple-select-label">
+                        <InputLabel id="demo-simple-select-label">
                           Select
                         </InputLabel>
                         <Select
@@ -332,42 +356,62 @@ function StudentGraduationRecord() {
                           value={xData.specialization}
                           onChange={handleChange}
                         >
-                          <MenuItem value={'Select Course'}>Select Course</MenuItem>
-                          <MenuItem value={'Aerospace'}>Aerospace</MenuItem>
-                          <MenuItem value={'Agriculture'}>Agriculture</MenuItem>
-                          <MenuItem value={'Aviation'}>Aviation</MenuItem>
-                          <MenuItem value={'Automobile'}>Automobile</MenuItem>
-                          <MenuItem value={'Bio Chemistry/ Bio-Technology'}>
+                          <MenuItem value={"Select Course"}>
+                            Select Course
+                          </MenuItem>
+                          <MenuItem value={"Aerospace"}>Aerospace</MenuItem>
+                          <MenuItem value={"Agriculture"}>Agriculture</MenuItem>
+                          <MenuItem value={"Aviation"}>Aviation</MenuItem>
+                          <MenuItem value={"Automobile"}>Automobile</MenuItem>
+                          <MenuItem value={"Bio Chemistry/ Bio-Technology"}>
                             Bio Chemistry/ Bio-Technology
                           </MenuItem>
-                          <MenuItem value={'Bio-Medical'}>Bio-Medical</MenuItem>
-                          <MenuItem value={'Ceramice'}>Ceramice</MenuItem>
-                          <MenuItem value={'Chemical'}>Chemical</MenuItem>
-                          <MenuItem value={'Computer Science'}>Computer Science</MenuItem>
-                          <MenuItem value={'Electrical and Electronics'}>
+                          <MenuItem value={"Bio-Medical"}>Bio-Medical</MenuItem>
+                          <MenuItem value={"Ceramice"}>Ceramice</MenuItem>
+                          <MenuItem value={"Chemical"}>Chemical</MenuItem>
+                          <MenuItem value={"Computer Science"}>
+                            Computer Science
+                          </MenuItem>
+                          <MenuItem value={"Electrical and Electronics"}>
                             Electrical and Electronics
                           </MenuItem>
-                          <MenuItem value={'Electronics and Communication'}>
+                          <MenuItem value={"Electronics and Communication"}>
                             Electronics and Communication
                           </MenuItem>
-                          <MenuItem value={'Energy'}>Energy</MenuItem>
-                          <MenuItem value={'Electronics and Instrumentation'}>
+                          <MenuItem value={"Energy"}>Energy</MenuItem>
+                          <MenuItem value={"Electronics and Instrumentation"}>
                             Electronics and Instrumentation
                           </MenuItem>
-                          <MenuItem value={'Environmental'}>Environmental</MenuItem>
-                          <MenuItem value={'Industrial Engineering and Management'}>
+                          <MenuItem value={"Environmental"}>
+                            Environmental
+                          </MenuItem>
+                          <MenuItem
+                            value={"Industrial Engineering and Management"}
+                          >
                             Industrial Engineering and Management
                           </MenuItem>
-                          <MenuItem value={'Instrumentation'}>Instrumentation</MenuItem>
-                          <MenuItem value={'Information Science'}>Information Science</MenuItem>
-                          <MenuItem value={'Marine'}>Marine</MenuItem>
-                          <MenuItem value={'Mechanical'}>Mechanical</MenuItem>
-                          <MenuItem value={'Mechatronics'}>Mechatronics</MenuItem>
-                          <MenuItem value={'Metallurgy'}>Metallurgy</MenuItem>
-                          <MenuItem value={'Industrial Production'}>Industrial Production</MenuItem>
-                          <MenuItem value={'Telecommunication'}>Telecommunication</MenuItem>
-                          <MenuItem value={'Textile'}>Textile</MenuItem>
-                          <MenuItem value={'Tools and Die Making'}>Tools and Die Making</MenuItem>
+                          <MenuItem value={"Instrumentation"}>
+                            Instrumentation
+                          </MenuItem>
+                          <MenuItem value={"Information Science"}>
+                            Information Science
+                          </MenuItem>
+                          <MenuItem value={"Marine"}>Marine</MenuItem>
+                          <MenuItem value={"Mechanical"}>Mechanical</MenuItem>
+                          <MenuItem value={"Mechatronics"}>
+                            Mechatronics
+                          </MenuItem>
+                          <MenuItem value={"Metallurgy"}>Metallurgy</MenuItem>
+                          <MenuItem value={"Industrial Production"}>
+                            Industrial Production
+                          </MenuItem>
+                          <MenuItem value={"Telecommunication"}>
+                            Telecommunication
+                          </MenuItem>
+                          <MenuItem value={"Textile"}>Textile</MenuItem>
+                          <MenuItem value={"Tools and Die Making"}>
+                            Tools and Die Making
+                          </MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -383,6 +427,7 @@ function StudentGraduationRecord() {
                     </Grid>
                     <Grid item xs={8}>
                       <TextField
+                        autoFocus
                         defaultValue="CGPA"
                         id="standard-basic"
                         name="score_type"
@@ -413,8 +458,8 @@ function StudentGraduationRecord() {
                           value={xData.score_frequency}
                           onChange={handleChange}
                         >
-                          <MenuItem value={'Semester'}>Semester</MenuItem>
-                          <MenuItem value={'Year'}>Year</MenuItem>
+                          <MenuItem value={"Semester"}>Semester</MenuItem>
+                          <MenuItem value={"Year"}>Year</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -439,9 +484,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic" 
-                          name="sem1"
-                          value={xData.sem1} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem1"
+                        value={xData.sem1}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -454,9 +503,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sgpa_scale"
-                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sgpa_scale"
+                        value={xData.sgpa_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -493,9 +546,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sem2"
-                          value={xData.sem2} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem2"
+                        value={xData.sem2}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -508,9 +565,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sgpa_scale"
-                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sgpa_scale"
+                        value={xData.sgpa_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -547,9 +608,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sem3"
-                          value={xData.sem3} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem3"
+                        value={xData.sem3}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -562,9 +627,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sgpa_scale"
-                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sgpa_scale"
+                        value={xData.sgpa_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -601,9 +670,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sem4"
-                          value={xData.sem4} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem4"
+                        value={xData.sem4}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -616,9 +689,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sgpa_scale"
-                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sgpa_scale"
+                        value={xData.sgpa_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -655,9 +732,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sem5"
-                          value={xData.sem5} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem5"
+                        value={xData.sem5}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -670,9 +751,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sgpa_scale"
-                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sgpa_scale"
+                        value={xData.sgpa_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -709,10 +794,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      
-                      <TextField id="standard-basic"
-                          name="sem6"
-                          value={xData.sem6} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem6"
+                        value={xData.sem6}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -725,9 +813,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sgpa_scale"
-                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sgpa_scale"
+                        value={xData.sgpa_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -764,10 +856,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    
-                      <TextField id="standard-basic"
-                          name="sem7"
-                          value={xData.sem7} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem7"
+                        value={xData.sem7}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -780,9 +875,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sgpa_scale"
-                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sgpa_scale"
+                        value={xData.sgpa_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -819,9 +918,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sem8"
-                          value={xData.sem8} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem8"
+                        value={xData.sem8}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -834,9 +937,13 @@ function StudentGraduationRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                      <TextField id="standard-basic"
-                          name="sgpa_scale"
-                          value={xData.sgpa_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sgpa_scale"
+                        value={xData.sgpa_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -856,7 +963,7 @@ function StudentGraduationRecord() {
                   <br></br>
                   <br></br>
                   <Divider light={true} />
-                  <br></br> 
+                  <br></br>
                   <Grid
                     container
                     rowSpacing={1}
@@ -903,12 +1010,25 @@ function StudentGraduationRecord() {
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
                       <br></br>
-                      <Button onClick={onSubmit} variant="contained" style={{ width: "200px" }}>Submit</Button>
+                      <Button
+                        onClick={onSubmit}
+                        variant="contained"
+                        style={{ width: "200px" }}
+                      >
+                        Submit
+                      </Button>
                     </Grid>
                     <Grid item xs={10}></Grid>
                     <Grid item xs={2}>
                       <br></br>
-                      <Button variant="contained" style={{ width: "160px" }} color="error">&#8635; Reset Record</Button>
+                      <Button
+                        variant="contained"
+                        style={{ width: "160px" }}
+                        color="error"
+                        onClick={() => window.location.reload(false)}
+                      >
+                        &#8635; Reset Record
+                      </Button>
                     </Grid>
                   </Grid>
                 </Paper>
@@ -931,6 +1051,20 @@ function StudentGraduationRecord() {
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
+
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={2000}
+              onClose={handleCloseSnackbar}
+            >
+              <Alert
+                onClose={handleCloseSnackbar}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Submitted successfully
+              </Alert>
+            </Snackbar>
           </Container>
         </Box>
       </Box>

@@ -18,7 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import TextField from "@mui/material/TextField";
-import Button from '@mui/material/Button'
+import Button from "@mui/material/Button";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Link as RouterLink } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
@@ -26,8 +26,15 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { fet } from "../../modules/fet";
-
 import { mainListItems, secondaryListItems } from "../listItems";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 
 function Copyright(props) {
   return (
@@ -98,39 +105,57 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentDiplomaRecord() {
-  const usn = window.sessionStorage.getItem('uid');
+  const usn = window.sessionStorage.getItem("uid");
   let xii_records;
   xii_records = {
-    usn: '',
-    diploma_course: '',
-    board: '',
-    sem1_marks: '',
-    max_marks: '',
-    sem1_per: '',
-    sem2_marks: '',
-    sem2_per: '',
-    sem3_marks: '',
-    sem3_per: '',
-    sem4_marks: '',
-    sem4_per: '',
-    sem5_marks: '',
-    sem5_per: '',
-    sem6_marks: '',
-    sem6_per: '',
-    aggregate_percentage: ''
-  } 
+    usn: "",
+    diploma_course: "",
+    board: "",
+    sem1_marks: "",
+    max_marks: "",
+    sem1_per: "",
+    sem2_marks: "",
+    sem2_per: "",
+    sem3_marks: "",
+    sem3_per: "",
+    sem4_marks: "",
+    sem4_per: "",
+    sem5_marks: "",
+    sem5_per: "",
+    sem6_marks: "",
+    sem6_per: "",
+    aggregate_percentage: "",
+  };
   let [xData, setxData] = React.useState(xii_records);
   React.useEffect(() => {
-    fet("/getStudents", 'POST', {params:{id: {usn}}})
-    .then(response => {console.log(response)
+    fet("/getStudents", "POST", { params: { id: { usn } } }).then(
+      (response) => {
+        console.log(response);
         // 4. Setting *dogImage* to the image url that we received from the response above
-    // .then(data => setDogImage(data.message))
-    setxData(prevState => ({
-      ...prevState,
-      ...response[0].profileFull
-  }));
-    
-  })},{})
+        // .then(data => setDogImage(data.message))
+        setxData((prevState) => ({
+          ...prevState,
+          ...response[0].profileFull,
+        }));
+      }
+    );
+  }, {});
+
+  
+// -----Opening and Closing snackbar-----
+const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+const handleClickSnackbar = () => {
+  setOpenSnackbar(true);
+};
+
+const handleCloseSnackbar = (event, reason) => {
+  if (reason === "clickaway") {
+    return;
+  }
+  setOpenSnackbar(false);
+};
+// --------------------------------------------
 
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
@@ -138,22 +163,23 @@ function StudentDiplomaRecord() {
   };
   const [Course, set] = React.useState("");
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setxData(prevState => ({
-        ...prevState,
-        [name]: value
+    setxData((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
-};
+  };
 
-  const onSubmit = async() => {
+
+  const onSubmit = async () => {
     console.log("Form submitted");
-    fet("/update", "POST", xData)
-    .then((response) => {
-        console.log(response);
-      });
+    fet("/update", "POST", xData).then((response) => {
+      console.log(response);
+    });
+    handleClickSnackbar();
     console.log(xData);
-  }
+  };
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
@@ -238,24 +264,25 @@ function StudentDiplomaRecord() {
                     height: 2400,
                   }}
                 >
-                <Paper
-                      elevation={2}
-                      sx={{
-                        p: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        backgroundColor: "#AFD3FC",
-                      }}
-                    >
-                      <Typography variant="h4" color="text.primary">
+                  <Paper
+                    elevation={2}
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      backgroundColor: "#AFD3FC",
+                    }}
+                  >
+                    <Typography variant="h4" color="text.primary">
                       Diploma Records
-                      </Typography>
-                      <Typography variant="h9" color="text.primary">
-                      Note - File formats supported – JPG, PNG or PDF. Maximum file size – 200 KB
-                      </Typography>
-                    </Paper> 
-                    <br></br>
-                    <Grid
+                    </Typography>
+                    <Typography variant="h9" color="text.primary">
+                      Note - File formats supported – JPG, PNG or PDF. Maximum
+                      file size – 200 KB
+                    </Typography>
+                  </Paper>
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -272,7 +299,7 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <FormControl sx={{ width: 150 }}>
+                      <FormControl sx={{ width: 150 }}>
                         <InputLabel id="demo-simple-select-label">
                           Select
                         </InputLabel>
@@ -284,32 +311,63 @@ function StudentDiplomaRecord() {
                           label="Course"
                           onChange={handleChange}
                         >
-                          <MenuItem value={'Select Course'}>Select Course</MenuItem>
-                          <MenuItem value={'Aerospace'}>Aerospace</MenuItem>
-                          <MenuItem value={'Agriculture'}>Agriculture</MenuItem>
-                          <MenuItem value={'Aviation'}>Aviation</MenuItem>
-                          <MenuItem value={'Automobile'}>Automobile</MenuItem>
-                          <MenuItem value={'Bio Chemistry/ Bio-Technology'}> Bio Chemistry/ Bio-Technology</MenuItem>
-                          <MenuItem value={'Bio-Medical'}>Bio-Medical</MenuItem>
-                          <MenuItem value={'Ceramice'}>Ceramice</MenuItem>
-                          <MenuItem value={'Chemical'}>Chemical</MenuItem>
-                          <MenuItem value={'Computer Science'}>Computer Science</MenuItem>
-                          <MenuItem value={'Electrical and Electronics'}>Electrical and Electronics</MenuItem>
-                          <MenuItem value={'Electronics and Communication'}>Electronics and Communication</MenuItem>
-                          <MenuItem value={'Energy'}>Energy</MenuItem>
-                          <MenuItem value={'Electronics and Instrumentation'}>Electronics and Instrumentation</MenuItem>
-                          <MenuItem value={'Environmental'}>Environmental</MenuItem>
-                          <MenuItem value={'Industrial Engineering and Management'}>Industrial Engineering and Management</MenuItem>
-                          <MenuItem value={'Instrumentation'}>Instrumentation</MenuItem>
-                          <MenuItem value={'Information Science'}>Information Science</MenuItem>
-                          <MenuItem value={'Marine'}>Marine</MenuItem>
-                          <MenuItem value={'Mechanical'}>Mechanical</MenuItem>
-                          <MenuItem value={'Mechatronics'}>Mechatronics</MenuItem>
-                          <MenuItem value={'Metallurgy'}>Metallurgy</MenuItem>
-                          <MenuItem value={'Industrial Production'}>Industrial Production</MenuItem>
-                          <MenuItem value={'Telecommunication'}>Telecommunication</MenuItem>
-                          <MenuItem value={'Textile'}>Textile</MenuItem>
-                          <MenuItem value={'Tools and Die Making'}>Tools and Die Making</MenuItem>
+                          <MenuItem value={"Select Course"}>
+                            Select Course
+                          </MenuItem>
+                          <MenuItem value={"Aerospace"}>Aerospace</MenuItem>
+                          <MenuItem value={"Agriculture"}>Agriculture</MenuItem>
+                          <MenuItem value={"Aviation"}>Aviation</MenuItem>
+                          <MenuItem value={"Automobile"}>Automobile</MenuItem>
+                          <MenuItem value={"Bio Chemistry/ Bio-Technology"}>
+                            {" "}
+                            Bio Chemistry/ Bio-Technology
+                          </MenuItem>
+                          <MenuItem value={"Bio-Medical"}>Bio-Medical</MenuItem>
+                          <MenuItem value={"Ceramice"}>Ceramice</MenuItem>
+                          <MenuItem value={"Chemical"}>Chemical</MenuItem>
+                          <MenuItem value={"Computer Science"}>
+                            Computer Science
+                          </MenuItem>
+                          <MenuItem value={"Electrical and Electronics"}>
+                            Electrical and Electronics
+                          </MenuItem>
+                          <MenuItem value={"Electronics and Communication"}>
+                            Electronics and Communication
+                          </MenuItem>
+                          <MenuItem value={"Energy"}>Energy</MenuItem>
+                          <MenuItem value={"Electronics and Instrumentation"}>
+                            Electronics and Instrumentation
+                          </MenuItem>
+                          <MenuItem value={"Environmental"}>
+                            Environmental
+                          </MenuItem>
+                          <MenuItem
+                            value={"Industrial Engineering and Management"}
+                          >
+                            Industrial Engineering and Management
+                          </MenuItem>
+                          <MenuItem value={"Instrumentation"}>
+                            Instrumentation
+                          </MenuItem>
+                          <MenuItem value={"Information Science"}>
+                            Information Science
+                          </MenuItem>
+                          <MenuItem value={"Marine"}>Marine</MenuItem>
+                          <MenuItem value={"Mechanical"}>Mechanical</MenuItem>
+                          <MenuItem value={"Mechatronics"}>
+                            Mechatronics
+                          </MenuItem>
+                          <MenuItem value={"Metallurgy"}>Metallurgy</MenuItem>
+                          <MenuItem value={"Industrial Production"}>
+                            Industrial Production
+                          </MenuItem>
+                          <MenuItem value={"Telecommunication"}>
+                            Telecommunication
+                          </MenuItem>
+                          <MenuItem value={"Textile"}>Textile</MenuItem>
+                          <MenuItem value={"Tools and Die Making"}>
+                            Tools and Die Making
+                          </MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -324,13 +382,21 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="board" value={xData.board} onChange={handleChange} label="Select Type" variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="board"
+                        value={xData.board}
+                        onChange={handleChange}
+                        label="Select Type"
+                        variant="standard"
+                      />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -346,7 +412,14 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="sem1_marks" value={xData.sem1_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        autoFocus
+                        id="standard-basic"
+                        name="sem1_marks"
+                        value={xData.sem1_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -359,7 +432,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="max_marks" value={xData.max_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="max_marks"
+                        value={xData.max_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -372,7 +451,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <TextField id="standard-basic" name="sem1_per" value={xData.sem1_per} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem1_per"
+                        value={xData.sem1_per}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -385,14 +470,15 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                    <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -408,7 +494,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="sem2_marks" value={xData.sem2_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem2_marks"
+                        value={xData.sem2_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -421,7 +513,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="max_marks" value={xData.max_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="max_marks"
+                        value={xData.max_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -434,7 +532,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <TextField id="standard-basic" name="sem2_per" value={xData.sem2_per} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem2_per"
+                        value={xData.sem2_per}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -447,14 +551,15 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                    <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -470,7 +575,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="sem3_marks" value={xData.sem3_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem3_marks"
+                        value={xData.sem3_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -483,7 +594,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="max_marks" value={xData.max_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="max_marks"
+                        value={xData.max_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -496,7 +613,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <TextField id="standard-basic" name="sem3_per" value={xData.sem3_per} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem3_per"
+                        value={xData.sem3_per}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -509,14 +632,15 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                    <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -533,9 +657,15 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="sem4_marks" value={xData.sem4_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem4_marks"
+                        value={xData.sem4_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
-                    
+
                     <Grid item xs={4}>
                       <Typography
                         variant="h9"
@@ -547,7 +677,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="max_marks" value={xData.max_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="max_marks"
+                        value={xData.max_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -560,7 +696,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <TextField id="standard-basic" name="sem4_per" value={xData.sem4_per} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem4_per"
+                        value={xData.sem4_per}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -573,14 +715,15 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                    <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -596,7 +739,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="sem5_marks" value={xData.sem5_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem5_marks"
+                        value={xData.sem5_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -609,7 +758,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="max_marks" value={xData.max_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="max_marks"
+                        value={xData.max_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -622,7 +777,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <TextField id="standard-basic" name="sem5_per" value={xData.sem5_per} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem5_per"
+                        value={xData.sem5_per}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -635,14 +796,15 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                    <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -658,7 +820,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="sem6_marks" value={xData.sem6_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem6_marks"
+                        value={xData.sem6_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -671,7 +839,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="max_marks" value={xData.max_marks} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="max_marks"
+                        value={xData.max_marks}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -684,7 +858,13 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <TextField id="standard-basic" name="sem6_per" value={xData.sem6_per} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="sem6_per"
+                        value={xData.sem6_per}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -697,14 +877,15 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                    <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    </Grid>
-                    <br></br><br></br>
-                    <Divider light={true} />
-                    <br></br>
-                    <Grid
+                  </Grid>
+                  <br></br>
+                  <br></br>
+                  <Divider light={true} />
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -721,24 +902,42 @@ function StudentDiplomaRecord() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" label="Aggregate" name="aggregate_percentage" value={xData.aggregate_percentage} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        label="Aggregate"
+                        name="aggregate_percentage"
+                        value={xData.aggregate_percentage}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
-                    <Grid item xs={4}>
-                    </Grid>
+                    <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                        <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
+                      <br></br>
+                      <Button
+                        onClick={onSubmit}
+                        variant="contained"
+                        style={{ width: "200px" }}
+                      >
+                        Submit
+                      </Button>
                     </Grid>
-                    <Grid item xs={10}>
-                    </Grid>
+                    <Grid item xs={10}></Grid>
                     <Grid item xs={2}>
-                        <br></br>
-                        <Button variant="contained" style={{width: "160px"}} color="error">&#8635; Reset Record</Button>
+                      <br></br>
+                      <Button
+                        variant="contained"
+                        style={{ width: "160px" }}
+                        color="error"
+                        onClick={() => window.location.reload(false)}
+                      >
+                        &#8635; Reset Record
+                      </Button>
                     </Grid>
-                    </Grid>
+                  </Grid>
                 </Paper>
                 <br></br>
-              <RouterLink
+                <RouterLink
                   to="/signed_in/student_dashboard/records"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
@@ -749,13 +948,26 @@ function StudentDiplomaRecord() {
                       flexWrap: "wrap",
                     }}
                   >
-                  <KeyboardBackspaceIcon fontSize="large" />
-                  <span>&nbsp; BACK</span>
+                    <KeyboardBackspaceIcon fontSize="large" />
+                    <span>&nbsp; BACK</span>
                   </div>
                 </RouterLink>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={2000}
+              onClose={handleCloseSnackbar}
+            >
+              <Alert
+                onClose={handleCloseSnackbar}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Submitted successfully
+              </Alert>
+            </Snackbar>
           </Container>
         </Box>
       </Box>
@@ -764,5 +976,5 @@ function StudentDiplomaRecord() {
 }
 
 export default function StudentDiplomaRecords() {
-  return < StudentDiplomaRecord />;
+  return <StudentDiplomaRecord />;
 }

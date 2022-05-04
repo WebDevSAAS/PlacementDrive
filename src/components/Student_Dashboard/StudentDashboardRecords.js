@@ -30,6 +30,8 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import { fet } from "../modules/fet";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -69,6 +71,11 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -100,110 +107,124 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function DashboardContentRecords() {
-  const usn = window.sessionStorage.getItem('uid');
+  const usn = window.sessionStorage.getItem("uid");
   let main_records;
   main_records = {
-    usn: '',
-    dob: '',
-    cgpa_10th: '',
-    cgpa_12th: '',
-    sem1_per: '',
-    sem2_per: '',
-    sem3_per: '',
-    sem4_per: '',
-    sem5_per: '',
-    sem6_per: '',
-    sem1: '',
-    sem2: '',
-    sem3: '',
-    sem4: '',
-    sem5: '',
-    sem6: '',
-    sem7: '',
-    sem8: '',
+    usn: "",
+    dob: "",
+    cgpa_10th: "",
+    cgpa_12th: "",
+    sem1_per: "",
+    sem2_per: "",
+    sem3_per: "",
+    sem4_per: "",
+    sem5_per: "",
+    sem6_per: "",
+    sem1: "",
+    sem2: "",
+    sem3: "",
+    sem4: "",
+    sem5: "",
+    sem6: "",
+    sem7: "",
+    sem8: "",
     current_backlog: 0,
     cleared_backlog: 0,
-    school_10th: '',
-    school_12th: '',
-    year_10th: '',
-    year_12th: '',
-    year_diploma: '',
-    year_graduation: '',
-    grad_project_title: '',
-    grad_project_type: '',
-    grad_project_company: '',
-    grad_project_duration: '',
-    grad_project_desc: '',
-    grad_intern_title: '',
-    grad_intern_company: '',
-    grad_intern_role: '',
-    grad_intern_duration: '',
-    grad_intern_desc: '',
-    post_grad_year: '',
-    post_grad_project_title: '',
-    post_grad_project_type: '',
-    post_grad_company: '',
-    post_grad_project_duration: '',
-    post_grad_project_description: '',
-    parent_mobile_number: '',
-    permanent_address: '',
-    current_address: '',
-    pan_number: '',
-    passport_number: '',
-    dl_number: '',
-    achievements: '',
-    blood_group: '',
+    school_10th: "",
+    school_12th: "",
+    year_10th: "",
+    year_12th: "",
+    year_diploma: "",
+    year_graduation: "",
+    grad_project_title: "",
+    grad_project_type: "",
+    grad_project_company: "",
+    grad_project_duration: "",
+    grad_project_desc: "",
+    grad_intern_title: "",
+    grad_intern_company: "",
+    grad_intern_role: "",
+    grad_intern_duration: "",
+    grad_intern_desc: "",
+    post_grad_year: "",
+    post_grad_project_title: "",
+    post_grad_project_type: "",
+    post_grad_company: "",
+    post_grad_project_duration: "",
+    post_grad_project_description: "",
+    parent_mobile_number: "",
+    permanent_address: "",
+    current_address: "",
+    pan_number: "",
+    passport_number: "",
+    dl_number: "",
+    achievements: "",
+    blood_group: "",
     validation: false,
     validated: false,
-  }  
+  };
   let [xData, setxData] = React.useState(main_records);
   React.useEffect(() => {
-    fet("/getStudents", 'POST', {params:{id: {usn}}})
-    .then(response => {console.log(response)
+    fet("/getStudents", "POST", { params: { id: { usn } } }).then(
+      (response) => {
+        console.log(response);
         // 4. Setting *dogImage* to the image url that we received from the response above
-    // .then(data => setDogImage(data.message))
-    setxData(prevState => ({
-      ...prevState,
-      ...response[0].profile,
-      ...response[0].profileFull
-  }));
-    
-  })},{})
+        // .then(data => setDogImage(data.message))
+        setxData((prevState) => ({
+          ...prevState,
+          ...response[0].profile,
+          ...response[0].profileFull,
+        }));
+      }
+    );
+  }, {});
   const [open, setOpen] = React.useState(false);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setxData(prevState => ({
-        ...prevState,
-        [name]: value
+    setxData((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
-};
+  };
 
-  const onSubmit = async() => {
+  const onSubmit = async () => {
     console.log("Form submitted");
     setReqText("Request For Validation");
-    xData.dob = dateOfBirth
-    .toISOString()
-    .split("T")[0]
-    xData.validation = false
-    xData.validated = false
-    fet("/update", "POST", xData)
-    .then((response) => {
-        console.log(response);
-      });
+    xData.dob = dateOfBirth.toISOString().split("T")[0];
+    xData.validation = false;
+    xData.validated = false;
+    fet("/update", "POST", xData).then((response) => {
+      console.log(response);
+    });
+    handleClickSnackbar();
     console.log(xData);
-  }
+  };
+
+    // -----Opening and Closing snackbar-----
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+    const handleClickSnackbar = () => {
+      setOpenSnackbar(true);
+    };
+  
+    const handleCloseSnackbar = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setOpenSnackbar(false);
+    };
+    // --------------------------------------------
 
   const [reqText, setReqText] = React.useState("Request For Validation");
 
-  const RequestValidation = async() => {
+  const RequestValidation = async () => {
     setReqText("Requested");
-    xData.validation=true;
-    fet("/update", "POST", xData)
-    .then((response) => {
-        console.log(response);
-      });
-  }
+    xData.validation = true;
+    fet("/update", "POST", xData).then((response) => {
+      console.log(response);
+    });
+  };
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -329,13 +350,28 @@ function DashboardContentRecords() {
           <Toolbar />
           <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Box textAlign="center">
-              {!xData.validated?(
-              <Button onClick={RequestValidation} variant="contained" style={{ width: "450px", marginBottom: "20px" }} color="secondary">
-                {reqText}
-              </Button>):(<Button variant="contained" style={{ width: "450px", marginBottom: "20px", cursor: "not-allowed" }} color="secondary">
-                Validated
-              </Button>)
-}
+              {!xData.validated ? (
+                <Button
+                  onClick={RequestValidation}
+                  variant="contained"
+                  style={{ width: "450px", marginBottom: "20px" }}
+                  color="secondary"
+                >
+                  {reqText}
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  style={{
+                    width: "450px",
+                    marginBottom: "20px",
+                    cursor: "not-allowed",
+                  }}
+                  color="secondary"
+                >
+                  Validated
+                </Button>
+              )}
             </Box>
             <Grid container spacing={3}>
               <Grid item xs={12} md={12} lg={12}>
@@ -467,21 +503,21 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Sem 1: {xData.sem1_per} 
+                        Sem 1: {xData.sem1_per}
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 2: {xData.sem2_per} 
+                        sem 2: {xData.sem2_per}
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 3: {xData.sem3_per} 
+                        sem 3: {xData.sem3_per}
                       </Typography>
                       <br></br>
                       <br></br>
@@ -490,21 +526,21 @@ function DashboardContentRecords() {
                         color="text.primary"
                         sx={{ ml: 3, mt: 1 }}
                       >
-                        Sem 4: {xData.sem4_per} 
+                        Sem 4: {xData.sem4_per}
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 5: {xData.sem5_per} 
+                        sem 5: {xData.sem5_per}
                       </Typography>
                       <Typography
                         variant="h8"
                         color="text.primary"
                         sx={{ ml: 12, mt: 1 }}
                       >
-                        sem 6: {xData.sem6_per} 
+                        sem 6: {xData.sem6_per}
                       </Typography>
                       <br></br>
                       <br></br>
@@ -1143,8 +1179,8 @@ function DashboardContentRecords() {
                             value={xData.grad_project_type}
                             onChange={handleChange}
                           >
-                            <MenuItem value={'Individual'}>Individual</MenuItem>
-                            <MenuItem value={'Group'}>Group</MenuItem>
+                            <MenuItem value={"Individual"}>Individual</MenuItem>
+                            <MenuItem value={"Group"}>Group</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -1159,10 +1195,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="grad_project_company"
-                            value={xData.grad_project_company}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="grad_project_company"
+                          value={xData.grad_project_company}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1212,10 +1251,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="grad_project_desc"
-                            value={xData.grad_project_desc}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="grad_project_desc"
+                          value={xData.grad_project_desc}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                     </Grid>
                     <br></br>
@@ -1284,10 +1326,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
+                        <TextField
+                          id="standard-basic"
                           name="grad_intern_role"
                           value={xData.grad_intern_role}
-                          onChange={handleChange} variant="standard" />
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1337,10 +1382,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="grad_intern_desc"
-                            value={xData.grad_intern_desc}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="grad_intern_desc"
+                          value={xData.grad_intern_desc}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                     </Grid>
                     <br></br>
@@ -1458,8 +1506,8 @@ function DashboardContentRecords() {
                             value={xData.post_grad_project_type}
                             onChange={handleChange}
                           >
-                            <MenuItem value={'Individual'}>Individual</MenuItem>
-                            <MenuItem value={'Group'}>Group</MenuItem>
+                            <MenuItem value={"Individual"}>Individual</MenuItem>
+                            <MenuItem value={"Group"}>Group</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
@@ -1474,10 +1522,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="post_grad_company"
-                            value={xData.post_grad_company}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="post_grad_company"
+                          value={xData.post_grad_company}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1527,10 +1578,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="post_grad_project_description"
-                            value={xData.post_grad_project_description}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="post_grad_project_description"
+                          value={xData.post_grad_project_description}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                     </Grid>
                     <br></br>
@@ -1573,8 +1627,7 @@ function DashboardContentRecords() {
                             value={xData.dob}
                             onChange={(newValue) => {
                               setDateOfBirth(newValue);
-                              xData.dob= newValue.toISOString()
-                            .split("T")[0]
+                              xData.dob = newValue.toISOString().split("T")[0];
                             }}
                             renderInput={(params) => (
                               <TextField {...params} helperText={null} />
@@ -1594,10 +1647,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="parent_mobile_number"
-                            value={xData.parent_mobile_number}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="parent_mobile_number"
+                          value={xData.parent_mobile_number}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1629,10 +1685,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="current_address"
-                            value={xData.current_address}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="current_address"
+                          value={xData.current_address}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1645,10 +1704,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="pan_number"
-                            value={xData.pan_number}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="pan_number"
+                          value={xData.pan_number}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1661,10 +1723,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="passport_number"
-                            value={xData.passport_number}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="passport_number"
+                          value={xData.passport_number}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1677,10 +1742,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="dl_number"
-                            value={xData.dl_number}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="dl_number"
+                          value={xData.dl_number}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1693,10 +1761,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="achievements"
-                            value={xData.achievements}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="achievements"
+                          value={xData.achievements}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1709,10 +1780,13 @@ function DashboardContentRecords() {
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
-                        <TextField id="standard-basic"
-                            name="blood_group"
-                            value={xData.blood_group}
-                            onChange={handleChange} variant="standard" />
+                        <TextField
+                          id="standard-basic"
+                          name="blood_group"
+                          value={xData.blood_group}
+                          onChange={handleChange}
+                          variant="standard"
+                        />
                       </Grid>
                       <Grid item xs={4}>
                         <Typography
@@ -1731,7 +1805,13 @@ function DashboardContentRecords() {
                       <Grid item xs={4}></Grid>
                       <Grid item xs={8}>
                         <br></br>
-                        <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
+                        <Button
+                          onClick={onSubmit}
+                          variant="contained"
+                          style={{ width: "200px" }}
+                        >
+                          Submit
+                        </Button>
                       </Grid>
                     </Grid>
                   </Paper>
@@ -1739,6 +1819,19 @@ function DashboardContentRecords() {
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={2000}
+              onClose={handleCloseSnackbar}
+            >
+              <Alert
+                onClose={handleCloseSnackbar}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Submitted successfully
+              </Alert>
+            </Snackbar>
           </Container>
         </Box>
       </Box>

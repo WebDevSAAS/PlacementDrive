@@ -75,7 +75,7 @@ function AdminSignIn() {
       }).then((response) => {
         console.log(response);
         if (response.status !== "error")
-          window.location = "./signed_in/dashboard";
+          window.location = "./signed_in/dashboard/student_report";
         else
           setOpen(true);    //  Invalid username or password
       });
