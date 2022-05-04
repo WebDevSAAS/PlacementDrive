@@ -68,7 +68,7 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link
+    {/* <Link
       to="/signed_in/student_dashboard/analytics"
       style={{ textDecoration: "none", color: "inherit" }}
     >
@@ -78,7 +78,7 @@ export const mainListItems = (
         </ListItemIcon>
         <ListItemText primary="Analytics" />
       </ListItem>
-    </Link>
+    </Link> */}
   </div>
 );
 

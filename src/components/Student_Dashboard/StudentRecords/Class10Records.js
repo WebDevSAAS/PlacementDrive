@@ -20,15 +20,22 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import TextField from "@mui/material/TextField";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Link as RouterLink } from "react-router-dom";
-import Button from '@mui/material/Button'
+import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { fet } from "../../modules/fet";
-
 import { mainListItems, secondaryListItems } from "../listItems";
 import { string } from "yup/lib/locale";
+
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Copyright(props) {
   return (
@@ -99,28 +106,44 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentClass10Record() {
-  const usn = window.sessionStorage.getItem('uid');
+  const usn = window.sessionStorage.getItem("uid");
   let x_records;
   x_records = {
-    usn: '',
-    board_10th: '',
-    g_state_10th: 'Haryana',
-    cgpa_10th: '',
-    cgpa10_scale: ''
-  }  
+    usn: "",
+    board_10th: "",
+    g_state_10th: "Haryana",
+    cgpa_10th: "",
+    cgpa10_scale: "",
+  };
   let [xData, setxData] = React.useState(x_records);
   React.useEffect(() => {
-    fet("/getStudents", 'POST', {params:{id: {usn}}})
-    .then(response => {console.log(response)
+    fet("/getStudents", "POST", { params: { id: { usn } } }).then(
+      (response) => {
+        console.log(response);
         // 4. Setting *dogImage* to the image url that we received from the response above
-    // .then(data => setDogImage(data.message))
-    setxData(prevState => ({
-      ...prevState,
-      ...response[0].profileFull
-  }));
-    
-  })},{})
+        // .then(data => setDogImage(data.message))
+        setxData((prevState) => ({
+          ...prevState,
+          ...response[0].profileFull,
+        }));
+      }
+    );
+  }, {});
 
+  // -----Opening and Closing snackbar-----
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+  // --------------------------------------------
 
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
@@ -128,22 +151,22 @@ function StudentClass10Record() {
   };
   const [Board, set] = React.useState("");
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setxData(prevState => ({
-        ...prevState,
-        [name]: value
+    setxData((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
-};
+  };
 
-  const onSubmit = async() => {
+  const onSubmit = async () => {
     console.log("Form submitted");
-    fet("/update", "POST", xData)
-    .then((response) => {
-        console.log(response);
-      });
+    fet("/update", "POST", xData).then((response) => {
+      console.log(response);
+    });
+    handleClickSnackbar();
     console.log(xData);
-  }
+  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -229,24 +252,24 @@ function StudentClass10Record() {
                     height: 580,
                   }}
                 >
-                <Paper
-                      elevation={2}
-                      sx={{
-                        p: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        backgroundColor: "#AFD3FC",
-                      }}
-                    >
-                      <Typography variant="h4" color="text.primary">
-                        Class 10 Records
-                      </Typography>
-                      <Typography variant="h9" color="text.primary">
-                        Class 10 records of student
-                      </Typography>
-                    </Paper> 
-                    <br></br>
-                    <Grid
+                  <Paper
+                    elevation={2}
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      backgroundColor: "#AFD3FC",
+                    }}
+                  >
+                    <Typography variant="h4" color="text.primary">
+                      Class 10 Records
+                    </Typography>
+                    <Typography variant="h9" color="text.primary">
+                      Class 10 records of student
+                    </Typography>
+                  </Paper>
+                  <br></br>
+                  <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -263,7 +286,7 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <FormControl sx={{ width: 150 }}>
+                      <FormControl sx={{ width: 150 }}>
                         <InputLabel id="demo-simple-select-label">
                           Select
                         </InputLabel>
@@ -275,10 +298,12 @@ function StudentClass10Record() {
                           label="Board"
                           onChange={handleChange}
                         >
-                          <MenuItem value={'CBSE'}>CBSE</MenuItem>
-                          <MenuItem value={'ICSE'}>ICSE</MenuItem>
-                          <MenuItem value={'International'}>International</MenuItem>
-                          <MenuItem value={'State'}>State</MenuItem>
+                          <MenuItem value={"CBSE"}>CBSE</MenuItem>
+                          <MenuItem value={"ICSE"}>ICSE</MenuItem>
+                          <MenuItem value={"International"}>
+                            International
+                          </MenuItem>
+                          <MenuItem value={"State"}>State</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -293,7 +318,13 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField sx={{ mt: 2}} defaultValue="CGPA" id="standard-basic" variant="standard" disabled />
+                      <TextField
+                        sx={{ mt: 2 }}
+                        defaultValue="CGPA"
+                        id="standard-basic"
+                        variant="standard"
+                        disabled
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -306,7 +337,13 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="cgpa_10th" value={xData.cgpa_10th} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="cgpa_10th"
+                        value={xData.cgpa_10th}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -319,7 +356,13 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                    <TextField id="standard-basic" name="cgpa10_scale" value={xData.cgpa10_scale} onChange={handleChange} variant="standard" />
+                      <TextField
+                        id="standard-basic"
+                        name="cgpa10_scale"
+                        value={xData.cgpa10_scale}
+                        onChange={handleChange}
+                        variant="standard"
+                      />
                     </Grid>
                     <Grid item xs={4}>
                       <Typography
@@ -332,19 +375,24 @@ function StudentClass10Record() {
                       </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <br></br>
-                    <input type="file" />
+                      <br></br>
+                      <input type="file" />
                     </Grid>
-                    <Grid item xs={4}>
-                    </Grid>
+                    <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
-                        <br/>
-                        <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
+                      <br />
+                      <Button
+                        onClick={onSubmit}
+                        variant="contained"
+                        style={{ width: "200px" }}
+                      >
+                        Submit
+                      </Button>
                     </Grid>
-                    </Grid>
+                  </Grid>
                 </Paper>
                 <br></br>
-              <RouterLink
+                <RouterLink
                   to="/signed_in/student_dashboard/records"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
@@ -355,13 +403,26 @@ function StudentClass10Record() {
                       flexWrap: "wrap",
                     }}
                   >
-                  <KeyboardBackspaceIcon fontSize="large" />
-                  <span>&nbsp; BACK</span>
+                    <KeyboardBackspaceIcon fontSize="large" />
+                    <span>&nbsp; BACK</span>
                   </div>
                 </RouterLink>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={2000}
+              onClose={handleCloseSnackbar}
+            >
+              <Alert
+                onClose={handleCloseSnackbar}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Submitted successfully
+              </Alert>
+            </Snackbar>
           </Container>
         </Box>
       </Box>
@@ -370,5 +431,5 @@ function StudentClass10Record() {
 }
 
 export default function StudentClass10Records() {
-  return < StudentClass10Record />;
+  return <StudentClass10Record />;
 }

@@ -22,8 +22,15 @@ import Button from "@mui/material/Button";
 import { Link as RouterLink } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { fet } from "../../modules/fet";
-
 import { mainListItems, secondaryListItems } from "../listItems";
+
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Copyright(props) {
   return (
@@ -94,47 +101,64 @@ const mdTheme = createTheme();
 //   ------------------------------------------------------------------------------------------------
 
 function StudentBacklogsRecord() {
-  const usn = window.sessionStorage.getItem('uid');
+  const usn = window.sessionStorage.getItem("uid");
   let x_records;
   x_records = {
-    usn: '',
+    usn: "",
     current_backlog: 0,
-    cleared_backlog: 0
-  }  
+    cleared_backlog: 0,
+  };
   let [xData, setxData] = React.useState(x_records);
   React.useEffect(() => {
-    fet("/getStudents", 'POST', {params:{id: {usn}}})
-    .then(response => {console.log(response)
+    fet("/getStudents", "POST", { params: { id: { usn } } }).then(
+      (response) => {
+        console.log(response);
         // 4. Setting *dogImage* to the image url that we received from the response above
-    // .then(data => setDogImage(data.message))
-    setxData(prevState => ({
-      ...prevState,
-      ...response[0].profileFull
-  }));
-    
-  })},{})
+        // .then(data => setDogImage(data.message))
+        setxData((prevState) => ({
+          ...prevState,
+          ...response[0].profileFull,
+        }));
+      }
+    );
+  }, {});
 
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setxData(prevState => ({
-        ...prevState,
-        [name]: value
+    setxData((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
-};
+  };
 
-  const onSubmit = async() => {
+  // -----Opening and Closing snackbar-----
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+  // --------------------------------------------
+
+  const onSubmit = async () => {
     console.log("Form submitted");
-    fet("/update", "POST", xData)
-    .then((response) => {
-        console.log(response);
-      });
+    fet("/update", "POST", xData).then((response) => {
+      console.log(response);
+    });
+    handleClickSnackbar();
     console.log(xData);
-  }
+  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -220,7 +244,7 @@ function StudentBacklogsRecord() {
                     height: 400,
                   }}
                 >
-                <Paper
+                  <Paper
                     elevation={2}
                     sx={{
                       p: 2,
@@ -288,7 +312,13 @@ function StudentBacklogsRecord() {
                     <Grid item xs={4}></Grid>
                     <Grid item xs={8}>
                       <br></br>
-                      <Button onClick={onSubmit} variant="contained" style={{width: "200px"}}>Submit</Button>
+                      <Button
+                        onClick={onSubmit}
+                        variant="contained"
+                        style={{ width: "200px" }}
+                      >
+                        Submit
+                      </Button>
                     </Grid>
                   </Grid>
                 </Paper>
@@ -304,13 +334,26 @@ function StudentBacklogsRecord() {
                       flexWrap: "wrap",
                     }}
                   >
-                  <KeyboardBackspaceIcon fontSize="large" />
-                  <span>&nbsp; BACK</span>
+                    <KeyboardBackspaceIcon fontSize="large" />
+                    <span>&nbsp; BACK</span>
                   </div>
                 </RouterLink>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={2000}
+              onClose={handleCloseSnackbar}
+            >
+              <Alert
+                onClose={handleCloseSnackbar}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Submitted successfully
+              </Alert>
+            </Snackbar>
           </Container>
         </Box>
       </Box>
