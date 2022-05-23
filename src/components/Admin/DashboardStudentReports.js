@@ -190,7 +190,7 @@ function AdminContentStudentReports() {
   React.useEffect(() => {
     fet("/student_reports", "GET").then((response) => {
       console.log(response);
-      // 4. Setting *dogImage* to the image url that we received from the response above
+      // 4. Setting dogImage to the image url that we received from the response above
       // .then(data => setDogImage(data.message))
       setxData(response);
     });

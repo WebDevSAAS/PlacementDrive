@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-mui";
@@ -18,33 +18,35 @@ import { fet, hash } from "../modules/fet"
 
 
 function Copyright(props) {
-    return (
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        {...props}
-      >
-        {"Copyright © "}
-        <Link color="inherit" href="https://www.rnsit.ac.in/">
-          RNSIT
-        </Link>{" "}
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
-    );
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://www.rnsit.ac.in/">
+        RNSIT
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
 }
-  
+
 
 const initialValues = {
   email: "",
   password: "",
+  accountType: "",
 };
 
 
 const emailRegex = /^[a-z]+@rnsit\.ac\.in$/;
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+const categoryRegex = /^\b(ADMIN|TPC|DFPC)\b/;
 var validationSchema = Yup.object().shape({
   email: Yup.string().matches(emailRegex, "Invalid Email. Use xyz@rnsit.ac.in").required("Required"),
   password: Yup.string()
@@ -53,29 +55,31 @@ var validationSchema = Yup.object().shape({
       "Password must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     )
     .required("Required"),
+  accountType: Yup.string().matches(categoryRegex, "Use one of: DFPC, TPC or ADMIN")
+    .required("Required"),
 });
 
 
 
 
 function AdminSignUp() {
-    
-    const onSubmit = (values) => {
-        console.log(values);
-        hash(values.password).then(h => {
-          values.password = h
-          console.log(values);
-          fet("/register_admin", "POST", values).then(res => {
-            //console.log("Signup response : ", res)
-            if (res.status !== "error")
-                  window.location = "./admin/signed_in/dashboard";
-          })
-        })
-    };
 
-    return (
+  const onSubmit = (values) => {
+    console.log(values);
+    hash(values.password).then(h => {
+      values.password = h
+      console.log(values);
+      fet("/register_admin", "POST", values).then(res => {
+        //console.log("Signup response : ", res)
+        if (res.status !== "error")
+          window.location = "/admin/signed_in/dashboard/notifications";
+      })
+    })
+  };
+
+  return (
     <>
-        <Container component="main" maxWidth="xs" sx={{ minHeight: "90vh" }}>
+      <Container component="main" maxWidth="xs" sx={{ minHeight: "90vh" }}>
         <CssBaseline />
         <Box
           sx={{
@@ -123,6 +127,17 @@ function AdminSignUp() {
                           component={TextField}
                         />
                       </Grid>
+                      <Grid item xs={12}>
+                        <Field
+                          margin="normal"
+                          label="Enter User Category"
+                          variant="outlined"
+                          fullWidth
+                          name="accountType"
+                          value={values.accountType}
+                          component={TextField}
+                        />
+                      </Grid>
                     </Grid>
                     <Button
                       fullWidth
@@ -132,19 +147,19 @@ function AdminSignUp() {
                       type="Submit"
                       sx={{ marginY: "1rem", marginTop: "3rem" }}
                     >
-                       Register
+                      Register
                     </Button>
                   </Form>
                 );
               }}
             </Formik>
-        </Box>
+          </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
-        </Container>
+      </Container>
     </>
-    );
-    
+  );
+
 }
 
-export { AdminSignUp } ;
+export { AdminSignUp };
