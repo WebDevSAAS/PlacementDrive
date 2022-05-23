@@ -108,7 +108,7 @@ function StudentGraduationRecord() {
   let xii_records;
   xii_records = {
     usn: "",
-    course: "",
+    grad_course: "",
     specialization: "",
     score_type: "",
     score_frequency: "",
@@ -121,7 +121,7 @@ function StudentGraduationRecord() {
     sem7: "0",
     sem8: "0",
     sgpa_scale: "0",
-    aggregate_percentage: "0",
+    grad_aggregate_percentage: "0",
   };
   let [xData, setxData] = React.useState(xii_records);
   React.useEffect(() => {
@@ -316,8 +316,8 @@ function StudentGraduationRecord() {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          name="course"
-                          value={xData.course}
+                          name="grad_course"
+                          value={xData.grad_course}
                           onChange={handleChange}
                         >
                           <MenuItem value={"B.E/B.Tech"}>B.E/B.Tech</MenuItem>
@@ -983,8 +983,8 @@ function StudentGraduationRecord() {
                     <Grid item xs={8}>
                       <TextField
                         id="standard-basic"
-                        name="aggregate_percentage"
-                        value={xData.aggregate_percentage}
+                        name="grad_aggregate_percentage"
+                        value={xData.grad_aggregate_percentage}
                         onChange={handleChange}
                         variant="standard"
                       />

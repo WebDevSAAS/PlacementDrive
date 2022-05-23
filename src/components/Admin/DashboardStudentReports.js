@@ -199,7 +199,7 @@ function AdminContentStudentReports() {
   for (var i = 0; i < xData.length; i++) {
     const temp = {};
     console.log(xData[i]);
-    temp.id = xData[i].company_id;
+    temp.id = xData[i]._id;
     temp.drivename = xData[i].comp[0].profile.c_name;
     temp.email = xData[i].stud[0].profile.email;
     temp.sector = xData[i].comp[0].profile.sector;
