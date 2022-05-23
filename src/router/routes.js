@@ -410,7 +410,8 @@ module.exports = function (app, db) {
   // ----------------------combined student and company using c_id && usn start---------------------------------
   app.get("/student_reports_c_id_usn", (req, res) => {
     let k = req.query;
-    // console.log("insides " + k.c_id);
+
+    console.log("insides " + k.c_id);
     db.collection("applyTo")
       .aggregate([{ $match: { "company_id": k.c_id,"usn":k.usn}},
       {
