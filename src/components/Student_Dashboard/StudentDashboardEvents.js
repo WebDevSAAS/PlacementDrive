@@ -131,9 +131,11 @@ function DashboardContentEvents() {
   // --------------------------------------------
 
   let hasApplied = (val) => {
-    console.log(val + " has applied.");
-    if (val == 2) return false;
-    if (val == 1) return true;
+    // console.log(val + " has applied.");
+    console.log(val);
+    if (val === true)
+      return true;
+    return false;
   };
 
   const columns = [
@@ -225,7 +227,7 @@ function DashboardContentEvents() {
                 );
                 handleClickSnackbar();
               }}
-              disabled={hasApplied(params.id)}
+              disabled={hasApplied(params)}
             >
               APPLY
             </Button>
