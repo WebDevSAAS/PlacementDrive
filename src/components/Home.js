@@ -7,6 +7,7 @@ import Link from "@mui/material/Link";
 import Divider from "@mui/material/Divider";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import LandingImg from "../images/Placement_Website_LOGO.png";
 
 
 
@@ -15,7 +16,15 @@ export default function Home() {
     <>
     <Navbar/>
     <Box sx={{ minHeight: "90vh" }}>
-      <Box sx={{minHeight: "60vh"}}></Box>
+      <Box sx={{minHeight: "60vh"}}>
+          <img src={LandingImg} alt="Landing Page Image"
+            sx={{
+              minWidth: "100vw",
+              backgroundsize: "cover",
+              backgroundposition: "center",
+              backgroundrepeat: "no-repeat",
+            }} />
+      </Box>
       <Box
       component="footer"
       sx={{
