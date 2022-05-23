@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SignIn } from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import StudentDetails from "./components/Student_Details/StudentDetails";
 import StudentClass10Records from "./components/Student_Dashboard/StudentRecords/Class10Records";
 import StudentClass12Records from "./components/Student_Dashboard/StudentRecords/Class12Records";
 import StudentBacklogsRecords from "./components/Student_Dashboard/StudentRecords/BacklogsRecords";
@@ -38,9 +37,7 @@ function App() {
           <Route path="/" exact element={<Home />} />
           <Route path="/signin" exact element={<SignIn />} />
           <Route path="/register" exact element={<SignUp />} />
-          <Route path="/ForgotPassword" exact element={<ForgotPassword />} />
-          <Route path="/signed_in/student" exact element={<StudentDetails />} />
-          
+          <Route path="/ForgotPassword" exact element={<ForgotPassword />} />          
           
           {/* Student Dashboard */}
           <Route path="/signed_in/student_dashboard" exact element={<StudentDashboard />} />

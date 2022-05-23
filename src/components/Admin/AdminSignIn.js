@@ -19,7 +19,6 @@ import {fet, hash} from "../modules/fet"
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-
 function Copyright(props) {
   return (
     <Typography
