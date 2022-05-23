@@ -333,10 +333,7 @@ module.exports = function (app, db) {
   // ----------------------get student end-----------------------------
   // ----------------------combine student and company start----------------
   app.get("/student_reports", (req, res) => {
-    // console.log("insides");
-    /*
-    
-    */
+    console.log("insides");
     db.collection("applyTo")
       .aggregate([
         {
@@ -363,42 +360,53 @@ module.exports = function (app, db) {
         res.json(results);
       });
   });
-  // ----------------------combine student and company end------------------
-  // ----------------------combine student and company using usn start---------------------------------
-  // app.get("/student_reports_usn", (req, res) => {
-  //   let k=req.body;
-  //   console.log("insides "+res);
-  //   /*
-  //   db.collection("applyTo").findOne(
-  //       { table_id: k.table_id },
-  //    */
-  //   db.collection("applyTo")
-  //     .aggregate([{$match:{usn:{$in:{}}}},
-  //       {
-  //         $lookup: {
-  //           from: "students",
-  //           localField: "usn",
-  //           foreignField: "usn",
-  //           as: "stud",
-  //         },
-  //       },
-  //       {
-  //         $lookup: {
-  //           from: "company",
-  //           localField: "c_id",
-  //           foreignField: "c_id",
-  //           as: "comp",
-  //         },
-  //       },
-  //     ])
-  //     .toArray((error, results) => {
-  //       if (error) {
-  //         res.json({ error });
-  //       }
-  //       res.json(results);
-  //     });
-  // });
-  // ----------------------combine student and company using usn end ----------------------------------
+  // ----------------------combined student and company end------------------
+  // ----------------------combined student and company using usn start---------------------------------
+  app.get("/student_reports_usn", (req, res) => {
+    let k=req.query;
+    // console.log("insides "+k.usn);
+    db.collection("applyTo")
+      .aggregate([{$match:{"usn":k.usn}},
+        {
+          $lookup: {
+            from: "company",
+            localField: "company_id",
+            foreignField: "c_id",
+            as: "comp",
+          },
+        },
+      ])
+      .toArray((error, results) => {
+        if (error) {
+          res.json({ error });
+        }
+        res.json(results);
+      });
+  });
+  // ----------------------combined student and company using usn end ----------------------------------
+  // ----------------------combined student and company using c_id start---------------------------------
+  app.get("/student_reports_c_id", (req, res) => {
+    let k = req.query;
+    // console.log("insides " + k.c_id);
+    db.collection("applyTo")
+      .aggregate([{ $match: { "company_id": k.c_id } },
+      {
+        $lookup: {
+          from: "students",
+          localField: "usn",
+          foreignField: "usn",
+          as: "stud",
+        },
+      },
+      ])
+      .toArray((error, results) => {
+        if (error) {
+          res.json({ error });
+        }
+        res.json(results);
+      });
+  });
+  // ----------------------combined student and company using c_id end ----------------------------------
 
   // post route for register (expects json data)
   app.post("/register", (req, res) => {
