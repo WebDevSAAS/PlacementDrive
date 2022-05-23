@@ -407,6 +407,33 @@ module.exports = function (app, db) {
       });
   });
   // ----------------------combined student and company using c_id end ----------------------------------
+  // ----------------------combined student and company using c_id && usn start---------------------------------
+  app.get("/student_reports_c_id_usn", (req, res) => {
+    let k = req.query;
+
+    console.log("insides " + k.c_id);
+    db.collection("applyTo")
+      .aggregate([{ $match: { "company_id": k.c_id,"usn":k.usn}},
+      {
+        $lookup: {
+          from: "students",
+          localField: "usn",
+          foreignField: "usn",
+          as: "stud",
+        },
+      },
+      ])
+      .toArray((error, results) => {
+        if (error) {
+          res.json({ error });
+        }
+        if(results.length)
+          res.json(true);
+        else
+          res.json(false);
+      });
+  });
+  // ----------------------combined student and company using c_id && usn end ----------------------------------
 
   // post route for register (expects json data)
   app.post("/register", (req, res) => {
