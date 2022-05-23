@@ -4,8 +4,8 @@ module.exports = function (app, db) {
   app.get("/", (req, res) => {
     try {
       db.collection("admins")
-      .find({})
-      .toArray((err, res) => console.log(res, err));
+        .find({})
+        .toArray((err, res) => console.log(res, err));
       res.send("All Set !");
     } catch (error) {
       console.log(error);
@@ -13,20 +13,18 @@ module.exports = function (app, db) {
     }
   });
 
-// =================admin Api===================
-  app.get("/admin",(req,res)=>{
-    try{
+  // =================admin Api===================
+  app.get("/admin", (req, res) => {
+    try {
       db.collection("admin")
-      .find({})
-      .toArray((err,res)=>console.log(res,err));
+        .find({})
+        .toArray((err, res) => console.log(res, err));
       res.send("Admin part");
-    }catch(error){
+    } catch (error) {
       console.log(error);
       res.send(error);
-  
     }
   });
-
 
   app.post("/register_admin", (req, res) => {
     let k = req.body;
@@ -45,10 +43,7 @@ module.exports = function (app, db) {
       });
     }
     // check if any value is not null
-    else if (
-      k.email &&
-      k.password
-    ) {
+    else if (k.email && k.password) {
       // check if record already exists...
       db.collection("admin").findOne(
         { email: k.email },
@@ -59,7 +54,7 @@ module.exports = function (app, db) {
               status: "error",
               message: "User already exists !",
               isLogged: false,
-              result
+              result,
             });
           }
           // usn doesn't exists, create one
@@ -67,7 +62,7 @@ module.exports = function (app, db) {
             let obj = {
               email: k.email,
               password: k.password,
-              accountType:'admin'
+              accountType:k.accountType,
             };
             db.collection("admin").insertOne(obj, (error, results) => {
               if (error) {
@@ -90,7 +85,7 @@ module.exports = function (app, db) {
                   lastUpdated: req.session.lastUpdated,
                   isLatest: true,
                   isLogged: true,
-                  resultId:results.insertedId
+                  resultId: results.insertedId,
                   // profile: obj.profile,
                 });
               }
@@ -135,6 +130,7 @@ module.exports = function (app, db) {
       k.event_type &&
       k.year_eligible &&
       k.ctc_package &&
+      k.band &&
       k.internship &&
       k.app_end_date &&
       // k.logo &&
@@ -168,6 +164,7 @@ module.exports = function (app, db) {
                 event_type: k.event_type,
                 year_eligible: k.year_eligible,
                 ctc_package: k.ctc_package,
+                band: k.band,
                 internship: k.internship,
                 app_end_date: k.app_end_date,
                 // logo: k.logo,
@@ -228,13 +225,7 @@ module.exports = function (app, db) {
         isLatest: false,
         // profile: req.session.profile,
       });
-    }
-    else if (
-      k.table_id &&
-      k.company_id &&
-      k.usn &&
-      k.desc
-    ) {
+    } else if (k.table_id && k.company_id && k.usn) {
       db.collection("applyTo").findOne(
         { table_id: k.table_id },
         { projection: { _id: 1, table_id: 1 } },
@@ -249,10 +240,9 @@ module.exports = function (app, db) {
           // usn doesn't exists, create one
           else {
             let obj = {
-                table_id: k.table_id,
-                company_id:k.company_id,
-                usn: k.usn,
-                desc: k.desc
+              table_id: k.table_id,
+              company_id: k.company_id,
+              usn: k.usn,
             };
             db.collection("applyTo").insertOne(obj, (error, results) => {
               if (error) {
@@ -292,29 +282,124 @@ module.exports = function (app, db) {
     }
   });
   // -----------------apply to API end---------------
-  
-  app.get("/student_al", (req, res) => {
-    let k = req.query;
-    console.log(k);
-
-    db.collection("students").findOne(
-      { usn: k.usn },
-      { projection: { _id: 1, usn: 1 } },
-      (error, result) => {
-        if (result && result._id) {
-          res.json({
-            status: "all data",
-            message: "data return !",
-            profileFull: result,
-          });
-        }
-        let keys = {};
-        for (const property in k) {
-          keys[`profileFull.${property}`] = k[property];
-        }
-      }
-    );
+  //-----------------get company start---------------
+  app.get("/company_all", (req, res) => {
+    try {
+      let k = req;
+      console.log(k);
+      db.collection("company")
+        .find()
+        .toArray((error, results) => {
+          if (error) {
+            res.json({
+              status: "error",
+              message: "unable to fetch data with requested params",
+              isLogged: true,
+            });
+            throw error;
+          }
+          res.json(results);
+        });
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
   });
+  //---------------get company all end------------------
+
+  //---------------get student start--------------------
+  app.get("/student_all", (req, res) => {
+    try {
+      let k = req.body;
+      console.log(k);
+      db.collection("students")
+        .find()
+        .toArray((error, results) => {
+          if (error) {
+            res.json({
+              status: "error",
+              message: "unable to fetch data with requested params",
+              isLogged: true,
+            });
+            throw error;
+          }
+          res.json(results);
+        });
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  });
+  // ----------------------get student end-----------------------------
+  // ----------------------combine student and company start----------------
+  app.get("/student_reports", (req, res) => {
+    // console.log("insides");
+    /*
+    
+    */
+    db.collection("applyTo")
+      .aggregate([
+        {
+          $lookup: {
+            from: "company",
+            localField: "company_id",
+            foreignField: "c_id",
+            as: "comp",
+          },
+        },
+        {
+          $lookup: {
+            from: "students",
+            localField: "usn",
+            foreignField: "usn",
+            as: "stud",
+          },
+        },
+      ])
+      .toArray((error, results) => {
+        if (error) {
+          res.json({ error });
+        }
+        res.json(results);
+      });
+  });
+  // ----------------------combine student and company end------------------
+  // ----------------------combine student and company using usn start---------------------------------
+  // app.get("/student_reports_usn", (req, res) => {
+  //   let k=req.body;
+  //   console.log("insides "+res);
+  //   /*
+  //   db.collection("applyTo").findOne(
+  //       { table_id: k.table_id },
+  //    */
+  //   db.collection("applyTo")
+  //     .aggregate([{$match:{usn:{$in:{}}}},
+  //       {
+  //         $lookup: {
+  //           from: "students",
+  //           localField: "usn",
+  //           foreignField: "usn",
+  //           as: "stud",
+  //         },
+  //       },
+  //       {
+  //         $lookup: {
+  //           from: "company",
+  //           localField: "c_id",
+  //           foreignField: "c_id",
+  //           as: "comp",
+  //         },
+  //       },
+  //     ])
+  //     .toArray((error, results) => {
+  //       if (error) {
+  //         res.json({ error });
+  //       }
+  //       res.json(results);
+  //     });
+  // });
+  // ----------------------combine student and company using usn end ----------------------------------
+
   // post route for register (expects json data)
   app.post("/register", (req, res) => {
     let k = req.body;
@@ -413,10 +498,11 @@ module.exports = function (app, db) {
   app.post("/update", (req, res) => {
     let k = req.body;
     // check if user logged in...
+    // console.log("inside update " + req.body.accountType);
     if (req.session && req.session.userid) {
       if (
         req.session.userid === k.usn ||
-        req.session.profile.accountType === "admin" // If user is editing his own Accounts or admin then supreme access...
+        req.body.accountType === "admin" // If user is editing his own Accounts or admin then supreme access...
       ) {
         // All OKAY, update
         db.collection("students").findOne(
@@ -424,7 +510,7 @@ module.exports = function (app, db) {
           { projection: { _id: 1, usn: 1 } },
           (error, result) => {
             if (error || !result) {
-              res.jsom({
+              res.json({
                 status: "error",
                 message: error,
                 isLogged: true,
@@ -468,17 +554,17 @@ module.exports = function (app, db) {
           }
         );
       } else
-        res.jsom({
+        res.json({
           // User is trying to modify someone else's data...
           status: "error",
           message: "Unauthorised access !",
           isLogged: true,
         });
     } else
-      res.jsom({
+      res.json({
         status: "error",
         message: "Not logged in !",
         isLogged: false,
       });
-    });
-  };
+  });
+};
