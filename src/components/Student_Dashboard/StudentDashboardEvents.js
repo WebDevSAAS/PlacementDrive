@@ -130,12 +130,16 @@ function DashboardContentEvents() {
   };
   // --------------------------------------------
 
-  let hasApplied = (val) => {
+  let hasApplied = async(c_id) => {
     // console.log(val + " has applied.");
-    console.log(val);
-    if (val === true)
-      return true;
-    return false;
+
+    fet(`/student_reports_c_id_usn?c_id=${c_id}&usn=${usn}`, "GET").then((responses) => {
+      console.log(c_id,usn,responses);
+      if (responses === true)
+        return true;
+      return false;
+    });
+    console.log(c_id, usn);
   };
 
   const columns = [
@@ -227,7 +231,11 @@ function DashboardContentEvents() {
                 );
                 handleClickSnackbar();
               }}
-              disabled={hasApplied(params)}
+              // disabled={async()=>fet(`/student_reports_c_id_usn?c_id=1027&usn=1RN19CS127`, "GET").then((response)=>{
+              //   console.log(response);
+              //   return response;
+              // })}
+              disabled={hasApplied(params.row.id)}
             >
               APPLY
             </Button>

@@ -199,8 +199,6 @@ function AdminDashboardContentRecords() {
     dl_number: "",
     achievements: "",
     blood_group: "",
-    validation: false,
-    validated: false,
   };
   let [ckData, setckData] = React.useState(main_records);
   // React.useEffect(() => {
@@ -220,7 +218,7 @@ function AdminDashboardContentRecords() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setxData((prevState) => ({
+    setckData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -392,7 +390,7 @@ function AdminDashboardContentRecords() {
               onClick={async () => {
                 console.log(params);
                 const usn = params.row.usn;
-                fet("/getStudents", "POST", { params: { id: { usn } } }).then(
+                fet("/getStudents", "POST", { params: { id: { usn } }, accountType: "admin" }).then(
                   (response) => {
                     console.log(response);
                     setckData((prevState) => ({
