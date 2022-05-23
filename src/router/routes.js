@@ -23,10 +23,8 @@ module.exports = function (app, db) {
     } catch (error) {
       console.log(error);
       res.send(error);
-
     }
   });
-
 
   app.post("/register_admin", (req, res) => {
     let k = req.body;
@@ -45,10 +43,7 @@ module.exports = function (app, db) {
       });
     }
     // check if any value is not null
-    else if (
-      k.email &&
-      k.password
-    ) {
+    else if (k.email && k.password) {
       // check if record already exists...
       db.collection("admin").findOne(
         { email: k.email },
@@ -59,7 +54,7 @@ module.exports = function (app, db) {
               status: "error",
               message: "User already exists !",
               isLogged: false,
-              result
+              result,
             });
           }
           // usn doesn't exists, create one
@@ -67,7 +62,7 @@ module.exports = function (app, db) {
             let obj = {
               email: k.email,
               password: k.password,
-              accountType: 'admin'
+              accountType:k.accountType,
             };
             db.collection("admin").insertOne(obj, (error, results) => {
               if (error) {
@@ -90,7 +85,7 @@ module.exports = function (app, db) {
                   lastUpdated: req.session.lastUpdated,
                   isLatest: true,
                   isLogged: true,
-                  resultId: results.insertedId
+                  resultId: results.insertedId,
                   // profile: obj.profile,
                 });
               }
@@ -230,12 +225,7 @@ module.exports = function (app, db) {
         isLatest: false,
         // profile: req.session.profile,
       });
-    }
-    else if (
-      k.table_id &&
-      k.company_id &&
-      k.usn
-    ) {
+    } else if (k.table_id && k.company_id && k.usn) {
       db.collection("applyTo").findOne(
         { table_id: k.table_id },
         { projection: { _id: 1, table_id: 1 } },
@@ -252,7 +242,7 @@ module.exports = function (app, db) {
             let obj = {
               table_id: k.table_id,
               company_id: k.company_id,
-              usn: k.usn
+              usn: k.usn,
             };
             db.collection("applyTo").insertOne(obj, (error, results) => {
               if (error) {
@@ -295,72 +285,120 @@ module.exports = function (app, db) {
   //-----------------get company start---------------
   app.get("/company_all", (req, res) => {
     try {
-      let k = req
+      let k = req;
       console.log(k);
-      db.collection("company").find().toArray((error, results) => {
-        if (error) {
-          res.json({
-            status: 'error',
-            message: 'unable to fetch data with requested params',
-            isLogged: true
-          })
-          throw error
-        }
-        res.json(results)
-      })
+      db.collection("company")
+        .find()
+        .toArray((error, results) => {
+          if (error) {
+            res.json({
+              status: "error",
+              message: "unable to fetch data with requested params",
+              isLogged: true,
+            });
+            throw error;
+          }
+          res.json(results);
+        });
     } catch (error) {
-      console.log(error)
-      res.send(error)
+      console.log(error);
+      res.send(error);
     }
-  })
+  });
   //---------------get company all end------------------
 
   //---------------get student start--------------------
   app.get("/student_all", (req, res) => {
     try {
-      let k = req.body
+      let k = req.body;
       console.log(k);
-      db.collection("students").find().toArray((error, results) => {
-        if (error) {
-          res.json({
-            status: 'error',
-            message: 'unable to fetch data with requested params',
-            isLogged: true
-          })
-          throw error
-        }
-        res.json(results)
-      })
+      db.collection("students")
+        .find()
+        .toArray((error, results) => {
+          if (error) {
+            res.json({
+              status: "error",
+              message: "unable to fetch data with requested params",
+              isLogged: true,
+            });
+            throw error;
+          }
+          res.json(results);
+        });
     } catch (error) {
-      console.log(error)
-      res.send(error)
+      console.log(error);
+      res.send(error);
     }
-  })
-  // ----------------------get student end----------------------------------
+  });
+  // ----------------------get student end-----------------------------
   // ----------------------combine student and company start----------------
   app.get("/student_reports", (req, res) => {
-    db.collection('applyTo').aggregate([{
-      $lookup: {
-        from: "company",
-        localField: "company_id",
-        foreignField: "c_id",
-        as: "comp"
-      }
-    }, {
-      $lookup: {
-        from: "students",
-        localField: "usn",
-        foreignField: "usn",
-        as: "stud"
-      }
-    }]).toArray((error, results) => {
-      if (error) {
-        res.json({ error });
-      }
-      res.json(results);
-    })
+    // console.log("insides");
+    /*
+    
+    */
+    db.collection("applyTo")
+      .aggregate([
+        {
+          $lookup: {
+            from: "company",
+            localField: "company_id",
+            foreignField: "c_id",
+            as: "comp",
+          },
+        },
+        {
+          $lookup: {
+            from: "students",
+            localField: "usn",
+            foreignField: "usn",
+            as: "stud",
+          },
+        },
+      ])
+      .toArray((error, results) => {
+        if (error) {
+          res.json({ error });
+        }
+        res.json(results);
+      });
   });
   // ----------------------combine student and company end------------------
+  // ----------------------combine student and company using usn start---------------------------------
+  // app.get("/student_reports_usn", (req, res) => {
+  //   let k=req.body;
+  //   console.log("insides "+res);
+  //   /*
+  //   db.collection("applyTo").findOne(
+  //       { table_id: k.table_id },
+  //    */
+  //   db.collection("applyTo")
+  //     .aggregate([{$match:{usn:{$in:{}}}},
+  //       {
+  //         $lookup: {
+  //           from: "students",
+  //           localField: "usn",
+  //           foreignField: "usn",
+  //           as: "stud",
+  //         },
+  //       },
+  //       {
+  //         $lookup: {
+  //           from: "company",
+  //           localField: "c_id",
+  //           foreignField: "c_id",
+  //           as: "comp",
+  //         },
+  //       },
+  //     ])
+  //     .toArray((error, results) => {
+  //       if (error) {
+  //         res.json({ error });
+  //       }
+  //       res.json(results);
+  //     });
+  // });
+  // ----------------------combine student and company using usn end ----------------------------------
 
   // post route for register (expects json data)
   app.post("/register", (req, res) => {
