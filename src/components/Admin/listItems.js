@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 export const mainListItems = (
   <div>
     {/* <Link color="inherit" underline="none" href="/signed_in/student_dashboard/notification"> */}
-    <Link
+    {/* <Link
       to="/admin/signed_in/dashboard/notifications"
       style={{ textDecoration: "none", color: "inherit" }}
     >
@@ -26,7 +26,7 @@ export const mainListItems = (
         </ListItemIcon>
         <ListItemText primary="Notifications" />
       </ListItem>
-    </Link>
+    </Link> */}
 
     <Link
       to="/admin/signed_in/dashboard/student_report"

@@ -20,7 +20,7 @@ const logoutFun = async() => {
 export const mainListItems = (
   <div>
     {/* <Link color="inherit" underline="none" href="/signed_in/student_dashboard/notification"> */}
-    <Link
+    {/* <Link
       to="/signed_in/student_dashboard/notifications"
       style={{ textDecoration: "none", color: "inherit" }}
     >
@@ -30,7 +30,7 @@ export const mainListItems = (
         </ListItemIcon>
         <ListItemText primary="Notifications" />
       </ListItem>
-    </Link>
+    </Link> */}
 
     <Link
       to="/signed_in/student_dashboard/profile"
