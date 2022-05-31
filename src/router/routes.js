@@ -615,7 +615,7 @@ module.exports = function (app, db) {
     console.log(k);
     if (req.session && req.session.id) {
       if (
-        req.body.accountType === "admin" // If user is editing his own Accounts or admin then supreme access...
+        req.session.accountType === "admin" // If user is editing his own Accounts or admin then supreme access...
       ) {
         // All OKAY, update
         db.collection("company").findOne(
@@ -630,14 +630,9 @@ module.exports = function (app, db) {
               throw error;
             } else {
               // user exists, update profile row
-              let keys = {};
-              for (const property in k) {
-                if (property != "accountType" && property != "c_id")
-                  keys[`${property}`] = k[property];
-              }
               db.collection("company").updateOne(
                 { c_id: k.c_id },
-                { $set: keys },
+                { $set: k.criteria },
                 (error, result) => {
                   if (error) {
                     res.json({
