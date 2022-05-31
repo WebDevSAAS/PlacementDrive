@@ -3,7 +3,7 @@ module.exports = function (app, db) {
   // root-route for server
   app.get("/", (req, res) => {
     try {
-      db.collection("admins")
+      db.collection("admin")
         .find({})
         .toArray((err, res) => console.log(res, err));
       res.send("All Set !");
@@ -78,10 +78,12 @@ module.exports = function (app, db) {
                 // log it in
                 req.session.useremail = k.email;
                 // req.session.profile = obj.profile;
+                req,session.accountType = k.accountType
                 req.session.lastUpdated = new Date();
                 res.json({
                   status: "success",
                   message: "Account created !",
+                  accountType: req.session.accountType,
                   lastUpdated: req.session.lastUpdated,
                   isLatest: true,
                   isLogged: true,
