@@ -62,7 +62,7 @@ module.exports = function (app, db) {
             let obj = {
               email: k.email,
               password: k.password,
-              accountType:k.accountType,
+              accountType: k.accountType,
             };
             db.collection("admin").insertOne(obj, (error, results) => {
               if (error) {
@@ -363,10 +363,11 @@ module.exports = function (app, db) {
   // ----------------------combined student and company end------------------
   // ----------------------combined student and company using usn start---------------------------------
   app.get("/student_reports_usn", (req, res) => {
-    let k=req.query;
+    let k = req.query;
     // console.log("insides "+k.usn);
     db.collection("applyTo")
-      .aggregate([{$match:{"usn":k.usn}},
+      .aggregate([
+        { $match: { usn: k.usn } },
         {
           $lookup: {
             from: "company",
@@ -389,15 +390,16 @@ module.exports = function (app, db) {
     let k = req.query;
     // console.log("insides " + k.c_id);
     db.collection("applyTo")
-      .aggregate([{ $match: { "company_id": k.c_id } },
-      {
-        $lookup: {
-          from: "students",
-          localField: "usn",
-          foreignField: "usn",
-          as: "stud",
+      .aggregate([
+        { $match: { company_id: k.c_id } },
+        {
+          $lookup: {
+            from: "students",
+            localField: "usn",
+            foreignField: "usn",
+            as: "stud",
+          },
         },
-      },
       ])
       .toArray((error, results) => {
         if (error) {
@@ -411,26 +413,25 @@ module.exports = function (app, db) {
   app.get("/student_reports_c_id_usn", (req, res) => {
     let k = req.query;
 
-    console.log("insides " + k.c_id);
+    console.log("insides " + k.c_id + " " + k.usn);
     db.collection("applyTo")
-      .aggregate([{ $match: { "company_id": k.c_id,"usn":k.usn}},
-      {
-        $lookup: {
-          from: "students",
-          localField: "usn",
-          foreignField: "usn",
-          as: "stud",
+      .aggregate([
+        { $match: { company_id: k.c_id, usn: k.usn } },
+        {
+          $lookup: {
+            from: "students",
+            localField: "usn",
+            foreignField: "usn",
+            as: "stud",
+          },
         },
-      },
       ])
       .toArray((error, results) => {
         if (error) {
           res.json({ error });
         }
-        if(results.length)
-          res.json(true);
-        else
-          res.json(false);
+        if (results.length == 1) res.json(true);
+        else res.json(false);
       });
   });
   // ----------------------combined student and company using c_id && usn end ----------------------------------
@@ -581,6 +582,78 @@ module.exports = function (app, db) {
                       isLatest: true,
                       isLogged: true,
                       profile: k,
+                    });
+                  }
+                }
+              );
+            }
+          }
+        );
+      } else
+        res.json({
+          // User is trying to modify someone else's data...
+          status: "error",
+          message: "Unauthorised access !",
+          isLogged: true,
+        });
+    } else
+      res.json({
+        status: "error",
+        message: "Not logged in !",
+        isLogged: false,
+      });
+  });
+
+  // Update event criteria
+  app.post("/event_update", (req, res) => {
+    let k = req.body;
+    // check if user logged in...
+    // console.log("inside update " + req.body.accountType);
+    console.log(req.session, req.session.id);
+    console.log(k);
+    if (req.session && req.session.id) {
+      if (
+        req.body.accountType === "admin" // If user is editing his own Accounts or admin then supreme access...
+      ) {
+        // All OKAY, update
+        db.collection("company").findOne(
+          { c_id: k.c_id },
+          { projection: { _id: 1, c_id: 1 } },
+          (error, result) => {
+            if (error || !result) {
+              res.json({
+                status: "error",
+                message: error,
+              });
+              throw error;
+            } else {
+              // user exists, update profile row
+              let keys = {};
+              for (const property in k) {
+                if (property != "accountType" && property != "c_id")
+                  keys[`${property}`] = k[property];
+              }
+              db.collection("company").updateOne(
+                { c_id: k.c_id },
+                { $set: keys },
+                (error, result) => {
+                  if (error) {
+                    res.json({
+                      status: "error",
+                      message: error,
+                    });
+                    throw error;
+                  } else {
+                    // records updated
+                    // req.session.profile = k; // Update session profile
+                    // req.session.lastUpdated = new Date();
+                    res.json({
+                      status: "success",
+                      message: "Records Updated !",
+                      lastUpdated: new Date(),
+                      isLatest: true,
+                      // isLogged: true,
+                      // profile: k,
                     });
                   }
                 }
