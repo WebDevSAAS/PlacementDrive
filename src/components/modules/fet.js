@@ -23,6 +23,8 @@ let fet = async (url, method, body) => {
           //console.log(data);
           if(data && data.profile && data.profile.usn)
             window.sessionStorage.setItem('uid', data.profile.usn);
+          if(data && data.accountType)
+            window.sessionStorage.setItem('accountType', data.accountType);
           resolve(data);
         })
         .catch((err) => {
