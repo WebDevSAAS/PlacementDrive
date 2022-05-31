@@ -35,6 +35,7 @@ module.exports = function (app, db) {
       res.json({
         status: "warn",
         message: "Session already exists !",
+        accountType: req.session.accountType,
         isLogged: true,
         lastUpdated: req.session.lastUpdated,
         isLatest: false,
