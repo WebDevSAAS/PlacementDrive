@@ -20,6 +20,7 @@ import { CheckboxWithLabel } from "formik-mui";
 import { fet, hash } from "./modules/fet";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -67,8 +68,11 @@ var validationSchema = Yup.object().shape({
 });
 
 function SignIn() {
+
+  const navigate = useNavigate();
+
   const onSubmit = async (values) => {
-    
+
     usnData = values["usn"];
     hash(values["password"]).then((h) => {
       console.log(values);
@@ -78,11 +82,12 @@ function SignIn() {
         accountType: "student",
       }).then((response) => {
         console.log(response);
-        if (response.status !== "error"){
-          window.sessionStorage.setItem('uid', values["usn"]);
-          window.location = "./signed_in/student_dashboard/profile";
+        if (response.status !== "error") {
+          window.sessionStorage.setItem("uid", values["usn"]);
+          // window.location = "./signed_in/student_dashboard/profile";
+          navigate('/signed_in/student_dashboard/profile');
         } else {
-          setOpen(true);    //  Invalid username or password
+          setOpen(true); //  Invalid username or password
         }
       });
     });

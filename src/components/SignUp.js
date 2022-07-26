@@ -22,6 +22,7 @@ import { fet, hash } from "./modules/fet";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -108,6 +109,9 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function SignUp() {
+
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     values.dob = dateOfBirth
@@ -119,7 +123,8 @@ export default function SignUp() {
       fet("/register", "POST", values).then(res => {
         //console.log("Signup response : ", res)
         if (res.status !== "error")
-              window.location = "./signed_in/student_dashboard";
+              // window.location = "./signed_in/student_dashboard";
+              navigate('/signed_in/student_dashboard/profile');
       })
     })
   };
