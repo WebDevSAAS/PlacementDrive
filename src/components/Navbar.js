@@ -57,7 +57,7 @@ const Navbar = () => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1, maxWidth: "100vw" }}>
+      <Box sx={{ flexGrow: 1, minWidth: "100vw", overflow: 'hidden' }}>
         <AppBar position="static" elevation={0}>
           <Toolbar sx={{ background: "#021B38", minHeight: "10vh" }}>
             <IconButton
@@ -66,7 +66,6 @@ const Navbar = () => {
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2,}}
             >
               <MenuIcon />
             </IconButton>
@@ -81,7 +80,10 @@ const Navbar = () => {
                 fontSize: "1.2rem",
               }}
             >
-              R N S Institute of Technology
+              
+              {window.innerWidth < 540 && ""}
+                {window.innerWidth > 540 && "R N S Institute of Technology"}
+              
             </Typography>
             <NavLink
               to="/register"

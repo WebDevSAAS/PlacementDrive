@@ -1040,7 +1040,7 @@ function AdminDashboardContentRecords() {
                       </Grid>
                       <Grid item xs={8}>
                         <TextField
-                          autoFocus
+                          
                           id="standard-basic"
                           name="sem1_marks"
                           value={ckData.sem1_marks}
@@ -1713,7 +1713,7 @@ function AdminDashboardContentRecords() {
                       </Grid>
                       <Grid item xs={8}>
                         <TextField
-                          autoFocus
+                          
                           disabled
                           defaultValue="CGPA"
                           id="standard-basic"

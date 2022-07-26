@@ -32,10 +32,10 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
+        minWidth: "100vw" ,
         minHeight: "30vh",
         py: 3,
         px: 2,
-        mt: "auto",
         backgroundColor: (theme) =>
           theme.palette.mode === "light"
             ? theme.palette.grey[200]
@@ -49,11 +49,13 @@ export default function Footer() {
             display: "flex",
             justifyContent: "space-around",
             p: 1,
-            m: 1,
+            marginBottom: 1,
             bgcolor: "inherit",
             borderRadius: 1,
+            marginTop: (window.innerWidth<540) ? "5rem" : "0rem",
           }}
         >
+
           <Link color="inherit" href="https://www.rnsit.ac.in/">
             <EmailIcon fontSize="large" />
           </Link>

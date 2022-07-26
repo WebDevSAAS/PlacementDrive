@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-mui";
@@ -64,6 +64,8 @@ var validationSchema = Yup.object().shape({
 
 function AdminSignUp() {
 
+  const navigate = useNavigate();
+
   const onSubmit = (values) => {
     console.log(values);
     hash(values.password).then(h => {
@@ -72,7 +74,8 @@ function AdminSignUp() {
       fet("/register_admin", "POST", values).then(res => {
         //console.log("Signup response : ", res)
         if (res.status !== "error")
-          window.location = "/admin/signed_in/dashboard/notifications";
+          // window.location = "/admin/signed_in/dashboard/notifications";
+          navigate("/admin/signed_in/dashboard/notifications");
       })
     })
   };
